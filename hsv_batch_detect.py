@@ -8,12 +8,7 @@ from dataclasses import dataclass
 
 import cv2
 import numpy as np
-
-
-@dataclass
-class HSVRange:
-    low: tuple[int, int, int]
-    high: tuple[int, int, int]
+from color_utils import HSVRange, build_mask, derive_class_hsv_ranges
 
 
 @dataclass
@@ -33,7 +28,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--hue-margin", type=int, default=12)
     parser.add_argument("--sat-min-floor", type=int, default=50)
     parser.add_argument("--val-min-floor", type=int, default=45)
-    parser.add_argument("--min-area", type=float, default=120.0)
+    parser.add_argument("--min-area", type=float, default=1500.0)
     parser.add_argument("--kernel-size", type=int, default=5)
     return parser.parse_args()
 
@@ -48,71 +43,13 @@ def list_images(folder: str) -> list[str]:
     return paths
 
 
-def circular_hue_mean(hues: np.ndarray) -> int:
-    angles = (hues.astype(np.float32) / 180.0) * 2.0 * np.pi
-    s = np.sin(angles).mean()
-    c = np.cos(angles).mean()
-    mean_angle = np.arctan2(s, c)
-    if mean_angle < 0:
-        mean_angle += 2.0 * np.pi
-    return int(round((mean_angle / (2.0 * np.pi)) * 180.0)) % 180
-
-
-def make_ranges_for_hue(hue_center: int, hue_margin: int, s_min: int, v_min: int) -> list[HSVRange]:
-    h_low = hue_center - hue_margin
-    h_high = hue_center + hue_margin
-    if h_low < 0:
-        return [
-            HSVRange((0, s_min, v_min), (h_high, 255, 255)),
-            HSVRange((180 + h_low, s_min, v_min), (179, 255, 255)),
-        ]
-    if h_high > 179:
-        return [
-            HSVRange((h_low, s_min, v_min), (179, 255, 255)),
-            HSVRange((0, s_min, v_min), (h_high - 180, 255, 255)),
-        ]
-    return [HSVRange((h_low, s_min, v_min), (h_high, 255, 255))]
-
-
-def derive_class_hsv_ranges(classes_dir: str, hue_margin: int, sat_floor: int, val_floor: int) -> dict[str, list[HSVRange]]:
-    out: dict[str, list[HSVRange]] = {}
-    for path in list_images(classes_dir):
-        color = os.path.splitext(os.path.basename(path))[0].lower()
-        img = cv2.imread(path)
-        if img is None:
-            continue
-        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-        h, s, v = cv2.split(hsv)
-
-        valid = (s > 25) & (v > 25)
-        if int(valid.sum()) < 10:
-            valid = np.ones_like(h, dtype=bool)
-
-        hue_center = circular_hue_mean(h[valid])
-        s_min = max(sat_floor, int(np.percentile(s[valid], 15)))
-        v_min = max(val_floor, int(np.percentile(v[valid], 15)))
-        out[color] = make_ranges_for_hue(hue_center, hue_margin, s_min, v_min)
-    return out
-
-
-def build_mask(hsv: np.ndarray, ranges: list[HSVRange]) -> np.ndarray:
-    acc = None
-    for r in ranges:
-        m = cv2.inRange(
-            hsv,
-            np.array(r.low, dtype=np.uint8),
-            np.array(r.high, dtype=np.uint8),
-        )
-        acc = m if acc is None else cv2.bitwise_or(acc, m)
-    if acc is None:
-        return np.zeros(hsv.shape[:2], dtype=np.uint8)
-    return acc
-
-
 def detect_in_image(img: np.ndarray, ranges_map: dict[str, list[HSVRange]], min_area: float, kernel_size: int) -> list[Detection]:
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     kernel = np.ones((kernel_size, kernel_size), np.uint8)
     detections: list[Detection] = []
+    img_h, img_w = img.shape[:2]
+    border_x = int(0.12 * img_w)
+    border_y = int(0.12 * img_h)
 
     for color, ranges in ranges_map.items():
         mask = build_mask(hsv, ranges)
@@ -127,15 +64,43 @@ def detect_in_image(img: np.ndarray, ranges_map: dict[str, list[HSVRange]], min_
             x, y, w, h = cv2.boundingRect(cnt)
             if w <= 0 or h <= 0:
                 continue
-            roi = mask[y : y + h, x : x + w]
-            ratio = float(np.count_nonzero(roi)) / float(w * h)
-            m = cv2.moments(cnt)
+            aspect = float(w) / float(h)
+            if aspect < 0.3 or aspect > 3.3:
+                continue
+            hull = cv2.convexHull(cnt)
+            hull_area = float(cv2.contourArea(hull))
+            solidity = (area / hull_area) if hull_area > 0 else 0.0
+            if solidity < 0.55:
+                continue
+            cx_val = x + w / 2.0
+            cy_val = y + h / 2.0
+            if cx_val < border_x or cx_val > img_w - border_x:
+                continue
+            if cy_val < border_y or cy_val > img_h - border_y:
+                continue
+
+            pad_x = int(0.15 * w)
+            pad_y = int(0.15 * h)
+            x1 = max(0, x - pad_x)
+            y1 = max(0, y - pad_y)
+            x2 = min(img.shape[1], x + w + pad_x)
+            y2 = min(img.shape[0], y + h + pad_y)
+            roi_crop = hsv[y1:y2, x1:x2]
+            if roi_crop.size == 0:
+                continue
+
+            roi_mask = build_mask(roi_crop, ranges)
+            denom = float(roi_crop.shape[0] * roi_crop.shape[1])
+            ratio = float(np.count_nonzero(roi_mask)) / denom if denom > 0 else 0.0
+            m = cv2.moments(roi_mask)
             if m["m00"] > 1e-6:
-                cx = float(m["m10"] / m["m00"])
-                cy = float(m["m01"] / m["m00"])
+                cx = float(x1 + (m["m10"] / m["m00"]))
+                cy = float(y1 + (m["m01"] / m["m00"]))
             else:
-                cx, cy = x + w / 2.0, y + h / 2.0
-            conf = max(0.0, min(1.0, 0.6 * ratio + 0.4 * min(1.0, area / 2500.0)))
+                cx, cy = x1 + (x2 - x1) / 2.0, y1 + (y2 - y1) / 2.0
+            solidity_score = solidity
+            size_score = min(1.0, area / 4000.0)
+            conf = max(0.0, min(1.0, 0.50 * ratio + 0.30 * solidity_score + 0.20 * size_score))
             detections.append(
                 Detection(
                     color=color,
@@ -199,9 +164,7 @@ def main() -> int:
     csv_path = os.path.join(args.out_dir, "detections.csv")
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow(
-            ["image", "color", "confidence", "cx", "cy", "x", "y", "w", "h", "area", "annotated_image"]
-        )
+        writer.writerow(["image", "color", "confidence", "cx", "cy", "x", "y", "w", "h", "area"])
         total = 0
         for path in image_paths:
             img = cv2.imread(path)
@@ -229,7 +192,6 @@ def main() -> int:
                         w,
                         h,
                         f"{det.area:.2f}",
-                        os.path.relpath(out_path, start=args.out_dir),
                     ]
                 )
     print(f"Processed {len(image_paths)} images, found {total} detections.")

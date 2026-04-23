@@ -11,6 +11,7 @@ from dataclasses import dataclass
 
 import cv2
 import numpy as np
+from color_utils import build_mask, load_color_ranges
 
 
 @dataclass
@@ -31,17 +32,11 @@ class Track:
     missed: int
 
 
-COLOR_RANGES = {
-    "orange": [((5, 120, 80), (22, 255, 255))],
-    "red": [((0, 100, 70), (10, 255, 255)), ((170, 100, 70), (179, 255, 255))],
-    "green": [((40, 70, 60), (85, 255, 255))],
-    "yellow": [((22, 130, 150), (38, 255, 255))],
-}
+COLOR_RANGES: dict[str, list[tuple[tuple[int, int, int], tuple[int, int, int]]]] = {}
 COLOR_DRAW = {
-    "orange": (0, 140, 255),
     "red": (0, 0, 255),
     "green": (0, 255, 0),
-    "yellow": (0, 255, 255),
+    "blue": (255, 100, 0),
     "unknown": (255, 255, 255),
 }
 
@@ -105,20 +100,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--track-gate-px", type=float, default=70.0)
     parser.add_argument("--max-track-missed", type=int, default=8)
     parser.add_argument("--log-dir", type=str, default="detection_logs")
-    parser.add_argument("--calib-color", type=str, default="orange", choices=list(COLOR_RANGES.keys()))
+    parser.add_argument("--calib-color", type=str, default="red", choices=["red", "green", "blue"])
     return parser.parse_args()
-
-
-def build_mask(hsv: np.ndarray, ranges: list[tuple[tuple[int, int, int], tuple[int, int, int]]]) -> np.ndarray:
-    out = None
-    for low, high in ranges:
-        mask = cv2.inRange(
-            hsv,
-            np.array(low, dtype=np.uint8),
-            np.array(high, dtype=np.uint8),
-        )
-        out = mask if out is None else cv2.bitwise_or(out, mask)
-    return out if out is not None else np.zeros(hsv.shape[:2], dtype=np.uint8)
 
 
 def find_detections(
@@ -287,7 +270,9 @@ def calibrate_sv_threshold(frame_det_bgr: np.ndarray, calib_color: str) -> None:
 
 
 def main() -> int:
+    global COLOR_RANGES
     args = parse_args()
+    COLOR_RANGES = load_color_ranges(classes_dir="captures/classes")
     os.makedirs(args.log_dir, exist_ok=True)
     csv_path = os.path.join(args.log_dir, "detections.csv")
     csv_exists = os.path.exists(csv_path)
