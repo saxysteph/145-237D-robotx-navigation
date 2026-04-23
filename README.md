@@ -2,6 +2,11 @@
 
 Repository for CSE145/237D Spring 2026 course project with RobotX: drone CV buoy/balloon detection, color classification, and navigation support tooling.
 
+Current Stage-A pipeline is standardized to exactly 3 classes:
+- `red`
+- `green` (teal/cyan physical balloon)
+- `blue`
+
 ## Environment Setup
 
 Create and activate the conda environment:
@@ -36,7 +41,8 @@ tccutil reset Camera
 
 `camera_live_feed.py` runs:
 - object-first detection (candidate blobs),
-- then HSV color classification (`red`, `green`, `yellow`, `orange`),
+- then HSV color classification (`red`, `green`, `blue`),
+- HSV ranges loaded at startup from `captures/classes` via shared `color_utils.py`,
 - ROI cropping, CLAHE, morphology, size gating, and Kalman tracking,
 - detection logging to `detection_logs/`.
 
@@ -85,8 +91,9 @@ Hotkeys:
 
 `hsv_batch_detect.py`:
 - uses reference class images in `captures/classes` (e.g., `red.png`, `green.png`, `blue.png`),
-- derives HSV ranges per class,
+- derives HSV ranges per class using shared `color_utils.py`,
 - detects on all images in `captures/`,
+- applies additional false-positive filtering (higher min area, aspect ratio, solidity, border exclusion),
 - saves outputs to `captures/hsv_results/`.
 
 Run:
@@ -98,6 +105,51 @@ python hsv_batch_detect.py
 Outputs:
 - `captures/hsv_results/detections.csv`
 - `captures/hsv_results/annotated/*.jpg`
+
+### 4) Augmentation robustness demo (presentation)
+
+`augment_test.py` runs detector on one clean capture plus 3 UAV-noise augmentations (blur, motion blur, brightness shift, glare, sensor noise), then builds a labeled 2x2 grid.
+
+Run:
+
+```bash
+python augment_test.py
+```
+
+Optional input image:
+
+```bash
+python augment_test.py captures/myframe.jpg
+```
+
+Output:
+- `captures/hsv_results/augmentation_test.jpg`
+
+### 5) Metrics summary + chart (presentation)
+
+`metrics_summary.py` reads `captures/hsv_results/detections.csv`, prints per-class metrics and summary line, and saves an OpenCV-only bar chart.
+
+Run:
+
+```bash
+python metrics_summary.py
+```
+
+Output:
+- `captures/hsv_results/metrics.png`
+
+### 6) Presentation-ready diagram
+
+`visualize_results.py` renders a single-slide style diagram (1400x900) with headline metrics and before/after comparison.
+
+Run:
+
+```bash
+python visualize_results.py
+```
+
+Output:
+- `captures/hsv_results/results_diagram.png`
 
 ## Typical Workflow
 
@@ -113,4 +165,22 @@ python camera_capture_spacebar.py --camera-index 0 --output-dir captures --prefi
 python hsv_batch_detect.py
 ```
 
-3. Inspect annotated images and `detections.csv` for threshold tuning.
+3. Generate summary metrics:
+
+```bash
+python metrics_summary.py
+```
+
+4. Generate augmentation demo panel:
+
+```bash
+python augment_test.py
+```
+
+5. Generate presentation diagram:
+
+```bash
+python visualize_results.py
+```
+
+6. Inspect `captures/hsv_results/` outputs for tuning and presentation artifacts.
