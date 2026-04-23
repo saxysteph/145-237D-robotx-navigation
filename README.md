@@ -7,6 +7,41 @@ Current Stage-A pipeline is standardized to exactly 3 classes:
 - `green` (teal/cyan physical balloon)
 - `blue`
 
+## Architecture Baselines (for comparison)
+
+Baseline captured before replacing `hsv_batch_detect.py` with object-proposal-first ROI classification:
+
+- Pipeline: color-first HSV contour detection + geometric filtering
+- Dataset: `captures/` (110 images)
+- Total detections: `868`
+- Per class:
+  - `red`: `225` (avg conf `0.702`)
+  - `green`: `415` (avg conf `0.723`)
+  - `blue`: `228` (avg conf `0.687`)
+- Overall average confidence: `0.708`
+
+First run after replacing with object-proposal-first ROI classification:
+
+- Pipeline: color-agnostic proposal stage (edges + saturation saliency) -> one ROI per proposal -> all-color HSV scoring within ROI
+- Dataset: `captures/` (110 images)
+- Total detections: `765`
+- Per class:
+  - `red`: `177` (avg conf `0.583`)
+  - `green`: `361` (avg conf `0.667`)
+  - `blue`: `227` (avg conf `0.701`)
+- Overall average confidence: `0.658`
+
+Hybrid proposals run (object-agnostic + color-mask proposals merged with NMS):
+
+- Pipeline: hybrid proposal stage (edges/saturation object proposals + legacy color-mask proposals) -> one ROI per proposal -> all-color HSV scoring within ROI
+- Dataset: `captures/` (110 images)
+- Total detections: `1067`
+- Per class:
+  - `red`: `308` (avg conf `0.589`)
+  - `green`: `485` (avg conf `0.677`)
+  - `blue`: `274` (avg conf `0.654`)
+- Overall average confidence: `0.646`
+
 ## Environment Setup
 
 Create and activate the conda environment:
