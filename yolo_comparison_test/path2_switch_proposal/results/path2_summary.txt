@@ -1,0 +1,5 @@
+=== PATH 2 SUMMARY ===
+Training: 30 epochs on 110 auto-labeled images
+Best mAP50: 0.980 (from training run)
+Inference: Images: 110 | Detections: 892 | Avg conf: 0.924
+Images with 0 detections: 0
