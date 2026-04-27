@@ -1,0 +1,229 @@
+<?xml version="1.0" ?>
+<sdf version="1.10">
+  <world name="ucsd_robotx_demo">
+    <physics name="1ms" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <scene>
+      <ambient>0.4 0.4 0.4 1.0</ambient>
+      <background>0.6 0.7 0.85 1.0</background>
+      <shadows>true</shadows>
+    </scene>
+
+    <light name="sun" type="directional">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 120 0 0 0</pose>
+      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <specular>0.4 0.4 0.4 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>0.5 -0.5 -1.0</direction>
+    </light>
+
+    <!-- Required for time stepping, scene sync, and camera rendering (Harmonic). Without these,
+         RTF stays at 0% and /drone/camera publishes no real images. -->
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics">
+    </plugin>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands">
+    </plugin>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster">
+    </plugin>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <!-- No gz-sim-waves-system: optional; many installs lack that library. -->
+
+    <model name="ocean_surface">
+      <static>true</static>
+      <pose>0 0 0 0 0 0</pose>
+      <link name="water_link">
+        <visual name="water_visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>500 500</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.0 0.1 0.3 0.85</ambient>
+            <diffuse>0.0 0.1 0.3 0.85</diffuse>
+            <specular>0.8 0.8 0.8 1.0</specular>
+            <emissive>0.0 0.0 0.02 0.0</emissive>
+          </material>
+          <transparency>0.15</transparency>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Entrance gate -->
+    <model name="entrance_green">
+      <static>true</static>
+      <pose>30 0 0.5 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>0.3</radius>
+              <length>1.2</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.0 0.6 0.0 1</ambient>
+            <diffuse>0.0 0.7 0.0 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
+            <emissive>0.0 1.0 0.0 1</emissive>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="entrance_red">
+      <static>true</static>
+      <pose>30 4 0.5 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>0.3</radius>
+              <length>1.2</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.6 0.0 0.0 1</ambient>
+            <diffuse>0.8 0.0 0.0 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
+            <emissive>1.0 0.0 0.0 1</emissive>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Navigation channel gate pairs -->
+    <model name="gate1_green">
+      <static>true</static>
+      <pose>50 0 0.5 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.3</radius><length>1.2</length></cylinder></geometry>
+          <material><ambient>0.0 0.5 0.0 1</ambient><diffuse>0.0 0.7 0.0 1</diffuse><emissive>0.0 1.0 0.0 1</emissive></material>
+        </visual>
+      </link>
+    </model>
+    <model name="gate1_red">
+      <static>true</static>
+      <pose>50 5 0.5 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.3</radius><length>1.2</length></cylinder></geometry>
+          <material><ambient>0.5 0.0 0.0 1</ambient><diffuse>0.8 0.0 0.0 1</diffuse><emissive>1.0 0.0 0.0 1</emissive></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="gate2_green">
+      <static>true</static>
+      <pose>70 -2 0.5 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.3</radius><length>1.2</length></cylinder></geometry>
+          <material><ambient>0.0 0.5 0.0 1</ambient><diffuse>0.0 0.7 0.0 1</diffuse><emissive>0.0 1.0 0.0 1</emissive></material>
+        </visual>
+      </link>
+    </model>
+    <model name="gate2_red">
+      <static>true</static>
+      <pose>70 3 0.5 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.3</radius><length>1.2</length></cylinder></geometry>
+          <material><ambient>0.5 0.0 0.0 1</ambient><diffuse>0.8 0.0 0.0 1</diffuse><emissive>1.0 0.0 0.0 1</emissive></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="gate3_green">
+      <static>true</static>
+      <pose>90 1 0.5 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.3</radius><length>1.2</length></cylinder></geometry>
+          <material><ambient>0.0 0.5 0.0 1</ambient><diffuse>0.0 0.7 0.0 1</diffuse><emissive>0.0 1.0 0.0 1</emissive></material>
+        </visual>
+      </link>
+    </model>
+    <model name="gate3_red">
+      <static>true</static>
+      <pose>90 6 0.5 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.3</radius><length>1.2</length></cylinder></geometry>
+          <material><ambient>0.5 0.0 0.0 1</ambient><diffuse>0.8 0.0 0.0 1</diffuse><emissive>1.0 0.0 0.0 1</emissive></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Scan-the-code equivalent buoy -->
+    <model name="light_buoy">
+      <static>true</static>
+      <pose>110 3 1.0 0 0 0</pose>
+      <link name="link">
+        <visual name="body">
+          <geometry>
+            <box>
+              <size>0.5 0.5 0.5</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.1 0.1 0.1 1</ambient>
+            <diffuse>0.1 0.1 0.1 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
+          </material>
+        </visual>
+        <visual name="led_face">
+          <pose>0.251 0 0 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.01 0.35 0.35</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.4 0.0 0.0 1</ambient>
+            <diffuse>0.8 0.0 0.0 1</diffuse>
+            <emissive>1.0 0.1 0.1 1</emissive>
+          </material>
+        </visual>
+      </link>
+      <light name="pulse_led" type="point">
+        <pose>0.3 0 0 0 0 0</pose>
+        <diffuse>1.0 0.0 0.0 1</diffuse>
+        <specular>0.2 0.0 0.0 1</specular>
+        <attenuation>
+          <range>30</range>
+          <constant>0.3</constant>
+          <linear>0.02</linear>
+          <quadratic>0.002</quadratic>
+        </attenuation>
+      </light>
+    </model>
+
+    <!-- Marker buoys (small dark objects) -->
+    <model name="marker_1"><static>true</static><pose>37 12 0.15 0 0 0</pose><link name="l"><visual name="v"><geometry><sphere><radius>0.15</radius></sphere></geometry><material><ambient>0.08 0.08 0.08 1</ambient><diffuse>0.1 0.1 0.1 1</diffuse></material></visual></link></model>
+    <model name="marker_2"><static>true</static><pose>45 -8 0.15 0 0 0</pose><link name="l"><visual name="v"><geometry><sphere><radius>0.15</radius></sphere></geometry><material><ambient>0.08 0.08 0.08 1</ambient><diffuse>0.1 0.1 0.1 1</diffuse></material></visual></link></model>
+    <model name="marker_3"><static>true</static><pose>58 10 0.15 0 0 0</pose><link name="l"><visual name="v"><geometry><sphere><radius>0.15</radius></sphere></geometry><material><ambient>0.08 0.08 0.08 1</ambient><diffuse>0.1 0.1 0.1 1</diffuse></material></visual></link></model>
+    <model name="marker_4"><static>true</static><pose>66 -11 0.15 0 0 0</pose><link name="l"><visual name="v"><geometry><sphere><radius>0.15</radius></sphere></geometry><material><ambient>0.08 0.08 0.08 1</ambient><diffuse>0.1 0.1 0.1 1</diffuse></material></visual></link></model>
+    <model name="marker_5"><static>true</static><pose>79 9 0.15 0 0 0</pose><link name="l"><visual name="v"><geometry><sphere><radius>0.15</radius></sphere></geometry><material><ambient>0.08 0.08 0.08 1</ambient><diffuse>0.1 0.1 0.1 1</diffuse></material></visual></link></model>
+    <model name="marker_6"><static>true</static><pose>91 -9 0.15 0 0 0</pose><link name="l"><visual name="v"><geometry><sphere><radius>0.15</radius></sphere></geometry><material><ambient>0.08 0.08 0.08 1</ambient><diffuse>0.1 0.1 0.1 1</diffuse></material></visual></link></model>
+    <model name="marker_7"><static>true</static><pose>104 11 0.15 0 0 0</pose><link name="l"><visual name="v"><geometry><sphere><radius>0.15</radius></sphere></geometry><material><ambient>0.08 0.08 0.08 1</ambient><diffuse>0.1 0.1 0.1 1</diffuse></material></visual></link></model>
+    <model name="marker_8"><static>true</static><pose>118 -6 0.15 0 0 0</pose><link name="l"><visual name="v"><geometry><sphere><radius>0.15</radius></sphere></geometry><material><ambient>0.08 0.08 0.08 1</ambient><diffuse>0.1 0.1 0.1 1</diffuse></material></visual></link></model>
+
+    <!-- WAM-V omitted: VRX uses generated/Fuel layouts for the full USV; model://wam-v is not shipped.
+         Re-add a Fuel URI or your own model if you want a surface vessel in this scene. -->
+  </world>
+</sdf>

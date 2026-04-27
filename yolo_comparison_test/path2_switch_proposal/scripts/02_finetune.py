@@ -10,6 +10,8 @@ from statistics import mean
 import cv2
 from ultralytics import YOLO
 
+from ultralytics_plot_patch import apply_plot_max_subplots
+
 
 def list_capture_images(captures_dir: str) -> list[str]:
     out: list[str] = []
@@ -41,6 +43,7 @@ def extract_map50(results_csv: str) -> float:
 
 def main() -> int:
     root = os.path.dirname(__file__)
+    apply_plot_max_subplots(4)
     repo_root = os.path.join(root, "..")
     captures_dir = os.path.join(repo_root, "captures")
 
@@ -57,7 +60,7 @@ def main() -> int:
         f.write("nc: 3\n")
         f.write("names: ['red', 'green', 'blue']\n")
 
-    train_project = os.path.join(root, "path2_training")
+    train_project = os.path.abspath(os.path.join(root, "path2_training"))
     train_name = "balloon_finetune"
     os.makedirs(train_project, exist_ok=True)
 

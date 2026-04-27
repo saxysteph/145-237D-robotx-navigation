@@ -7,6 +7,17 @@ Current Stage-A pipeline is standardized to exactly 3 classes:
 - `green` (teal/cyan physical balloon)
 - `blue`
 
+## Gazebo + VRX Simulation Stack
+
+This repo now also includes a simulation stack under `simulation/` for a Gazebo Harmonic RobotX-style ocean course with:
+- animated ocean water,
+- emissive gate buoys,
+- optional WAM-V reference vessel,
+- overhead UAV camera publishing on `/drone/camera`,
+- ROS 2 bridge config for YOLO ingestion.
+
+See `simulation/README.md` for setup and launch commands.
+
 ## Architecture Baselines (for comparison)
 
 Baseline captured before replacing `hsv_batch_detect.py` with object-proposal-first ROI classification:

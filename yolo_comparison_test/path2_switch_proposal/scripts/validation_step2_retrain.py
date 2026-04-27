@@ -7,6 +7,8 @@ import os
 
 from ultralytics import YOLO
 
+from ultralytics_plot_patch import apply_plot_max_subplots
+
 
 def extract_map50(results_csv: str) -> float:
     import csv
@@ -28,6 +30,7 @@ def extract_map50(results_csv: str) -> float:
 
 def main() -> int:
     root = os.path.dirname(__file__)
+    apply_plot_max_subplots(4)
     dataset_dir = os.path.join(root, "dataset")
     dataset_yaml_abs = os.path.join(dataset_dir, "dataset_abs.yaml")
 
@@ -38,7 +41,7 @@ def main() -> int:
         f.write("nc: 3\n")
         f.write("names: ['red', 'green', 'blue']\n")
 
-    project = os.path.join(root, "training")
+    project = os.path.abspath(os.path.join(root, "training"))
     name = "balloon_proper"
     os.makedirs(project, exist_ok=True)
 

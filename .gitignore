@@ -205,3 +205,28 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Path 2 YOLO / Ultralytics outputs (balloon project; do not commit)
+yolo_comparison_test/path2_switch_proposal/scripts/balloon_ultralytics_runs/
+yolo_comparison_test/path2_switch_proposal/scripts/path2_training/
+yolo_comparison_test/path2_switch_proposal/scripts/training/
+yolo_comparison_test/path2_switch_proposal/scripts/path2_dataset/
+yolo_comparison_test/path2_switch_proposal/scripts/dataset/
+yolo_comparison_test/path2_switch_proposal/scripts/path2_results/
+yolo_comparison_test/path2_switch_proposal/scripts/val_annotated/
+runs/detect/
+datasets/coco8/
+datasets/coco8.zip
+
+# Gazebo / simulation artifacts
+simulation/**/.gz/
+simulation/**/log/
+simulation/**/logs/
+simulation/**/state/
+simulation/**/cache/
+*.world_state
+*.state.log
+
+# Large local weights / image capture dumps
+yolo11n.pt
+yolo_comparison_test/path2_switch_proposal/captures/

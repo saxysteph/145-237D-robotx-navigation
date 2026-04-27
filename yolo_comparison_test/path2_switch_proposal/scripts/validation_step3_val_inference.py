@@ -9,6 +9,8 @@ from dataclasses import dataclass
 import cv2
 from ultralytics import YOLO
 
+from ultralytics_plot_patch import apply_plot_max_subplots
+
 
 @dataclass
 class Box:
@@ -97,6 +99,7 @@ def greedy_match(preds: list[Box], gts: list[Box], cls_filter: int | None = None
 
 def main() -> int:
     root = os.path.dirname(__file__)
+    apply_plot_max_subplots(4)
     val_img_dir = os.path.join(root, "dataset", "images", "val")
     val_lbl_dir = os.path.join(root, "dataset", "labels", "val")
     ann_dir = os.path.join(root, "val_annotated")
@@ -161,7 +164,16 @@ def main() -> int:
         cv2.imwrite(os.path.join(ann_dir, name), img)
 
     p, r, f1 = prf(total_tp, total_fp, total_fn)
-    map_metrics = model.val(data=dataset_yaml_abs, split="val", verbose=False)
+    ultralytics_val_dir = os.path.abspath(os.path.join(root, "balloon_ultralytics_runs"))
+    map_metrics = model.val(
+        data=dataset_yaml_abs,
+        split="val",
+        verbose=False,
+        batch=4,
+        project=ultralytics_val_dir,
+        name="val",
+        exist_ok=True,
+    )
     map50 = float(map_metrics.box.map50)
 
     by_name = {0: "red", 1: "green", 2: "blue"}
@@ -198,7 +210,7 @@ def main() -> int:
     out_txt = os.path.join(root, "honest_results.txt")
     with open(out_txt, "w", encoding="utf-8") as f:
         f.write(text)
-    return 0
+    return 0 
 
 
 if __name__ == "__main__":

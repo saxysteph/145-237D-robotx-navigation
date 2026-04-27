@@ -10,8 +10,8 @@ import shutil
 
 def main() -> int:
     root = os.path.dirname(__file__)
-    src_images = os.path.join(root, "..", "path2_dataset", "images")
-    src_labels = os.path.join(root, "..", "path2_dataset", "labels")
+    src_images = os.path.join(root, "path2_dataset", "images")
+    src_labels = os.path.join(root, "path2_dataset", "labels")
 
     dst_root = os.path.join(root, "dataset")
     train_img = os.path.join(dst_root, "images", "train")
