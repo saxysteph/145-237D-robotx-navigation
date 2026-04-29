@@ -1,0 +1,488 @@
+[
+  {
+    "id": 1,
+    "name": "robotx_dr_001_clear_blue_mild_ocean_baseline",
+    "glare": "clear_blue_mild",
+    "wave": "ocean",
+    "layout": "baseline",
+    "seed": 55,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_001_clear_blue_mild_ocean_baseline.sdf"
+  },
+  {
+    "id": 2,
+    "name": "robotx_dr_002_clear_blue_mild_ocean_offset",
+    "glare": "clear_blue_mild",
+    "wave": "ocean",
+    "layout": "offset",
+    "seed": 68,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_002_clear_blue_mild_ocean_offset.sdf"
+  },
+  {
+    "id": 3,
+    "name": "robotx_dr_003_clear_blue_mild_ocean_wide_lane",
+    "glare": "clear_blue_mild",
+    "wave": "ocean",
+    "layout": "wide_lane",
+    "seed": 81,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_003_clear_blue_mild_ocean_wide_lane.sdf"
+  },
+  {
+    "id": 4,
+    "name": "robotx_dr_004_clear_blue_mild_regular_baseline",
+    "glare": "clear_blue_mild",
+    "wave": "regular",
+    "layout": "baseline",
+    "seed": 94,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_004_clear_blue_mild_regular_baseline.sdf"
+  },
+  {
+    "id": 5,
+    "name": "robotx_dr_005_clear_blue_mild_regular_offset",
+    "glare": "clear_blue_mild",
+    "wave": "regular",
+    "layout": "offset",
+    "seed": 107,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_005_clear_blue_mild_regular_offset.sdf"
+  },
+  {
+    "id": 6,
+    "name": "robotx_dr_006_clear_blue_mild_regular_wide_lane",
+    "glare": "clear_blue_mild",
+    "wave": "regular",
+    "layout": "wide_lane",
+    "seed": 120,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_006_clear_blue_mild_regular_wide_lane.sdf"
+  },
+  {
+    "id": 7,
+    "name": "robotx_dr_007_clear_blue_mild_trochoid_baseline",
+    "glare": "clear_blue_mild",
+    "wave": "trochoid",
+    "layout": "baseline",
+    "seed": 133,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_007_clear_blue_mild_trochoid_baseline.sdf"
+  },
+  {
+    "id": 8,
+    "name": "robotx_dr_008_clear_blue_mild_trochoid_offset",
+    "glare": "clear_blue_mild",
+    "wave": "trochoid",
+    "layout": "offset",
+    "seed": 146,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_008_clear_blue_mild_trochoid_offset.sdf"
+  },
+  {
+    "id": 9,
+    "name": "robotx_dr_009_clear_blue_mild_trochoid_wide_lane",
+    "glare": "clear_blue_mild",
+    "wave": "trochoid",
+    "layout": "wide_lane",
+    "seed": 159,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_009_clear_blue_mild_trochoid_wide_lane.sdf"
+  },
+  {
+    "id": 10,
+    "name": "robotx_dr_010_clear_blue_harsh_ocean_baseline",
+    "glare": "clear_blue_harsh",
+    "wave": "ocean",
+    "layout": "baseline",
+    "seed": 172,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_010_clear_blue_harsh_ocean_baseline.sdf"
+  },
+  {
+    "id": 11,
+    "name": "robotx_dr_011_clear_blue_harsh_ocean_offset",
+    "glare": "clear_blue_harsh",
+    "wave": "ocean",
+    "layout": "offset",
+    "seed": 185,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_011_clear_blue_harsh_ocean_offset.sdf"
+  },
+  {
+    "id": 12,
+    "name": "robotx_dr_012_clear_blue_harsh_ocean_wide_lane",
+    "glare": "clear_blue_harsh",
+    "wave": "ocean",
+    "layout": "wide_lane",
+    "seed": 198,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_012_clear_blue_harsh_ocean_wide_lane.sdf"
+  },
+  {
+    "id": 13,
+    "name": "robotx_dr_013_clear_blue_harsh_regular_baseline",
+    "glare": "clear_blue_harsh",
+    "wave": "regular",
+    "layout": "baseline",
+    "seed": 211,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_013_clear_blue_harsh_regular_baseline.sdf"
+  },
+  {
+    "id": 14,
+    "name": "robotx_dr_014_clear_blue_harsh_regular_offset",
+    "glare": "clear_blue_harsh",
+    "wave": "regular",
+    "layout": "offset",
+    "seed": 224,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_014_clear_blue_harsh_regular_offset.sdf"
+  },
+  {
+    "id": 15,
+    "name": "robotx_dr_015_clear_blue_harsh_regular_wide_lane",
+    "glare": "clear_blue_harsh",
+    "wave": "regular",
+    "layout": "wide_lane",
+    "seed": 237,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_015_clear_blue_harsh_regular_wide_lane.sdf"
+  },
+  {
+    "id": 16,
+    "name": "robotx_dr_016_clear_blue_harsh_trochoid_baseline",
+    "glare": "clear_blue_harsh",
+    "wave": "trochoid",
+    "layout": "baseline",
+    "seed": 250,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_016_clear_blue_harsh_trochoid_baseline.sdf"
+  },
+  {
+    "id": 17,
+    "name": "robotx_dr_017_clear_blue_harsh_trochoid_offset",
+    "glare": "clear_blue_harsh",
+    "wave": "trochoid",
+    "layout": "offset",
+    "seed": 263,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_017_clear_blue_harsh_trochoid_offset.sdf"
+  },
+  {
+    "id": 18,
+    "name": "robotx_dr_018_clear_blue_harsh_trochoid_wide_lane",
+    "glare": "clear_blue_harsh",
+    "wave": "trochoid",
+    "layout": "wide_lane",
+    "seed": 276,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_018_clear_blue_harsh_trochoid_wide_lane.sdf"
+  },
+  {
+    "id": 19,
+    "name": "robotx_dr_019_sunset_glint_ocean_baseline",
+    "glare": "sunset_glint",
+    "wave": "ocean",
+    "layout": "baseline",
+    "seed": 289,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_019_sunset_glint_ocean_baseline.sdf"
+  },
+  {
+    "id": 20,
+    "name": "robotx_dr_020_sunset_glint_ocean_offset",
+    "glare": "sunset_glint",
+    "wave": "ocean",
+    "layout": "offset",
+    "seed": 302,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_020_sunset_glint_ocean_offset.sdf"
+  },
+  {
+    "id": 21,
+    "name": "robotx_dr_021_sunset_glint_ocean_wide_lane",
+    "glare": "sunset_glint",
+    "wave": "ocean",
+    "layout": "wide_lane",
+    "seed": 315,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_021_sunset_glint_ocean_wide_lane.sdf"
+  },
+  {
+    "id": 22,
+    "name": "robotx_dr_022_sunset_glint_regular_baseline",
+    "glare": "sunset_glint",
+    "wave": "regular",
+    "layout": "baseline",
+    "seed": 328,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_022_sunset_glint_regular_baseline.sdf"
+  },
+  {
+    "id": 23,
+    "name": "robotx_dr_023_sunset_glint_regular_offset",
+    "glare": "sunset_glint",
+    "wave": "regular",
+    "layout": "offset",
+    "seed": 341,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_023_sunset_glint_regular_offset.sdf"
+  },
+  {
+    "id": 24,
+    "name": "robotx_dr_024_sunset_glint_regular_wide_lane",
+    "glare": "sunset_glint",
+    "wave": "regular",
+    "layout": "wide_lane",
+    "seed": 354,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_024_sunset_glint_regular_wide_lane.sdf"
+  },
+  {
+    "id": 25,
+    "name": "robotx_dr_025_sunset_glint_trochoid_baseline",
+    "glare": "sunset_glint",
+    "wave": "trochoid",
+    "layout": "baseline",
+    "seed": 367,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_025_sunset_glint_trochoid_baseline.sdf"
+  },
+  {
+    "id": 26,
+    "name": "robotx_dr_026_sunset_glint_trochoid_offset",
+    "glare": "sunset_glint",
+    "wave": "trochoid",
+    "layout": "offset",
+    "seed": 380,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_026_sunset_glint_trochoid_offset.sdf"
+  },
+  {
+    "id": 27,
+    "name": "robotx_dr_027_sunset_glint_trochoid_wide_lane",
+    "glare": "sunset_glint",
+    "wave": "trochoid",
+    "layout": "wide_lane",
+    "seed": 393,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_027_sunset_glint_trochoid_wide_lane.sdf"
+  },
+  {
+    "id": 28,
+    "name": "robotx_dr_028_greenish_murky_ocean_baseline",
+    "glare": "greenish_murky",
+    "wave": "ocean",
+    "layout": "baseline",
+    "seed": 406,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_028_greenish_murky_ocean_baseline.sdf"
+  },
+  {
+    "id": 29,
+    "name": "robotx_dr_029_greenish_murky_ocean_offset",
+    "glare": "greenish_murky",
+    "wave": "ocean",
+    "layout": "offset",
+    "seed": 419,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_029_greenish_murky_ocean_offset.sdf"
+  },
+  {
+    "id": 30,
+    "name": "robotx_dr_030_greenish_murky_ocean_wide_lane",
+    "glare": "greenish_murky",
+    "wave": "ocean",
+    "layout": "wide_lane",
+    "seed": 432,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_030_greenish_murky_ocean_wide_lane.sdf"
+  },
+  {
+    "id": 31,
+    "name": "robotx_dr_031_greenish_murky_regular_baseline",
+    "glare": "greenish_murky",
+    "wave": "regular",
+    "layout": "baseline",
+    "seed": 445,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_031_greenish_murky_regular_baseline.sdf"
+  },
+  {
+    "id": 32,
+    "name": "robotx_dr_032_greenish_murky_regular_offset",
+    "glare": "greenish_murky",
+    "wave": "regular",
+    "layout": "offset",
+    "seed": 458,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_032_greenish_murky_regular_offset.sdf"
+  },
+  {
+    "id": 33,
+    "name": "robotx_dr_033_greenish_murky_regular_wide_lane",
+    "glare": "greenish_murky",
+    "wave": "regular",
+    "layout": "wide_lane",
+    "seed": 471,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_033_greenish_murky_regular_wide_lane.sdf"
+  },
+  {
+    "id": 34,
+    "name": "robotx_dr_034_greenish_murky_trochoid_baseline",
+    "glare": "greenish_murky",
+    "wave": "trochoid",
+    "layout": "baseline",
+    "seed": 484,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_034_greenish_murky_trochoid_baseline.sdf"
+  },
+  {
+    "id": 35,
+    "name": "robotx_dr_035_greenish_murky_trochoid_offset",
+    "glare": "greenish_murky",
+    "wave": "trochoid",
+    "layout": "offset",
+    "seed": 497,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_035_greenish_murky_trochoid_offset.sdf"
+  },
+  {
+    "id": 36,
+    "name": "robotx_dr_036_greenish_murky_trochoid_wide_lane",
+    "glare": "greenish_murky",
+    "wave": "trochoid",
+    "layout": "wide_lane",
+    "seed": 510,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_036_greenish_murky_trochoid_wide_lane.sdf"
+  },
+  {
+    "id": 37,
+    "name": "robotx_dr_037_dark_overcast_ocean_baseline",
+    "glare": "dark_overcast",
+    "wave": "ocean",
+    "layout": "baseline",
+    "seed": 523,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_037_dark_overcast_ocean_baseline.sdf"
+  },
+  {
+    "id": 38,
+    "name": "robotx_dr_038_dark_overcast_ocean_offset",
+    "glare": "dark_overcast",
+    "wave": "ocean",
+    "layout": "offset",
+    "seed": 536,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_038_dark_overcast_ocean_offset.sdf"
+  },
+  {
+    "id": 39,
+    "name": "robotx_dr_039_dark_overcast_ocean_wide_lane",
+    "glare": "dark_overcast",
+    "wave": "ocean",
+    "layout": "wide_lane",
+    "seed": 549,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_039_dark_overcast_ocean_wide_lane.sdf"
+  },
+  {
+    "id": 40,
+    "name": "robotx_dr_040_dark_overcast_regular_baseline",
+    "glare": "dark_overcast",
+    "wave": "regular",
+    "layout": "baseline",
+    "seed": 562,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_040_dark_overcast_regular_baseline.sdf"
+  },
+  {
+    "id": 41,
+    "name": "robotx_dr_041_dark_overcast_regular_offset",
+    "glare": "dark_overcast",
+    "wave": "regular",
+    "layout": "offset",
+    "seed": 575,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_041_dark_overcast_regular_offset.sdf"
+  },
+  {
+    "id": 42,
+    "name": "robotx_dr_042_dark_overcast_regular_wide_lane",
+    "glare": "dark_overcast",
+    "wave": "regular",
+    "layout": "wide_lane",
+    "seed": 588,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_042_dark_overcast_regular_wide_lane.sdf"
+  },
+  {
+    "id": 43,
+    "name": "robotx_dr_043_dark_overcast_trochoid_baseline",
+    "glare": "dark_overcast",
+    "wave": "trochoid",
+    "layout": "baseline",
+    "seed": 601,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_043_dark_overcast_trochoid_baseline.sdf"
+  },
+  {
+    "id": 44,
+    "name": "robotx_dr_044_dark_overcast_trochoid_offset",
+    "glare": "dark_overcast",
+    "wave": "trochoid",
+    "layout": "offset",
+    "seed": 614,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_044_dark_overcast_trochoid_offset.sdf"
+  },
+  {
+    "id": 45,
+    "name": "robotx_dr_045_dark_overcast_trochoid_wide_lane",
+    "glare": "dark_overcast",
+    "wave": "trochoid",
+    "layout": "wide_lane",
+    "seed": 627,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_045_dark_overcast_trochoid_wide_lane.sdf"
+  },
+  {
+    "id": 46,
+    "name": "robotx_dr_046_silt_haze_ocean_baseline",
+    "glare": "silt_haze",
+    "wave": "ocean",
+    "layout": "baseline",
+    "seed": 640,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_046_silt_haze_ocean_baseline.sdf"
+  },
+  {
+    "id": 47,
+    "name": "robotx_dr_047_silt_haze_ocean_offset",
+    "glare": "silt_haze",
+    "wave": "ocean",
+    "layout": "offset",
+    "seed": 653,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_047_silt_haze_ocean_offset.sdf"
+  },
+  {
+    "id": 48,
+    "name": "robotx_dr_048_silt_haze_ocean_wide_lane",
+    "glare": "silt_haze",
+    "wave": "ocean",
+    "layout": "wide_lane",
+    "seed": 666,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_048_silt_haze_ocean_wide_lane.sdf"
+  },
+  {
+    "id": 49,
+    "name": "robotx_dr_049_silt_haze_regular_baseline",
+    "glare": "silt_haze",
+    "wave": "regular",
+    "layout": "baseline",
+    "seed": 679,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_049_silt_haze_regular_baseline.sdf"
+  },
+  {
+    "id": 50,
+    "name": "robotx_dr_050_silt_haze_regular_offset",
+    "glare": "silt_haze",
+    "wave": "regular",
+    "layout": "offset",
+    "seed": 692,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_050_silt_haze_regular_offset.sdf"
+  },
+  {
+    "id": 51,
+    "name": "robotx_dr_051_silt_haze_regular_wide_lane",
+    "glare": "silt_haze",
+    "wave": "regular",
+    "layout": "wide_lane",
+    "seed": 705,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_051_silt_haze_regular_wide_lane.sdf"
+  },
+  {
+    "id": 52,
+    "name": "robotx_dr_052_silt_haze_trochoid_baseline",
+    "glare": "silt_haze",
+    "wave": "trochoid",
+    "layout": "baseline",
+    "seed": 718,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_052_silt_haze_trochoid_baseline.sdf"
+  },
+  {
+    "id": 53,
+    "name": "robotx_dr_053_silt_haze_trochoid_offset",
+    "glare": "silt_haze",
+    "wave": "trochoid",
+    "layout": "offset",
+    "seed": 731,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_053_silt_haze_trochoid_offset.sdf"
+  },
+  {
+    "id": 54,
+    "name": "robotx_dr_054_silt_haze_trochoid_wide_lane",
+    "glare": "silt_haze",
+    "wave": "trochoid",
+    "layout": "wide_lane",
+    "seed": 744,
+    "world_path": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_054_silt_haze_trochoid_wide_lane.sdf"
+  }
+]

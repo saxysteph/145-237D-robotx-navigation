@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<sdf version="1.10">
+  <model name="robotx_buoy_black">
+    <static>true</static>
+    <pose>0 0 0 0 0 0</pose>
+    <link name="body_link">
+      <collision name="body_collision">
+        <pose>0 0 0.52 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.26</radius>
+            <length>1.04</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name="body_visual">
+        <pose>0 0 0.52 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.26</radius>
+            <length>1.04</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.05 0.05 0.05 1</ambient>
+          <diffuse>0.08 0.08 0.08 1</diffuse>
+          <specular>0.08 0.08 0.08 1</specular>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

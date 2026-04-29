@@ -9,14 +9,14 @@ Current Stage-A pipeline is standardized to exactly 3 classes:
 
 ## Gazebo + VRX Simulation Stack
 
-This repo now also includes a simulation stack under `simulation/` for a Gazebo Harmonic RobotX-style ocean course with:
+This repo also includes a simulation stack under `gazebo/` for a Gazebo Harmonic RobotX-style ocean course with:
 - animated ocean water,
 - emissive gate buoys,
 - optional WAM-V reference vessel,
 - overhead UAV camera publishing on `/drone/camera`,
 - ROS 2 bridge config for YOLO ingestion.
 
-See `simulation/README.md` for setup and launch commands.
+See `gazebo/README.md` for environment setup, plugin paths, and macOS server/GUI launch commands.
 
 ## Architecture Baselines (for comparison)
 
