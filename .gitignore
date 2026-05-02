@@ -230,3 +230,7 @@ simulation/**/cache/
 # Large local weights / image capture dumps
 yolo11n.pt
 yolo_comparison_test/path2_switch_proposal/captures/
+
+# ROI+HSV pipeline local runs (symlinked datasets, test_eval, MP4s; keep out of git)
+yolo_comparison_test/path2_switch_proposal/scripts/roi_hsv_pipeline*/
+yolo_comparison_test/path2_switch_proposal/scripts/path2_video_results/
