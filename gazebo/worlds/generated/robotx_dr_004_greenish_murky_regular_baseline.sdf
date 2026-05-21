@@ -1,0 +1,466 @@
+<?xml version="1.0"?>
+<sdf version="1.10">
+  <world name="robotx_task1_uav_view">
+    <gravity>0 0 -9.81</gravity>
+
+    <physics name="physics" type="ode">
+      <max_step_size>0.002</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <scene>
+      <ambient>0.18 0.22 0.18 1.0</ambient>
+      <background>0.35 0.55 0.40 1.0</background>
+      <shadows>true</shadows>
+      <grid>false</grid>
+    </scene>
+
+    <light name="sun" type="directional">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 300 0 0 0</pose>
+      <diffuse>0.55 0.75 0.60 1.0</diffuse>
+      <specular>0.28 0.45 0.32 1.0</specular>
+      <direction>0.20 -0.06 -1.0</direction>
+      <attenuation>
+        <range>2500</range>
+        <constant>0.85</constant>
+        <linear>0.001</linear>
+        <quadratic>0.00005</quadratic>
+      </attenuation>
+    </light>
+
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <include>
+      <uri>model://regular_waves</uri>
+      <name>robotx_ocean</name>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://robotx_buoy_red_led</uri>
+      <name>safe_passage_red_1</name>
+      <pose>-3.0141 -8.1407 0.0 -0.00113 0.25246 -0.66656</pose>
+    </include>
+    <include>
+      <uri>model://robotx_buoy_green_led</uri>
+      <name>safe_passage_green_1</name>
+      <pose>-0.8175 -5.8064 0.0 0.20987 0.25693 -3.23108</pose>
+    </include>
+    <include>
+      <uri>model://robotx_buoy_red_led</uri>
+      <name>safe_passage_red_2</name>
+      <pose>8.3886 -4.9952 0.0 0.18704 0.09581 -3.07584</pose>
+    </include>
+    <include>
+      <uri>model://robotx_buoy_green_led</uri>
+      <name>safe_passage_green_2</name>
+      <pose>9.3710 -2.4923 0.0 -0.02144 0.08029 -2.35573</pose>
+    </include>
+    <include>
+      <uri>model://robotx_buoy_red_led</uri>
+      <name>safe_passage_red_3</name>
+      <pose>-2.1510 0.2046 0.0 -0.13998 -0.23679 -1.00573</pose>
+    </include>
+    <include>
+      <uri>model://robotx_buoy_green_led</uri>
+      <name>safe_passage_green_3</name>
+      <pose>-2.7681 3.3884 0.0 0.18051 -0.08439 0.07103</pose>
+    </include>
+    <include>
+      <uri>model://robotx_buoy_red_led</uri>
+      <name>safe_passage_red_4</name>
+      <pose>-6.0174 3.3166 0.0 -0.20982 0.15645 -0.39930</pose>
+    </include>
+    <include>
+      <uri>model://robotx_buoy_green_led</uri>
+      <name>safe_passage_green_4</name>
+      <pose>-2.4735 6.4362 0.0 0.27976 0.21542 -3.25659</pose>
+    </include>
+    <include>
+      <uri>model://robotx_buoy_red_led</uri>
+      <name>safe_passage_red_5</name>
+      <pose>3.4413 -10.5959 0.0 0.13747 0.12366 2.70392</pose>
+    </include>
+    <include>
+      <uri>model://robotx_buoy_green_led</uri>
+      <name>safe_passage_green_5</name>
+      <pose>3.9596 -3.5622 0.0 0.06006 -0.25704 0.75266</pose>
+    </include>
+    <include>
+      <uri>model://robotx_buoy_red_led</uri>
+      <name>safe_passage_red_6</name>
+      <pose>1.8630 2.0669 0.0 -0.21383 0.08929 -2.01832</pose>
+    </include>
+    <include>
+      <uri>model://robotx_buoy_green_led</uri>
+      <name>safe_passage_green_6</name>
+      <pose>1.0903 5.6304 0.0 0.27127 -0.07424 -0.74690</pose>
+    </include>
+    <include>
+      <uri>model://robotx_buoy_red_led</uri>
+      <name>safe_passage_red_7</name>
+      <pose>-4.5274 -5.6592 0.0 -0.26185 0.21031 1.28362</pose>
+    </include>
+    <include>
+      <uri>model://robotx_buoy_green_led</uri>
+      <name>safe_passage_green_7</name>
+      <pose>-8.2714 -0.4397 0.0 0.18032 -0.03022 1.65526</pose>
+    </include>
+
+    <!-- Domain clutter (not buoys): boxes/cylinders; static, no buoy URI substring -->
+    <model name="scene_clutter_box_000">
+      <static>true</static>
+      <pose>9.176 4.565 0.826 0 0 -2.545799</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>1.920 2.005 1.612</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.45 0.38 0.32 1.0</ambient>
+            <diffuse>0.62 0.52 0.38 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_001">
+      <static>true</static>
+      <pose>10.503 -7.996 0.447 0 0 1.241051</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>2.054 1.861 0.854</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.18 0.22 0.28 1.0</ambient>
+            <diffuse>0.28 0.34 0.42 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_002">
+      <static>true</static>
+      <pose>8.723 10.349 0.484 0 0 -2.548389</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>2.728 2.576 0.928</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.35 0.16 0.12 1.0</ambient>
+            <diffuse>0.55 0.28 0.18 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_003">
+      <static>true</static>
+      <pose>6.122 2.817 0.285 0 0 2.219840</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>1.360 1.427 0.529</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.12 0.30 0.14 1.0</ambient>
+            <diffuse>0.22 0.48 0.24 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_004">
+      <static>true</static>
+      <pose>1.032 9.672 0.403 0 0 1.119745</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>1.868 1.327 0.765</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.40 0.35 0.50 1.0</ambient>
+            <diffuse>0.55 0.50 0.68 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_005">
+      <static>true</static>
+      <pose>11.383 3.112 0.532 0 0 -1.928081</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>2.545 2.533 1.025</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.45 0.38 0.32 1.0</ambient>
+            <diffuse>0.62 0.52 0.38 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_cyl_006">
+      <static>true</static>
+      <pose>-10.894 10.667 0.594 0 0 2.585105</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <cylinder>
+              <radius>0.557</radius>
+              <length>1.087</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.18 0.22 0.28 1.0</ambient>
+            <diffuse>0.28 0.34 0.42 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_cyl_007">
+      <static>true</static>
+      <pose>-12.495 -3.970 0.891 0 0 -0.564102</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <cylinder>
+              <radius>0.510</radius>
+              <length>1.682</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.35 0.16 0.12 1.0</ambient>
+            <diffuse>0.55 0.28 0.18 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_008">
+      <static>true</static>
+      <pose>4.926 10.963 0.758 0 0 1.151665</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>0.966 2.106 1.475</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.12 0.30 0.14 1.0</ambient>
+            <diffuse>0.22 0.48 0.24 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_009">
+      <static>true</static>
+      <pose>-10.220 -6.671 0.466 0 0 1.967517</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>1.750 2.280 0.892</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.40 0.35 0.50 1.0</ambient>
+            <diffuse>0.55 0.50 0.68 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_010">
+      <static>true</static>
+      <pose>-12.289 -11.315 0.778 0 0 -0.678255</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>1.796 0.881 1.517</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.45 0.38 0.32 1.0</ambient>
+            <diffuse>0.62 0.52 0.38 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_cyl_011">
+      <static>true</static>
+      <pose>-7.818 -10.672 0.800 0 0 -1.887495</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <cylinder>
+              <radius>0.512</radius>
+              <length>1.500</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.18 0.22 0.28 1.0</ambient>
+            <diffuse>0.28 0.34 0.42 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_cyl_012">
+      <static>true</static>
+      <pose>10.785 -11.158 0.587 0 0 2.311826</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <cylinder>
+              <radius>0.506</radius>
+              <length>1.074</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.35 0.16 0.12 1.0</ambient>
+            <diffuse>0.55 0.28 0.18 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_cyl_013">
+      <static>true</static>
+      <pose>-11.253 6.933 0.560 0 0 2.761121</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <cylinder>
+              <radius>0.373</radius>
+              <length>1.021</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.12 0.30 0.14 1.0</ambient>
+            <diffuse>0.22 0.48 0.24 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_014">
+      <static>true</static>
+      <pose>-5.675 9.536 0.301 0 0 2.026558</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>1.639 2.120 0.562</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.40 0.35 0.50 1.0</ambient>
+            <diffuse>0.55 0.50 0.68 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_015">
+      <static>true</static>
+      <pose>12.056 11.935 0.646 0 0 0.173841</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>1.363 2.601 1.251</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.45 0.38 0.32 1.0</ambient>
+            <diffuse>0.62 0.52 0.38 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_016">
+      <static>true</static>
+      <pose>-1.316 -12.542 0.602 0 0 1.660919</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>1.756 1.192 1.164</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.18 0.22 0.28 1.0</ambient>
+            <diffuse>0.28 0.34 0.42 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_017">
+      <static>true</static>
+      <pose>10.826 7.693 0.254 0 0 0.439509</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>1.312 1.638 0.468</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.35 0.16 0.12 1.0</ambient>
+            <diffuse>0.55 0.28 0.18 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+    <model name="uav_dataset_camera">
+      <static>false</static>
+      <pose>0 0 26 0 0 0</pose>
+      <plugin filename="librobotx_overhead_motion_plugin.dylib" name="robotx::OverheadMotionPlugin">
+        <radius_x_m>12.59662</radius_x_m>
+        <radius_y_m>10.56166</radius_y_m>
+        <angular_speed_rad_s>0.058568</angular_speed_rad_s>
+        <phase_rad>5.959574</phase_rad>
+        <z_wobble_m>0.02978</z_wobble_m>
+        <z_wobble_hz>0.03557</z_wobble_hz>
+        <z_wobble_phase_rad>2.754847</z_wobble_phase_rad>
+      </plugin>
+      <link name="camera_link">
+        <gravity>false</gravity>
+        <sensor name="top_down_rgb" type="camera">
+          <always_on>true</always_on>
+          <update_rate>20</update_rate>
+          <pose>0 0 0 0 1.57079632679 0</pose>
+          <camera>
+            <horizontal_fov>1.05</horizontal_fov>
+            <image>
+              <width>1920</width>
+              <height>1080</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.2</near>
+              <far>600</far>
+            </clip>
+          </camera>
+          <topic>/robotx/uav/camera/image_raw</topic>
+          <visualize>true</visualize>
+        </sensor>
+      </link>
+    </model>
+  </world>
+</sdf>

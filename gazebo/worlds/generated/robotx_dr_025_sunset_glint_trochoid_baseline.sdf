@@ -45,38 +45,373 @@
     <include>
       <uri>model://robotx_buoy_red_led</uri>
       <name>safe_passage_red_1</name>
-      <pose>-8.000 2.000 0.0 0 0 0</pose>
+      <pose>5.6005 -6.9972 0.0 -0.16929 0.13487 2.30732</pose>
     </include>
     <include>
       <uri>model://robotx_buoy_green_led</uri>
       <name>safe_passage_green_1</name>
-      <pose>-8.000 -2.000 0.0 0 0 0</pose>
+      <pose>7.7962 -1.2256 0.0 -0.06214 0.14899 0.87018</pose>
     </include>
     <include>
       <uri>model://robotx_buoy_red_led</uri>
       <name>safe_passage_red_2</name>
-      <pose>8.000 3.500 0.0 0 0 0</pose>
+      <pose>-12.6485 0.2188 0.0 0.05967 -0.11824 -2.17142</pose>
     </include>
     <include>
       <uri>model://robotx_buoy_green_led</uri>
       <name>safe_passage_green_2</name>
-      <pose>8.000 -3.500 0.0 0 0 0</pose>
+      <pose>-7.1179 1.1028 0.0 -0.22296 0.13781 -1.08563</pose>
+    </include>
+    <include>
+      <uri>model://robotx_buoy_red_led</uri>
+      <name>safe_passage_red_3</name>
+      <pose>-7.7611 -5.4164 0.0 0.05213 -0.18774 -0.03267</pose>
+    </include>
+    <include>
+      <uri>model://robotx_buoy_green_led</uri>
+      <name>safe_passage_green_3</name>
+      <pose>-7.6558 -2.2388 0.0 0.26877 0.20091 2.16596</pose>
     </include>
     <include>
       <uri>model://robotx_buoy_blue_led</uri>
-      <name>start_marker_blue</name>
-      <pose>-14.000 0.000 0.0 0 0 0</pose>
+      <name>marker_blue_1</name>
+      <pose>-0.9884 0.6723 0.0 0.14483 -0.20569 2.34772</pose>
     </include>
     <include>
       <uri>model://robotx_buoy_blue_led</uri>
-      <name>end_marker_blue</name>
-      <pose>14.000 0.000 0.0 0 0 0</pose>
+      <name>marker_blue_2</name>
+      <pose>-7.0067 6.4624 0.0 -0.14705 -0.04492 -0.61679</pose>
     </include>
 
-    <model name="uav_dataset_camera">
+    <!-- Domain clutter (not buoys): boxes/cylinders; static, no buoy URI substring -->
+    <model name="scene_clutter_box_000">
       <static>true</static>
+      <pose>-2.234 6.591 0.393 0 0 -1.963778</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>0.913 2.289 0.746</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.45 0.38 0.32 1.0</ambient>
+            <diffuse>0.62 0.52 0.38 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_001">
+      <static>true</static>
+      <pose>11.358 -5.661 0.397 0 0 -2.498833</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>1.415 1.217 0.754</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.18 0.22 0.28 1.0</ambient>
+            <diffuse>0.28 0.34 0.42 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_002">
+      <static>true</static>
+      <pose>12.195 2.659 0.910 0 0 -0.221235</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>1.573 0.883 1.779</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.35 0.16 0.12 1.0</ambient>
+            <diffuse>0.55 0.28 0.18 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_cyl_003">
+      <static>true</static>
+      <pose>12.443 -11.768 0.923 0 0 1.617422</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <cylinder>
+              <radius>0.471</radius>
+              <length>1.745</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.12 0.30 0.14 1.0</ambient>
+            <diffuse>0.22 0.48 0.24 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_cyl_004">
+      <static>true</static>
+      <pose>9.179 -11.616 0.859 0 0 -0.820438</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <cylinder>
+              <radius>0.635</radius>
+              <length>1.618</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.40 0.35 0.50 1.0</ambient>
+            <diffuse>0.55 0.50 0.68 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_005">
+      <static>true</static>
+      <pose>3.429 -3.396 0.987 0 0 -2.530135</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>1.847 1.235 1.935</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.45 0.38 0.32 1.0</ambient>
+            <diffuse>0.62 0.52 0.38 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_006">
+      <static>true</static>
+      <pose>-0.142 11.087 0.906 0 0 1.748245</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>1.934 1.968 1.772</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.18 0.22 0.28 1.0</ambient>
+            <diffuse>0.28 0.34 0.42 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_007">
+      <static>true</static>
+      <pose>7.349 3.367 0.401 0 0 -1.666658</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>1.460 1.848 0.761</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.35 0.16 0.12 1.0</ambient>
+            <diffuse>0.55 0.28 0.18 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_008">
+      <static>true</static>
+      <pose>0.972 -7.322 0.982 0 0 1.164983</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>2.426 1.678 1.924</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.12 0.30 0.14 1.0</ambient>
+            <diffuse>0.22 0.48 0.24 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_009">
+      <static>true</static>
+      <pose>-10.318 9.072 0.533 0 0 2.934612</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>2.149 1.875 1.027</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.40 0.35 0.50 1.0</ambient>
+            <diffuse>0.55 0.50 0.68 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_010">
+      <static>true</static>
+      <pose>12.630 10.877 0.934 0 0 -2.201666</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>1.356 2.486 1.828</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.45 0.38 0.32 1.0</ambient>
+            <diffuse>0.62 0.52 0.38 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_cyl_011">
+      <static>true</static>
+      <pose>-4.077 -3.479 0.513 0 0 0.368016</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <cylinder>
+              <radius>0.405</radius>
+              <length>0.926</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.18 0.22 0.28 1.0</ambient>
+            <diffuse>0.28 0.34 0.42 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_cyl_012">
+      <static>true</static>
+      <pose>-7.006 -11.597 1.094 0 0 0.404822</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <cylinder>
+              <radius>0.758</radius>
+              <length>2.087</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.35 0.16 0.12 1.0</ambient>
+            <diffuse>0.55 0.28 0.18 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_013">
+      <static>true</static>
+      <pose>-10.064 12.879 0.464 0 0 -0.253756</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>1.690 1.943 0.888</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.12 0.30 0.14 1.0</ambient>
+            <diffuse>0.22 0.48 0.24 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_cyl_014">
+      <static>true</static>
+      <pose>1.819 6.617 0.717 0 0 -2.879593</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <cylinder>
+              <radius>0.518</radius>
+              <length>1.333</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.40 0.35 0.50 1.0</ambient>
+            <diffuse>0.55 0.50 0.68 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_cyl_015">
+      <static>true</static>
+      <pose>-2.642 -9.552 0.700 0 0 0.951882</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <cylinder>
+              <radius>0.545</radius>
+              <length>1.300</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.45 0.38 0.32 1.0</ambient>
+            <diffuse>0.62 0.52 0.38 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_016">
+      <static>true</static>
+      <pose>10.880 6.332 0.647 0 0 2.520090</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>1.439 1.073 1.255</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.18 0.22 0.28 1.0</ambient>
+            <diffuse>0.28 0.34 0.42 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="scene_clutter_box_017">
+      <static>true</static>
+      <pose>-11.611 -5.701 0.713 0 0 1.263573</pose>
+      <link name="link">
+        <visual name="v">
+          <geometry>
+            <box>
+              <size>1.616 0.972 1.386</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.35 0.16 0.12 1.0</ambient>
+            <diffuse>0.55 0.28 0.18 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+    <model name="uav_dataset_camera">
+      <static>false</static>
       <pose>0 0 26 0 0 0</pose>
+      <plugin filename="librobotx_overhead_motion_plugin.dylib" name="robotx::OverheadMotionPlugin">
+        <radius_x_m>8.83301</radius_x_m>
+        <radius_y_m>9.10104</radius_y_m>
+        <angular_speed_rad_s>0.075417</angular_speed_rad_s>
+        <phase_rad>5.876744</phase_rad>
+        <z_wobble_m>0.11687</z_wobble_m>
+        <z_wobble_hz>0.05077</z_wobble_hz>
+        <z_wobble_phase_rad>3.116154</z_wobble_phase_rad>
+      </plugin>
       <link name="camera_link">
+        <gravity>false</gravity>
         <sensor name="top_down_rgb" type="camera">
           <always_on>true</always_on>
           <update_rate>20</update_rate>

@@ -23,13 +23,15 @@ def generate_launch_description():
         description="Directory for saved camera frames",
     )
 
+    # Match gazebo/README.md + gz_env.sh: waves/VRX live under ~/robotx_sim_ws/src (not robotx_gz_ws).
+    wave_root = Path.home() / "robotx_sim_ws" / "src" / "asv_wave_sim" / "gz-waves-models"
     resource_path = ":".join(
         [
             str(gazebo_root / "models"),
-            str(Path.home() / "robotx_gz_ws" / "src" / "asv_wave_sim" / "gz-waves-models" / "models"),
-            str(Path.home() / "robotx_gz_ws" / "src" / "asv_wave_sim" / "gz-waves-models" / "world_models"),
-            str(Path.home() / "robotx_gz_ws" / "src" / "asv_wave_sim" / "gz-waves-models" / "worlds"),
-            str(Path.home() / "robotx_gz_ws" / "src" / "vrx" / "vrx_gz" / "models"),
+            str(wave_root / "models"),
+            str(wave_root / "world_models"),
+            str(wave_root / "worlds"),
+            str(Path.home() / "robotx_sim_ws" / "src" / "vrx" / "vrx_gz" / "models"),
         ]
     )
     set_resource_env = SetEnvironmentVariable("GZ_SIM_RESOURCE_PATH", resource_path)

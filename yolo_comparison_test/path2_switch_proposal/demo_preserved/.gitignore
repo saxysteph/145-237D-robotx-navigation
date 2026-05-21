@@ -1,0 +1,5 @@
+*
+!.gitignore
+!README.txt
+!weights/
+!weights/buoy_roi_best.pt

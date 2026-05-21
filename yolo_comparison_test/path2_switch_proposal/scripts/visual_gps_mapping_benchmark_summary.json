@@ -1,0 +1,793 @@
+{
+  "clips": {
+    "robotx_dr_012_sunset_glint_regular_wide_lane": {
+      "current_pipeline": {
+        "count": 837,
+        "mean_m": 13.861886621502817,
+        "median_m": 12.957813023019012,
+        "p95_m": 25.44761544345094,
+        "rmse_m": 15.25334850346237
+      },
+      "visual_gps_pipeline": {
+        "count": 837,
+        "mean_m": 8.067959214666685,
+        "median_m": 6.62788563628076,
+        "p95_m": 21.20103242387631,
+        "rmse_m": 9.901821289032746,
+        "transmissions": [
+          {
+            "target_id": 9,
+            "color": "green",
+            "lat": 32.88019946928326,
+            "lon": -117.23407512786164,
+            "frame": 41
+          },
+          {
+            "target_id": 34,
+            "color": "green",
+            "lat": 32.88007110621652,
+            "lon": -117.23405909649026,
+            "frame": 52
+          },
+          {
+            "target_id": 10,
+            "color": "red",
+            "lat": 32.88004666698615,
+            "lon": -117.2341556011233,
+            "frame": 78
+          },
+          {
+            "target_id": 50,
+            "color": "green",
+            "lat": 32.88009144230643,
+            "lon": -117.23416978217156,
+            "frame": 82
+          },
+          {
+            "target_id": 70,
+            "color": "red",
+            "lat": 32.88003096504255,
+            "lon": -117.23425774503488,
+            "frame": 88
+          },
+          {
+            "target_id": 24,
+            "color": "green",
+            "lat": 32.880054424341644,
+            "lon": -117.23413383113719,
+            "frame": 92
+          },
+          {
+            "target_id": 69,
+            "color": "red",
+            "lat": 32.88009520588359,
+            "lon": -117.23431559513844,
+            "frame": 93
+          },
+          {
+            "target_id": 38,
+            "color": "green",
+            "lat": 32.880086609309465,
+            "lon": -117.23410721013272,
+            "frame": 98
+          },
+          {
+            "target_id": 16,
+            "color": "red",
+            "lat": 32.87999511475854,
+            "lon": -117.23414801744302,
+            "frame": 114
+          },
+          {
+            "target_id": 66,
+            "color": "red",
+            "lat": 32.88006320863394,
+            "lon": -117.23420242218788,
+            "frame": 145
+          },
+          {
+            "target_id": 42,
+            "color": "green",
+            "lat": 32.880124040774334,
+            "lon": -117.23420286627959,
+            "frame": 149
+          },
+          {
+            "target_id": 19,
+            "color": "red",
+            "lat": 32.88002123159083,
+            "lon": -117.23419511815418,
+            "frame": 170
+          }
+        ],
+        "confirmed_targets": 12,
+        "final_heading_deg": 110.87606833393806,
+        "frame_states": [
+          {
+            "image": "0000382__uav_10000000000.jpg",
+            "heading_deg": 0.0,
+            "pitch_deg": 20.234194308842934,
+            "roll_deg": -1.0184843477131498
+          },
+          {
+            "image": "0000383__uav_10050000000.jpg",
+            "heading_deg": 359.952735961601,
+            "pitch_deg": -5.017122732583055,
+            "roll_deg": -2.005852595054156
+          },
+          {
+            "image": "0000384__uav_10100000000.jpg",
+            "heading_deg": 359.8881831243066,
+            "pitch_deg": -1.2291300300249752,
+            "roll_deg": -3.9862928436608995
+          },
+          {
+            "image": "0000385__uav_10150000000.jpg",
+            "heading_deg": 359.87646371348796,
+            "pitch_deg": -18.058508898345046,
+            "roll_deg": -2.0395860429428287
+          },
+          {
+            "image": "0000386__uav_10200000000.jpg",
+            "heading_deg": 359.84696392126455,
+            "pitch_deg": -15.905981183172665,
+            "roll_deg": 0.0
+          },
+          {
+            "image": "0000387__uav_10250000000.jpg",
+            "heading_deg": 359.8259900074562,
+            "pitch_deg": -12.479118173181806,
+            "roll_deg": -11.990372923753757
+          },
+          {
+            "image": "0000388__uav_10300000000.jpg",
+            "heading_deg": 359.8020505621539,
+            "pitch_deg": -12.782599562171603,
+            "roll_deg": -11.000937149062738
+          },
+          {
+            "image": "0000389__uav_10350000000.jpg",
+            "heading_deg": 359.774376309281,
+            "pitch_deg": -12.51671190844047,
+            "roll_deg": -11.954326526074787
+          },
+          {
+            "image": "0000390__uav_10400000000.jpg",
+            "heading_deg": 359.74221520540345,
+            "pitch_deg": -14.253622269164406,
+            "roll_deg": -8.989865340536006
+          },
+          {
+            "image": "0000391__uav_10450000000.jpg",
+            "heading_deg": 359.66380924269936,
+            "pitch_deg": -6.6980618193544625,
+            "roll_deg": -2.020622680513419
+          }
+        ]
+      },
+      "world_sdf": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_012_sunset_glint_regular_wide_lane.sdf"
+    },
+    "robotx_dr_026_clear_blue_mild_ocean_baseline": {
+      "current_pipeline": {
+        "count": 1377,
+        "mean_m": 9.179579765302133,
+        "median_m": 7.076747052573621,
+        "p95_m": 22.57960740507272,
+        "rmse_m": 11.110250767646544
+      },
+      "visual_gps_pipeline": {
+        "count": 1377,
+        "mean_m": 7.873098128729471,
+        "median_m": 5.054816372627138,
+        "p95_m": 22.95940651328935,
+        "rmse_m": 10.665789548136026,
+        "transmissions": [
+          {
+            "target_id": 5,
+            "color": "red",
+            "lat": 32.880058971543264,
+            "lon": -117.23418097499432,
+            "frame": 30
+          },
+          {
+            "target_id": 23,
+            "color": "green",
+            "lat": 32.8800546519886,
+            "lon": -117.23409961142391,
+            "frame": 36
+          },
+          {
+            "target_id": 21,
+            "color": "red",
+            "lat": 32.880041365479,
+            "lon": -117.23424238012812,
+            "frame": 36
+          },
+          {
+            "target_id": 25,
+            "color": "red",
+            "lat": 32.88010468438527,
+            "lon": -117.23406565603183,
+            "frame": 36
+          },
+          {
+            "target_id": 22,
+            "color": "red",
+            "lat": 32.88010555737123,
+            "lon": -117.23412620381643,
+            "frame": 36
+          },
+          {
+            "target_id": 24,
+            "color": "green",
+            "lat": 32.880090711774024,
+            "lon": -117.23416964832789,
+            "frame": 36
+          },
+          {
+            "target_id": 28,
+            "color": "green",
+            "lat": 32.87999613434618,
+            "lon": -117.23409873772117,
+            "frame": 38
+          },
+          {
+            "target_id": 26,
+            "color": "red",
+            "lat": 32.88000675045798,
+            "lon": -117.2342194042934,
+            "frame": 38
+          },
+          {
+            "target_id": 1,
+            "color": "red",
+            "lat": 32.87998429617985,
+            "lon": -117.23410133586225,
+            "frame": 45
+          },
+          {
+            "target_id": 29,
+            "color": "green",
+            "lat": 32.88000549969299,
+            "lon": -117.23421422231146,
+            "frame": 53
+          },
+          {
+            "target_id": 31,
+            "color": "red",
+            "lat": 32.87998284140844,
+            "lon": -117.23425169251948,
+            "frame": 111
+          },
+          {
+            "target_id": 3,
+            "color": "green",
+            "lat": 32.88000883504135,
+            "lon": -117.23416929478438,
+            "frame": 111
+          },
+          {
+            "target_id": 32,
+            "color": "green",
+            "lat": 32.879985639073176,
+            "lon": -117.23423634390035,
+            "frame": 157
+          }
+        ],
+        "confirmed_targets": 13,
+        "final_heading_deg": 260.51845230923414,
+        "frame_states": [
+          {
+            "image": "0000200__uav_10000000000.jpg",
+            "heading_deg": 0.0,
+            "pitch_deg": -2.146884810845952,
+            "roll_deg": 23.74949449286676
+          },
+          {
+            "image": "0000201__uav_10050000000.jpg",
+            "heading_deg": 0.06227550176669183,
+            "pitch_deg": 1.2473407003374661,
+            "roll_deg": 23.875280853927517
+          },
+          {
+            "image": "0000202__uav_10100000000.jpg",
+            "heading_deg": 0.11750690395263064,
+            "pitch_deg": -2.106382237436221,
+            "roll_deg": 24.341089936692512
+          },
+          {
+            "image": "0000203__uav_10150000000.jpg",
+            "heading_deg": 0.169071327989343,
+            "pitch_deg": -1.9641559808940934,
+            "roll_deg": 23.91960292007746
+          },
+          {
+            "image": "0000204__uav_10200000000.jpg",
+            "heading_deg": 0.2453435585254624,
+            "pitch_deg": 1.4038626980479587,
+            "roll_deg": 24.092019528990342
+          },
+          {
+            "image": "0000205__uav_10250000000.jpg",
+            "heading_deg": 0.31596265995159456,
+            "pitch_deg": -1.8577480927511498,
+            "roll_deg": 24.13237959458082
+          },
+          {
+            "image": "0000206__uav_10300000000.jpg",
+            "heading_deg": 0.33314785869265506,
+            "pitch_deg": -1.7458946556025376,
+            "roll_deg": 23.962488974578186
+          },
+          {
+            "image": "0000207__uav_10350000000.jpg",
+            "heading_deg": 0.3931548636196567,
+            "pitch_deg": 1.7130979710230805,
+            "roll_deg": 23.702645950966243
+          },
+          {
+            "image": "0000208__uav_10400000000.jpg",
+            "heading_deg": 0.39299402714993903,
+            "pitch_deg": -1.5606037726545925,
+            "roll_deg": 23.962488974578186
+          },
+          {
+            "image": "0000209__uav_1350000000.jpg",
+            "heading_deg": 265.0012972433115,
+            "pitch_deg": 21.274396238537907,
+            "roll_deg": -7.0420391737294015
+          }
+        ]
+      },
+      "world_sdf": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_026_clear_blue_mild_ocean_baseline.sdf"
+    },
+    "robotx_dr_030_greenish_murky_trochoid_wide_lane": {
+      "current_pipeline": {
+        "count": 818,
+        "mean_m": 8.4807645562326,
+        "median_m": 8.377320741618057,
+        "p95_m": 15.585555086832422,
+        "rmse_m": 9.514559397291883
+      },
+      "visual_gps_pipeline": {
+        "count": 818,
+        "mean_m": 11.051177839916313,
+        "median_m": 10.795563019111505,
+        "p95_m": 20.983559443770403,
+        "rmse_m": 12.446077380615682,
+        "transmissions": [
+          {
+            "target_id": 13,
+            "color": "red",
+            "lat": 32.88002445497227,
+            "lon": -117.23428767474846,
+            "frame": 30
+          },
+          {
+            "target_id": 16,
+            "color": "green",
+            "lat": 32.880004100596864,
+            "lon": -117.23441354322723,
+            "frame": 34
+          },
+          {
+            "target_id": 17,
+            "color": "red",
+            "lat": 32.87999070797681,
+            "lon": -117.23434160510607,
+            "frame": 42
+          },
+          {
+            "target_id": 18,
+            "color": "green",
+            "lat": 32.879906625796295,
+            "lon": -117.23435178429256,
+            "frame": 42
+          },
+          {
+            "target_id": 28,
+            "color": "green",
+            "lat": 32.87995380356312,
+            "lon": -117.23445103588966,
+            "frame": 45
+          },
+          {
+            "target_id": 15,
+            "color": "green",
+            "lat": 32.880037422399106,
+            "lon": -117.23437990245878,
+            "frame": 48
+          },
+          {
+            "target_id": 1,
+            "color": "green",
+            "lat": 32.88008367388561,
+            "lon": -117.23435166602084,
+            "frame": 78
+          },
+          {
+            "target_id": 21,
+            "color": "green",
+            "lat": 32.88000197590856,
+            "lon": -117.23436529166347,
+            "frame": 85
+          },
+          {
+            "target_id": 50,
+            "color": "green",
+            "lat": 32.88001793382722,
+            "lon": -117.23424467333189,
+            "frame": 88
+          },
+          {
+            "target_id": 8,
+            "color": "red",
+            "lat": 32.88013557620756,
+            "lon": -117.23427979322561,
+            "frame": 103
+          },
+          {
+            "target_id": 6,
+            "color": "green",
+            "lat": 32.88013370424811,
+            "lon": -117.2344442778807,
+            "frame": 117
+          },
+          {
+            "target_id": 7,
+            "color": "green",
+            "lat": 32.880065461113894,
+            "lon": -117.23429900835379,
+            "frame": 122
+          },
+          {
+            "target_id": 10,
+            "color": "green",
+            "lat": 32.88013763454717,
+            "lon": -117.23435465150177,
+            "frame": 130
+          },
+          {
+            "target_id": 26,
+            "color": "green",
+            "lat": 32.880053362823524,
+            "lon": -117.23442473866307,
+            "frame": 131
+          },
+          {
+            "target_id": 52,
+            "color": "green",
+            "lat": 32.88001199597386,
+            "lon": -117.23429372338613,
+            "frame": 160
+          },
+          {
+            "target_id": 22,
+            "color": "red",
+            "lat": 32.880071693237134,
+            "lon": -117.23429551945398,
+            "frame": 192
+          }
+        ],
+        "confirmed_targets": 16,
+        "final_heading_deg": 335.05782815979205,
+        "frame_states": [
+          {
+            "image": "0000000__uav_10000000000.jpg",
+            "heading_deg": 0.0,
+            "pitch_deg": 20.541488476010016,
+            "roll_deg": -1.0121876139824504
+          },
+          {
+            "image": "0000001__uav_10050000000.jpg",
+            "heading_deg": 0.0012495756500925381,
+            "pitch_deg": 19.452496109719128,
+            "roll_deg": 2.014598787870572
+          },
+          {
+            "image": "0000002__uav_10100000000.jpg",
+            "heading_deg": 359.99532027747847,
+            "pitch_deg": 19.42664652011102,
+            "roll_deg": 1.9970511882358213
+          },
+          {
+            "image": "0000003__uav_10150000000.jpg",
+            "heading_deg": 359.99073886831025,
+            "pitch_deg": 21.128207096022784,
+            "roll_deg": 0.0
+          },
+          {
+            "image": "0000004__uav_10200000000.jpg",
+            "heading_deg": 359.98266920818037,
+            "pitch_deg": 12.386798730713155,
+            "roll_deg": 11.0003525275819
+          },
+          {
+            "image": "0000005__uav_10250000000.jpg",
+            "heading_deg": 0.04770080019102352,
+            "pitch_deg": -12.030068739284248,
+            "roll_deg": 7.976081812483639
+          },
+          {
+            "image": "0000006__uav_10300000000.jpg",
+            "heading_deg": 0.1882729187688028,
+            "pitch_deg": -20.423290104340538,
+            "roll_deg": 0.0
+          },
+          {
+            "image": "0000007__uav_10350000000.jpg",
+            "heading_deg": 0.1643051936692359,
+            "pitch_deg": 18.84474990416188,
+            "roll_deg": -0.9588356612495073
+          },
+          {
+            "image": "0000008__uav_10400000000.jpg",
+            "heading_deg": 0.20442725673012774,
+            "pitch_deg": -12.766773602676322,
+            "roll_deg": 10.00416135562806
+          },
+          {
+            "image": "0000009__uav_10450000000.jpg",
+            "heading_deg": 0.20812936742328247,
+            "pitch_deg": -7.802358042178629,
+            "roll_deg": 14.98683489493649
+          }
+        ]
+      },
+      "world_sdf": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_030_greenish_murky_trochoid_wide_lane.sdf"
+    },
+    "robotx_dr_044_greenish_murky_trochoid_offset": {
+      "current_pipeline": {
+        "count": 1064,
+        "mean_m": 7.341298645361465,
+        "median_m": 9.251467989701517,
+        "p95_m": 10.698378832375894,
+        "rmse_m": 8.154672295751123
+      },
+      "visual_gps_pipeline": {
+        "count": 1064,
+        "mean_m": 6.06063346641378,
+        "median_m": 5.1393605496407595,
+        "p95_m": 15.668736964381477,
+        "rmse_m": 7.416028136236421,
+        "transmissions": [
+          {
+            "target_id": 2,
+            "color": "red",
+            "lat": 32.88009603155554,
+            "lon": -117.23431769610742,
+            "frame": 22
+          },
+          {
+            "target_id": 3,
+            "color": "red",
+            "lat": 32.8801123956729,
+            "lon": -117.23438045173837,
+            "frame": 26
+          },
+          {
+            "target_id": 1,
+            "color": "red",
+            "lat": 32.88002910203123,
+            "lon": -117.23427489457431,
+            "frame": 27
+          },
+          {
+            "target_id": 4,
+            "color": "green",
+            "lat": 32.88005940095876,
+            "lon": -117.23434652858478,
+            "frame": 27
+          },
+          {
+            "target_id": 15,
+            "color": "green",
+            "lat": 32.880084099066785,
+            "lon": -117.23431897133776,
+            "frame": 44
+          },
+          {
+            "target_id": 6,
+            "color": "red",
+            "lat": 32.880249300845854,
+            "lon": -117.23431126486548,
+            "frame": 67
+          },
+          {
+            "target_id": 12,
+            "color": "green",
+            "lat": 32.88010876353519,
+            "lon": -117.23425952059478,
+            "frame": 70
+          },
+          {
+            "target_id": 20,
+            "color": "green",
+            "lat": 32.88011343049127,
+            "lon": -117.2343204217166,
+            "frame": 77
+          },
+          {
+            "target_id": 35,
+            "color": "green",
+            "lat": 32.880138102364405,
+            "lon": -117.2342301986928,
+            "frame": 82
+          },
+          {
+            "target_id": 36,
+            "color": "green",
+            "lat": 32.880107783969535,
+            "lon": -117.2342055015603,
+            "frame": 84
+          },
+          {
+            "target_id": 14,
+            "color": "red",
+            "lat": 32.88010095742316,
+            "lon": -117.23426907605631,
+            "frame": 90
+          },
+          {
+            "target_id": 44,
+            "color": "green",
+            "lat": 32.88017399042452,
+            "lon": -117.23424777577544,
+            "frame": 107
+          },
+          {
+            "target_id": 39,
+            "color": "green",
+            "lat": 32.88014528775869,
+            "lon": -117.2342972855333,
+            "frame": 116
+          },
+          {
+            "target_id": 10,
+            "color": "red",
+            "lat": 32.88013958371892,
+            "lon": -117.23423625087062,
+            "frame": 123
+          },
+          {
+            "target_id": 9,
+            "color": "red",
+            "lat": 32.88006604547796,
+            "lon": -117.23419525155755,
+            "frame": 126
+          },
+          {
+            "target_id": 16,
+            "color": "green",
+            "lat": 32.88017968994713,
+            "lon": -117.23433100316069,
+            "frame": 134
+          },
+          {
+            "target_id": 38,
+            "color": "green",
+            "lat": 32.88003018963839,
+            "lon": -117.23422728819037,
+            "frame": 138
+          },
+          {
+            "target_id": 13,
+            "color": "red",
+            "lat": 32.88003522406446,
+            "lon": -117.23423742486833,
+            "frame": 142
+          },
+          {
+            "target_id": 32,
+            "color": "green",
+            "lat": 32.880216036528275,
+            "lon": -117.23422736765428,
+            "frame": 163
+          },
+          {
+            "target_id": 27,
+            "color": "green",
+            "lat": 32.88007944987125,
+            "lon": -117.23427269491269,
+            "frame": 188
+          },
+          {
+            "target_id": 54,
+            "color": "green",
+            "lat": 32.880209032473715,
+            "lon": -117.2342762673492,
+            "frame": 189
+          },
+          {
+            "target_id": 5,
+            "color": "red",
+            "lat": 32.88018038883069,
+            "lon": -117.23427303674531,
+            "frame": 199
+          }
+        ],
+        "confirmed_targets": 22,
+        "final_heading_deg": 23.576362338840795,
+        "frame_states": [
+          {
+            "image": "0000582__uav_10000000000.jpg",
+            "heading_deg": 0.0,
+            "pitch_deg": -15.11409266141733,
+            "roll_deg": -2.958107737230958
+          },
+          {
+            "image": "0000583__uav_10050000000.jpg",
+            "heading_deg": 0.06975328459537877,
+            "pitch_deg": 19.942114332258463,
+            "roll_deg": -1.0050860052541812
+          },
+          {
+            "image": "0000584__uav_10100000000.jpg",
+            "heading_deg": 0.13030775150383533,
+            "pitch_deg": 19.467128496501793,
+            "roll_deg": 2.949958616968299
+          },
+          {
+            "image": "0000585__uav_10150000000.jpg",
+            "heading_deg": 0.18835179901327592,
+            "pitch_deg": 19.968603057448554,
+            "roll_deg": -1.026466286107728
+          },
+          {
+            "image": "0000586__uav_10200000000.jpg",
+            "heading_deg": 0.2527172902990742,
+            "pitch_deg": 19.878307565356828,
+            "roll_deg": 0.0
+          },
+          {
+            "image": "0000587__uav_10250000000.jpg",
+            "heading_deg": 0.3164157954007578,
+            "pitch_deg": -6.081775577062436,
+            "roll_deg": 15.988628668032355
+          },
+          {
+            "image": "0000588__uav_10300000000.jpg",
+            "heading_deg": 0.42701856227375856,
+            "pitch_deg": -19.479029672984883,
+            "roll_deg": -0.9776487850298482
+          },
+          {
+            "image": "0000589__uav_10350000000.jpg",
+            "heading_deg": 0.47854409934865316,
+            "pitch_deg": 20.45938901288024,
+            "roll_deg": 1.0276167864416665
+          },
+          {
+            "image": "0000590__uav_10400000000.jpg",
+            "heading_deg": 0.5475758267439232,
+            "pitch_deg": -15.358363280982426,
+            "roll_deg": 6.989654475628168
+          },
+          {
+            "image": "0000591__uav_10450000000.jpg",
+            "heading_deg": 0.5953683291804737,
+            "pitch_deg": 13.075651464524993,
+            "roll_deg": 0.0
+          }
+        ]
+      },
+      "world_sdf": "/Users/xurui/Downloads/SP26/CSE237D/145-237D-robotx-navigation/gazebo/worlds/generated/robotx_dr_044_greenish_murky_trochoid_offset.sdf"
+    }
+  },
+  "overall": {
+    "current_pipeline": {
+      "count": 4096,
+      "mean_m": 9.519308497236759,
+      "median_m": 8.831926611862137,
+      "p95_m": 22.47893702803486,
+      "rmse_m": 11.153224489094953
+    },
+    "visual_gps_pipeline": {
+      "count": 4096,
+      "mean_m": 8.076786002747145,
+      "median_m": 6.365261121968141,
+      "p95_m": 21.68389961714948,
+      "rmse_m": 10.173546132845589
+    }
+  }
+}

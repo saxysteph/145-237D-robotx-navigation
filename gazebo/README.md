@@ -143,15 +143,83 @@ Camera topic:
 
 ## 10) Launch World + Bridge + Recorder Together
 
+One shell environment for **Gazebo resource paths + ROS 2** (reads `~/robotx_sim_ws` per `gz_env.sh`; expects `/opt/ros/jazzy` or `humble` on Linux):
+
 ```bash
-source /opt/ros/jazzy/setup.bash
-source ~/robotx_sim_ws/install/setup.bash
-ros2 launch ~/robotx_sim_ws/src/robotx_custom/launch/robotx_task1_uav.launch.py
+export REPO_ROOT="/path/to/145-237D-robotx-navigation"
+source "$REPO_ROOT/gazebo/scripts/setup_robotx_sim_env.sh"
+ros2 launch "$REPO_ROOT/gazebo/launch/robotx_task1_uav.launch.py"
 ```
 
-Recorded frames are saved by default to:
+Equivalent manual sourcing:
 
-- `captures/gazebo_uav/`
+```bash
+source /opt/ros/jazzy/setup.bash
+source ~/robotx_sim_ws/install/setup.bash   # optional, if you colcon-built a workspace
+export REPO_ROOT="/path/to/145-237D-robotx-navigation"
+source "$REPO_ROOT/gazebo/scripts/gz_env.sh"
+ros2 launch "$REPO_ROOT/gazebo/launch/robotx_task1_uav.launch.py"
+```
+
+**Note:** ROS 2 is not installed via Homebrew like Gazebo; use **Ubuntu 24.04 + apt** (`ros-jazzy-ros-gz-bridge`, `ros-jazzy-gz-sim-vendor`) or build from source. On macOS, run this launch **inside Linux** (VM/container) or record on a lab machine, then copy `captures/gazebo_uav_batch/` back.
+
+### Record **without** ROS (Gazebo Transport only)
+
+If you prefer not to install ROS, run **`gz sim`** with `gz_env.sh`, then in another terminal subscribe directly to the camera topic (same string as the bridge: `/robotx/uav/camera/image_raw`, type `gz.msgs.Image`):
+
+```bash
+export REPO_ROOT="/path/to/145-237D-robotx-navigation"
+source "$REPO_ROOT/gazebo/scripts/gz_env.sh"
+# terminal A
+gz sim -r "$REPO_ROOT/gazebo/worlds/generated/<scenario>.sdf"
+
+# terminal B (Python 3.12+ recommended on macOS to match Homebrew gz Python .so)
+pip install "protobuf>=4" numpy opencv-python
+python3 "$REPO_ROOT/gazebo/scripts/record_uav_dataset_gz_transport.py" \
+  --topic /robotx/uav/camera/image_raw \
+  --out-dir captures/gazebo_uav
+```
+
+The script auto-prepends common Homebrew `Cellar/gz-transport13` and `gz-msgs10` paths. You still need **`project_buoys_to_yolo_labels.py`** afterward (same as the ROS workflow).
+
+With **`ros2 launch`** (above), recorded frames go to `captures/gazebo_uav/` by default. With **`record_uav_dataset_gz_transport.py`**, set `--out-dir` (example: `captures/gazebo_uav`).
+
+Optional pose logging (recommended for frame-by-frame GT reprojection):
+
+- `record_uav_dataset.py` now supports:
+  - `--pose-topic` (`geometry_msgs/PoseStamped`)
+  - `--odom-topic` (`nav_msgs/Odometry`)
+  - `--navsat-topic` (`sensor_msgs/NavSatFix`)
+- When any pose source is provided, a sidecar CSV is written:
+  - `captures/gazebo_uav/uav_pose_log.csv`
+  - one row per saved image with `(x,y,z,yaw)` and optional GPS.
+
+Example:
+
+```bash
+python3 gazebo/scripts/record_uav_dataset.py \
+  --topic /robotx/uav/camera/image_raw \
+  --out-dir captures/gazebo_uav \
+  --odom-topic /robotx/uav/odometry
+```
+
+Frame-by-frame moving GT overlay from simulator world coordinates (defaults to `calibration/camera_intrinsics_latest.json` for fx/fy/cx/cy; override with `--fx-px` etc.):
+
+```bash
+python3 gazebo/scripts/render_gt_in_image_from_pose.py \
+  --frames-dir captures/gazebo_uav \
+  --pose-csv captures/gazebo_uav/uav_pose_log.csv \
+  --world-sdf gazebo/worlds/generated/robotx_dr_001_clear_blue_mild_ocean_baseline.sdf \
+  --out-dir captures/gazebo_uav/gt_overlay
+```
+
+For **YOLO ROI training** (`train_roi_then_hsv.py`), generate `labels_proj/` from the same projection math + calibration:
+
+```bash
+cp /path/to/generated_scenario.sdf /your/clip/world.sdf
+python3 gazebo/scripts/project_buoys_to_yolo_labels.py --captures-root captures/gazebo_uav_batch
+```
+Each clip folder needs `uav_*.jpg`, `uav_pose_log.csv`, and `world.sdf` matching that capture (see `record_uav_clip_timed.py`, which copies the world file automatically).
 
 ## 11) Files in this Folder
 
@@ -167,8 +235,20 @@ Recorded frames are saved by default to:
   - launches Gazebo + `ros_gz_bridge` + recorder script
 - `config/bridge_robotx_uav.yaml`
   - bridge mapping from Gazebo image topic to ROS 2 image topic
+- `scripts/gz_env.sh`
+  - `GZ_SIM_RESOURCE_PATH` / plugin paths for waves + repo buoy models (source with **bash**, or set `REPO_ROOT` then source from zsh)
+- `scripts/setup_robotx_sim_env.sh`
+  - sources `gz_env.sh` + `/opt/ros/jazzy|humble` + optional `~/robotx_sim_ws/install`
 - `scripts/record_uav_dataset.py`
-  - saves bridged ROS image frames to disk for dataset generation
+  - saves bridged ROS image frames to disk and optional pose/GPS sidecar CSV
+- `scripts/record_uav_dataset_gz_transport.py`
+  - same outputs using **Gazebo Transport** only (no ROS); needs `protobuf`, OpenCV, and matching `gz-transport` / `gz-msgs` Python modules
+- `scripts/render_gt_in_image_from_pose.py`
+  - projects world-SDF buoy GT into each frame using per-frame drone pose log
+- `scripts/load_camera_intrinsics.py`
+  - shared fx/fy/cx/cy from `calibration/camera_intrinsics_latest.json`
+- `scripts/project_buoys_to_yolo_labels.py`
+  - writes `labels_proj/*.txt` for Path2 `train_roi_then_hsv.py` (same math as `render_gt_in_image_from_pose`)
 - `scripts/generate_domain_randomized_worlds.py`
   - generates many `.sdf` world variants that sweep glare, wave model, and buoy layouts
   - writes `worlds/generated/manifest.json` with scenario metadata

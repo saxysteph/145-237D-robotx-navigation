@@ -18,6 +18,10 @@ This repo also includes a simulation stack under `gazebo/` for a Gazebo Harmonic
 
 See `gazebo/README.md` for environment setup, plugin paths, and macOS server/GUI launch commands.
 
+## MAVLink buoy telemetry (ground station)
+
+Confirmed buoy GPS + color can be sent to a laptop ground station via [MAVCore](https://github.com/uci-uav-forge/mavcore). See `mavlink_comms/README.md` for local two-terminal testing (`run_ground_station.py` + `run_mock_sender.py`).
+
 ## Architecture Baselines (for comparison)
 
 Baseline captured before replacing `hsv_batch_detect.py` with object-proposal-first ROI classification:
@@ -108,6 +112,26 @@ python camera_live_feed.py \
   --target-diameter-m 0.32 \
   --det-width 960 --det-height 540
 ```
+
+GPS projection (no prior buoy map required; uses drone GPS + camera model):
+
+```bash
+python camera_live_feed.py \
+  --camera-index 0 \
+  --altitude-m 10 \
+  --fx-px 1500 --fy-px 1500 \
+  --drone-lat 32.88010 --drone-lon -117.23420 \
+  --heading-deg 35
+```
+
+`detection_logs/detections.csv` now includes:
+- `north_m`, `east_m` local offsets from camera nadir,
+- `est_lat`, `est_lon` projected buoy coordinates.
+
+Projection assumptions for this first pass:
+- flat water plane at known AGL altitude (`--altitude-m`),
+- nadir-pointing camera,
+- heading available from onboard state (`--heading-deg`).
 
 Hotkeys:
 - `q`: quit

@@ -1,3 +1,5 @@
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -138,6 +140,10 @@ celerybeat.pid
 .env
 .envrc
 .venv
+.venv-mavlink
+.venv_gz
+.venv_train
+vendor/mavcore/
 env/
 venv/
 ENV/
@@ -226,6 +232,12 @@ simulation/**/state/
 simulation/**/cache/
 *.world_state
 *.state.log
+
+# Large local archives / capture dumps (keep zips on disk only)
+archives/*
+!archives/README.md
+captures/gazebo_uav_batch/robotx_dr_*/
+yolo_comparison_test/path2_switch_proposal/scripts/roi_hsv_eval*/
 
 # Large local weights / image capture dumps
 yolo11n.pt

@@ -41,6 +41,52 @@ COLOR_DRAW = {
 }
 
 
+def meters_to_latlon(lat_deg: float, lon_deg: float, north_m: float, east_m: float) -> tuple[float, float]:
+    """Local tangent-plane EN offsets -> WGS84 lat/lon approximation."""
+    earth_r = 6378137.0
+    d_lat = (north_m / earth_r) * (180.0 / np.pi)
+    cos_lat = float(np.cos(np.deg2rad(lat_deg)))
+    cos_lat = max(1e-6, abs(cos_lat))
+    d_lon = (east_m / (earth_r * cos_lat)) * (180.0 / np.pi)
+    return lat_deg + d_lat, lon_deg + d_lon
+
+
+def project_pixel_to_ground_ned(
+    u: float,
+    v: float,
+    width: int,
+    height: int,
+    altitude_m: float,
+    fx_px: float,
+    fy_px: float,
+    cx_px: float,
+    cy_px: float,
+    heading_deg: float,
+) -> tuple[float, float]:
+    """
+    Project image pixel to local N/E offsets (meters) under nadir-camera assumption.
+    Assumptions:
+      - Camera optical axis points straight down (nadir).
+      - Ground/water surface is a flat plane at known altitude_m below camera.
+      - heading_deg is yaw clockwise from North.
+    """
+    if fx_px <= 1e-6 or fy_px <= 1e-6:
+        return 0.0, 0.0
+    if altitude_m <= 1e-6:
+        return 0.0, 0.0
+
+    # Camera-local ground offsets before heading rotation.
+    # Image center is (cx, cy), +x right, +y down.
+    east_cam = ((u - cx_px) / fx_px) * altitude_m
+    north_cam = ((cy_px - v) / fy_px) * altitude_m
+
+    yaw = np.deg2rad(heading_deg)
+    c, s = float(np.cos(yaw)), float(np.sin(yaw))
+    north = c * north_cam - s * east_cam
+    east = s * north_cam + c * east_cam
+    return north, east
+
+
 def make_kalman(init_x: float, init_y: float) -> cv2.KalmanFilter:
     kf = cv2.KalmanFilter(4, 2)
     kf.transitionMatrix = np.array(
@@ -92,7 +138,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--det-height", type=int, default=540)
     parser.add_argument("--altitude-m", type=float, default=10.0)
     parser.add_argument("--fx-px", type=float, default=1500.0)
+    parser.add_argument("--fy-px", type=float, default=0.0, help="If <= 0, fallback to --fx-px.")
+    parser.add_argument("--cx-px", type=float, default=0.0, help="If <= 0, fallback to image center.")
+    parser.add_argument("--cy-px", type=float, default=0.0, help="If <= 0, fallback to image center.")
     parser.add_argument("--target-diameter-m", type=float, default=0.32)
+    parser.add_argument("--drone-lat", type=float, default=None, help="Drone camera GPS latitude in degrees.")
+    parser.add_argument("--drone-lon", type=float, default=None, help="Drone camera GPS longitude in degrees.")
+    parser.add_argument("--heading-deg", type=float, default=0.0, help="Drone yaw clockwise from North.")
     parser.add_argument("--kernel-size", type=int, default=5)
     parser.add_argument("--roi-margin", type=float, default=0.10)
     parser.add_argument("--min-circularity", type=float, default=0.35)
@@ -302,7 +354,23 @@ def main() -> int:
         writer = csv.writer(f)
         if not csv_exists:
             writer.writerow(
-                ["timestamp", "image_path", "track_id", "color", "confidence", "cx", "cy", "x", "y", "w", "h"]
+                [
+                    "timestamp",
+                    "image_path",
+                    "track_id",
+                    "color",
+                    "confidence",
+                    "cx",
+                    "cy",
+                    "x",
+                    "y",
+                    "w",
+                    "h",
+                    "north_m",
+                    "east_m",
+                    "est_lat",
+                    "est_lon",
+                ]
             )
 
         while True:
@@ -335,10 +403,43 @@ def main() -> int:
             for det, track_id, (sx, sy) in assigned:
                 x, y, w, h = det.bbox_full
                 color_bgr = COLOR_DRAW[det.color]
+                fy_px = args.fy_px if args.fy_px > 0 else args.fx_px
+                cx_px = args.cx_px if args.cx_px > 0 else (frame_full.shape[1] * 0.5)
+                cy_px = args.cy_px if args.cy_px > 0 else (frame_full.shape[0] * 0.5)
+                north_m, east_m = project_pixel_to_ground_ned(
+                    u=float(sx),
+                    v=float(sy),
+                    width=frame_full.shape[1],
+                    height=frame_full.shape[0],
+                    altitude_m=args.altitude_m,
+                    fx_px=args.fx_px,
+                    fy_px=fy_px,
+                    cx_px=cx_px,
+                    cy_px=cy_px,
+                    heading_deg=args.heading_deg,
+                )
+                est_lat = ""
+                est_lon = ""
+                if args.drone_lat is not None and args.drone_lon is not None:
+                    est_lat_v, est_lon_v = meters_to_latlon(args.drone_lat, args.drone_lon, north_m, east_m)
+                    est_lat = f"{est_lat_v:.8f}"
+                    est_lon = f"{est_lon_v:.8f}"
+
                 cv2.rectangle(frame_out, (x, y), (x + w, y + h), color_bgr, 2)
                 cv2.circle(frame_out, (int(sx), int(sy)), 4, color_bgr, -1)
                 label = f"{det.color} t{track_id} conf={det.confidence:.2f}"
                 cv2.putText(frame_out, label, (x, max(20, y - 8)), cv2.FONT_HERSHEY_SIMPLEX, 0.55, color_bgr, 2)
+                if est_lat and est_lon:
+                    cv2.putText(
+                        frame_out,
+                        f"lat={est_lat} lon={est_lon}",
+                        (x, min(frame_out.shape[0] - 10, y + h + 18)),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.45,
+                        color_bgr,
+                        1,
+                        cv2.LINE_AA,
+                    )
                 writer.writerow(
                     [
                         f"{time.time():.3f}",
@@ -352,6 +453,10 @@ def main() -> int:
                         y,
                         w,
                         h,
+                        f"{north_m:.3f}",
+                        f"{east_m:.3f}",
+                        est_lat,
+                        est_lon,
                     ]
                 )
             f.flush()

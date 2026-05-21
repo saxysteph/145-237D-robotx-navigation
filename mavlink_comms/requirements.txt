@@ -1,0 +1,4 @@
+# MAVCore (vendored): clone with scripts/setup_mavlink_env.sh
+pymavlink>=2.4.40
+numpy>=1.24
+scipy>=1.10
