@@ -220,6 +220,8 @@ yolo_comparison_test/path2_switch_proposal/scripts/path2_dataset/
 yolo_comparison_test/path2_switch_proposal/scripts/dataset/
 yolo_comparison_test/path2_switch_proposal/scripts/path2_results/
 yolo_comparison_test/path2_switch_proposal/scripts/val_annotated/
+yolo_comparison_test/path2_switch_proposal/scripts/roboflow_dataset/
+yolo_comparison_test/path2_switch_proposal/scripts/roboflow_training/
 runs/detect/
 datasets/coco8/
 datasets/coco8.zip

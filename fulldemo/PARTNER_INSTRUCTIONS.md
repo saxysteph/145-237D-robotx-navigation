@@ -6,7 +6,9 @@ End-to-end guide for running the buoy detection pipeline: Jetson Orin Nano detec
 
 ## Hardware Setup
 
-- Jetson Orin Nano connected to laptop via **USB-C cable**
+- **Network link (choose one):**
+  - **Option A — USB-C cable:** Jetson `192.168.55.1` ↔ laptop `192.168.55.100`
+  - **Option B — Router WiFi (recommended):** Jetson and laptop both join the same router SSID (e.g. `GL-AXT1800-*`) and use their router LAN IPs (e.g. `192.168.8.x`)
 - H264 camera connected to Jetson
 - `buoy_best.onnx` present at `~/robotx-navigation/buoy_best.onnx` on the Jetson
 
@@ -46,6 +48,27 @@ sudo ifconfig enXX 192.168.55.100 netmask 255.255.255.0
 
 ---
 
+## Step 1B — Router WiFi Option (recommended)
+
+If you have a portable router, connect both laptop and Jetson to the router SSID.
+
+- **Laptop IP (router):**
+
+```bash
+ipconfig getifaddr en0
+```
+
+- **Jetson IP (router):** check on Jetson:
+
+```bash
+hostname -I
+ip -4 addr show wlan0
+```
+
+Use the laptop’s router IP as `--gcs-ip` when running detection on the Jetson.
+
+---
+
 ## Step 2 — SSH into the Jetson
 
 ```bash
@@ -61,8 +84,7 @@ Open a **new terminal** on the laptop from the repo root:
 
 ```bash
 cd ~/Downloads/SP26/CSE237D/145-237D-robotx-navigation
-source .venv-mavlink/bin/activate
-python mavlink_comms/scripts/run_ground_station.py
+bash fulldemo/run_gcs_mac.sh
 ```
 
 To save detections to a file for post-processing and visualization:
@@ -97,31 +119,17 @@ source venv/bin/activate   # if venv exists, otherwise skip
 Run the full pipeline:
 
 ```bash
-python3 camera_live_feed.py \
-  --headless \
-  --save-video \
-  --camera-index 0 \
-  --yolo-model buoy_best.onnx \
-  --gcs-ip 192.168.55.100 \
-  --drone-lat <DRONE_LAT> \
-  --drone-lon <DRONE_LON> \
-  --altitude-m <ALTITUDE_M> \
-  --heading-deg <HEADING_DEG>
+GCS_IP=<LAPTOP_IP_ON_LINK> bash fulldemo/run_detection_jetson.sh
 ```
 
 Example for benchtop testing (fake GPS):
 
 ```bash
-python3 camera_live_feed.py \
-  --headless \
-  --save-video \
-  --camera-index 0 \
-  --yolo-model buoy_best.onnx \
-  --gcs-ip 192.168.55.100 \
-  --drone-lat 32.88010 \
-  --drone-lon -117.23420 \
-  --altitude-m 10 \
-  --heading-deg 0
+# USB-C option
+GCS_IP=192.168.55.100 bash fulldemo/run_detection_jetson.sh
+
+# Router option (example laptop IP 192.168.8.184)
+GCS_IP=192.168.8.184 bash fulldemo/run_detection_jetson.sh
 ```
 
 ### What to look for

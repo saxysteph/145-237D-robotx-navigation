@@ -6,10 +6,37 @@ End-to-end guide: Jetson Orin Nano runs YOLO + HSV detection, laptop receives GP
 
 ## Prerequisites
 
-- Jetson connected to laptop via USB-C (`192.168.55.1`)
-- Laptop USB-ethernet interface assigned: `sudo ifconfig en10 192.168.55.100 netmask 255.255.255.0`
+- **Network link (choose one):**
+  - **Option A — USB-C (default):** Jetson `192.168.55.1` ↔ laptop `192.168.55.100`
+  - **Option B — WiFi router (recommended for field):** Jetson and laptop both join the same router SSID (e.g. `GL-AXT1800-*`) and use their router LAN IPs (e.g. `192.168.8.x`)
 - Jetson venv and all packages installed (see `jetson_setup.sh`)
 - `buoy_best.pt` present at `~/robotx-navigation/buoy_best.pt` on the Jetson
+
+---
+
+## Step 0 (Option A) — USB-C network (laptop ↔ Jetson)
+
+Assign the laptop’s USB ethernet IP (adjust interface name):
+
+```bash
+sudo ifconfig en10 192.168.55.100 netmask 255.255.255.0
+ping 192.168.55.1
+```
+
+---
+
+## Step 0 (Option B) — Router WiFi network (recommended)
+
+Join the same router SSID on both devices.
+
+- **On Jetson:** connect the WiFi dongle to the router SSID and note the Jetson IP (e.g. `192.168.8.136`).
+- **On laptop:** join the same SSID and note the laptop IP:
+
+```bash
+ipconfig getifaddr en0
+```
+
+For the rest of this guide, set `--gcs-ip` to the **laptop’s router IP**.
 
 ---
 
@@ -19,8 +46,7 @@ Open a terminal on your laptop from the repo root:
 
 ```bash
 cd ~/Downloads/SP26/CSE237D/145-237D-robotx-navigation
-source .venv-mavlink/bin/activate
-python mavlink_comms/scripts/run_ground_station.py
+bash fulldemo/run_gcs_mac.sh
 ```
 
 The ground station listens on UDP port `14555`. You should see:
@@ -48,49 +74,37 @@ python mavlink_comms/scripts/run_ground_station.py --output-jsonl fulldemo/detec
 SSH into the Jetson:
 
 ```bash
-ssh babydragon@192.168.55.1
+ssh babydragon@192.168.55.1   # USB-C option
+# or:
+ssh babydragon@<JETSON_ROUTER_IP>  # router WiFi option (e.g. 192.168.8.136)
 cd ~/robotx-navigation
 ```
 
 Run the full pipeline (YOLO → HSV → MAVLink transmit):
 
 ```bash
-python3 camera_live_feed.py \
-  --headless \
-  --save-video \
-  --camera-index 0 \
-  --yolo-model buoy_best.pt \
-  --gcs-ip 192.168.55.100 \
-  --drone-lat <DRONE_LAT> \
-  --drone-lon <DRONE_LON> \
-  --altitude-m <ALTITUDE_M> \
-  --heading-deg <HEADING_DEG>
+GCS_IP=<LAPTOP_IP_ON_LINK> bash fulldemo/run_detection_jetson.sh
 ```
 
 Replace the placeholders with actual values. Example for benchtop testing:
 
 ```bash
-python3 camera_live_feed.py \
-  --headless \
-  --save-video \
-  --camera-index 0 \
-  --yolo-model buoy_best.pt \
-  --gcs-ip 192.168.55.100 \
-  --drone-lat 32.88010 \
-  --drone-lon -117.23420 \
-  --altitude-m 10 \
-  --heading-deg 0
+# USB-C option (laptop IP is 192.168.55.100)
+GCS_IP=192.168.55.100 bash fulldemo/run_detection_jetson.sh
+
+# Router option (example laptop IP 192.168.8.184)
+GCS_IP=192.168.8.184 bash fulldemo/run_detection_jetson.sh
 ```
 
 **What the pipeline does:**
-1. YOLO (`buoy_best.pt`) proposes bounding boxes on each frame at det resolution (960×540)
+1. YOLO proposes bounding boxes on each frame at det resolution (960×540)
 2. HSV thresholding classifies each ROI as `red`, `green`, or `blue`
 3. Pixel coordinates are projected to GPS lat/lon (flat-earth, nadir camera model)
 4. Each confirmed detection is transmitted as a MAVLink `STATUSTEXT` to the laptop
 
 **Console output on the Jetson:**
-- `YOLO loaded: buoy_best.pt` — model ready
-- `MAVLink transmitter → udpout:192.168.55.100:14555` — link established
+- `YOLO loaded: ...` — model ready
+- `MAVLink transmitter → udpout:<LAPTOP_IP_ON_LINK>:14555` — link established
 - `[TX] t1 red lat=32.88012 lon=-117.23418` — live transmissions
 
 ---
