@@ -596,6 +596,15 @@
         <h3>Live MAVLink Pipeline — Confirmed ✓</h3>
         <p style="font-size:0.75rem; color:var(--muted); margin-top:0.3rem;">Jetson (192.168.8.x) → WiFi router → Laptop GCS</p>
       </div>
+      <!-- Actual screenshot — save as docs/pipeline_screenshot.jpg -->
+      <div class="demo-screenshot-wrap" id="screenshot-wrap">
+        <img src="pipeline_screenshot.jpg" alt="Actual terminal output: Jetson [TX] and laptop [GCS] lines live"
+             style="display:block; width:100%; border-radius:6px; border:1px solid var(--border);"
+             onerror="document.getElementById('screenshot-wrap').style.display='none'">
+        <div style="font-size:0.65rem; color:var(--muted); font-family:var(--mono); margin-top:0.4rem;">
+          pipeline_screenshot.jpg — actual terminal output, field session
+        </div>
+      </div>
       <div class="demo-terminal">
         <div class="inner">
           <span class="dim"># Jetson TX — detections transmitted</span><br>
@@ -739,6 +748,28 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="reveal" style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.25rem;">
+    <a href="https://github.com/saxysteph/145-237D-robotx-navigation/wiki/Repository-Structure"
+       target="_blank"
+       style="display:inline-flex; align-items:center; gap:0.5rem; padding:0.6rem 1.1rem;
+              background:var(--surface); border:1px solid var(--border2); border-radius:8px;
+              color:var(--accent); text-decoration:none; font-size:0.8rem; font-weight:600;
+              transition:all 0.2s;"
+       onmouseover="this.style.borderColor='var(--accent)'; this.style.background='var(--surface2)'"
+       onmouseout="this.style.borderColor='var(--border2)'; this.style.background='var(--surface)'">
+      ⊞ Full structure &amp; key file docs on Wiki ↗
+    </a>
+    <a href="https://github.com/saxysteph/145-237D-robotx-navigation/wiki/Setup-and-Replication"
+       target="_blank"
+       style="display:inline-flex; align-items:center; gap:0.5rem; padding:0.6rem 1.1rem;
+              background:var(--surface); border:1px solid var(--border2); border-radius:8px;
+              color:var(--text2); text-decoration:none; font-size:0.8rem; font-weight:600;
+              transition:all 0.2s;"
+       onmouseover="this.style.borderColor='var(--accent)'; this.style.color='var(--accent)'"
+       onmouseout="this.style.borderColor='var(--border2)'; this.style.color='var(--text2)'">
+      ▶ Setup &amp; Replication guide ↗
+    </a>
   </div>
 </section>
 
