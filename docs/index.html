@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RobotX Navigation — Aerial Intelligence Pipeline</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #21262d;
+      --border: #30363d;
+      --accent: #58a6ff;
+      --accent2: #3fb950;
+      --accent3: #f78166;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      --mono: 'Cascadia Code', 'Fira Code', 'Courier New', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,17,23,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.75rem 2rem;
+    }
+    nav .logo { font-weight: 700; font-size: 1rem; color: var(--accent); letter-spacing: 0.02em; }
+    nav ul { list-style: none; display: flex; gap: 1.5rem; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+    nav a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(88,166,255,0.12), transparent);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero .tag {
+      display: inline-block; font-size: 0.75rem; font-weight: 600;
+      color: var(--accent); background: rgba(88,166,255,0.1);
+      border: 1px solid rgba(88,166,255,0.3); border-radius: 999px;
+      padding: 0.25rem 0.85rem; margin-bottom: 1.5rem; letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .hero h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem; }
+    .hero h1 span { color: var(--accent); }
+    .hero p { font-size: 1.05rem; color: var(--muted); max-width: 640px; margin: 0 auto 2rem; }
+    .hero-btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.6rem 1.25rem; border-radius: 6px; font-size: 0.875rem; font-weight: 600;
+      text-decoration: none; transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: #000; }
+    .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+
+    /* PIPELINE */
+    .pipeline {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; flex-wrap: wrap;
+      padding: 3rem 2rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .pipeline-step {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1rem 1.25rem; text-align: center;
+      min-width: 120px;
+    }
+    .pipeline-step .icon { font-size: 1.5rem; margin-bottom: 0.25rem; }
+    .pipeline-step .label { font-size: 0.75rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
+    .pipeline-step .desc { font-size: 0.7rem; color: var(--muted); margin-top: 0.2rem; }
+    .pipeline-arrow { color: var(--muted); font-size: 1.25rem; padding: 0 0.5rem; }
+
+    /* SECTIONS */
+    section { padding: 4rem 2rem; max-width: 1000px; margin: 0 auto; }
+    h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+    h2 .accent { color: var(--accent); }
+
+    /* CARDS GRID */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.25rem;
+    }
+    .card h3 { font-size: 0.875rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .card p { font-size: 0.875rem; color: var(--muted); }
+
+    /* MILESTONES */
+    .milestones { display: flex; flex-direction: column; gap: 0.75rem; }
+    .milestone {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1rem 1.25rem;
+    }
+    .milestone .status { font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .milestone .content { flex: 1; }
+    .milestone .title { font-size: 0.875rem; font-weight: 600; }
+    .milestone .meta { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+    .badge {
+      display: inline-block; font-size: 0.65rem; font-weight: 700;
+      padding: 0.1rem 0.5rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.04em;
+      margin-left: 0.5rem;
+    }
+    .badge-necessary { background: rgba(88,166,255,0.15); color: var(--accent); border: 1px solid rgba(88,166,255,0.3); }
+    .badge-useful { background: rgba(63,185,80,0.12); color: var(--accent2); border: 1px solid rgba(63,185,80,0.3); }
+
+    /* TEAM */
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .team-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.25rem;
+    }
+    .team-card .name { font-weight: 700; margin-bottom: 0.25rem; }
+    .team-card .role { font-size: 0.8rem; color: var(--accent); margin-bottom: 0.5rem; }
+    .team-card .org { font-size: 0.75rem; color: var(--muted); }
+
+    /* CODE BLOCK */
+    .code-block {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.25rem; font-family: var(--mono);
+      font-size: 0.8rem; color: #a5d6ff; overflow-x: auto; line-height: 1.7;
+    }
+    .code-block .comment { color: var(--muted); }
+    .code-block .cmd { color: var(--accent2); }
+
+    /* LINKS SECTION */
+    .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; }
+    .link-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1rem 1.25rem;
+      text-decoration: none; color: var(--text);
+      transition: border-color 0.2s, transform 0.15s;
+      display: flex; flex-direction: column; gap: 0.25rem;
+    }
+    .link-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .link-card .link-title { font-weight: 600; font-size: 0.875rem; color: var(--accent); }
+    .link-card .link-desc { font-size: 0.75rem; color: var(--muted); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border); padding: 2rem;
+      text-align: center; color: var(--muted); font-size: 0.8rem;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">RobotX Navigation</span>
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#pipeline">Pipeline</a></li>
+    <li><a href="#milestones">Milestones</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#replicate">Replicate</a></li>
+    <li><a href="https://github.com/saxysteph/145-237D-robotx-navigation" target="_blank">GitHub ↗</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="tag">CSE 145 / CSE 237D &mdash; Spring 2026 &mdash; UC San Diego</div>
+  <h1>Aerial Intelligence &amp;<br><span>Communication Pipeline</span></h1>
+  <p>A drone autonomously detects colored buoys, calculates GPS coordinates using ray projection, and transmits a real-time buoy map to a ground station — powering UCSD's entry into Maritime RobotX 2026.</p>
+  <div class="hero-btns">
+    <a class="btn btn-primary" href="https://github.com/saxysteph/145-237D-robotx-navigation/blob/main/fulldemo/PARTNER_INSTRUCTIONS.md" target="_blank">Run the Pipeline</a>
+    <a class="btn btn-secondary" href="https://github.com/saxysteph/145-237D-robotx-navigation" target="_blank">View on GitHub</a>
+    <a class="btn btn-secondary" href="https://github.com/saxysteph/145-237D-robotx-navigation/wiki" target="_blank">Full Wiki</a>
+  </div>
+</div>
+
+<!-- PIPELINE BAR -->
+<div class="pipeline">
+  <div class="pipeline-step">
+    <div class="icon">📷</div>
+    <div class="label">H264 Camera</div>
+    <div class="desc">USB, 800×600</div>
+  </div>
+  <div class="pipeline-arrow">→</div>
+  <div class="pipeline-step">
+    <div class="icon">🔍</div>
+    <div class="label">YOLO11n</div>
+    <div class="desc">Bounding boxes</div>
+  </div>
+  <div class="pipeline-arrow">→</div>
+  <div class="pipeline-step">
+    <div class="icon">🎨</div>
+    <div class="label">HSV Thresh</div>
+    <div class="desc">R / G / B</div>
+  </div>
+  <div class="pipeline-arrow">→</div>
+  <div class="pipeline-step">
+    <div class="icon">📍</div>
+    <div class="label">Ray Projection</div>
+    <div class="desc">Pixel → GPS</div>
+  </div>
+  <div class="pipeline-arrow">→</div>
+  <div class="pipeline-step">
+    <div class="icon">📡</div>
+    <div class="label">MAVLink UDP</div>
+    <div class="desc">Port 14555</div>
+  </div>
+  <div class="pipeline-arrow">→</div>
+  <div class="pipeline-step">
+    <div class="icon">💻</div>
+    <div class="label">Ground Station</div>
+    <div class="desc">JSON + dot map</div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <h2><span class="accent">//</span> Project Overview</h2>
+  <p style="color:var(--muted); margin-bottom:1.5rem; max-width:720px;">
+    The Maritime RobotX 2026 Challenge tasks teams with fielding coordinated autonomous aerial, surface, and underwater robots. Our project delivers the <strong style="color:var(--text)">aerial perception and communication layer</strong>: the Jetson Orin Nano onboard the UAV detects colored buoys via a hybrid YOLO + HSV pipeline, projects pixel centroids to GPS coordinates using monocular ray projection, and transmits structured detections to a ground station over MAVLink UDP — all in real time.
+  </p>
+  <div class="cards">
+    <div class="card">
+      <h3>Edge Detection</h3>
+      <p>YOLO11n (ONNX) proposes bounding boxes. HSV thresholding classifies color within each ROI. Two-stage design is more robust than end-to-end classification on limited data.</p>
+    </div>
+    <div class="card">
+      <h3>GPS Mapping</h3>
+      <p>Pixel centroids are projected to GPS lat/lon using drone altitude, heading, and camera intrinsics. Flat-earth nadir model, valid for competition environment.</p>
+    </div>
+    <div class="card">
+      <h3>MAVLink Comms</h3>
+      <p>Detections transmitted as STATUSTEXT packets over UDP. Ground station decodes to JSON and logs a JSONL file for visualization and post-processing.</p>
+    </div>
+    <div class="card">
+      <h3>Visualization</h3>
+      <p>Color-coded GPS dot map rendered via matplotlib. Supports live polling mode while a session is running for real-time situational awareness.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MILESTONES -->
+<section id="milestones">
+  <h2><span class="accent">//</span> Project Milestones</h2>
+  <div class="milestones">
+    <div class="milestone">
+      <div class="status">✅</div>
+      <div class="content">
+        <div class="title">Wk 4 — System Setup <span class="badge badge-necessary">Necessary</span></div>
+        <div class="meta">Jetson Orin setup, live camera feed, basic detection running on device</div>
+      </div>
+    </div>
+    <div class="milestone">
+      <div class="status">✅</div>
+      <div class="content">
+        <div class="title">Wk 5 — MVP Demonstration <span class="badge badge-necessary">Necessary</span></div>
+        <div class="meta">Buoy color detection, GPS projection, MAVLink transmission to base station, detection visualizer. Benchmark: &gt;85% classification accuracy</div>
+      </div>
+    </div>
+    <div class="milestone">
+      <div class="status">✅</div>
+      <div class="content">
+        <div class="title">Wk 6–7 — System Optimization <span class="badge badge-useful">Useful</span></div>
+        <div class="meta">Detection accuracy tuning, HSV fallback ranges, latency stabilization</div>
+      </div>
+    </div>
+    <div class="milestone">
+      <div class="status">✅</div>
+      <div class="content">
+        <div class="title">Wk 7–9 — Data-to-Action Pipeline <span class="badge badge-useful">Useful</span></div>
+        <div class="meta">Wireless link (router/USB-C), ground station logging, coordinate visualization</div>
+      </div>
+    </div>
+    <div class="milestone">
+      <div class="status">🔄</div>
+      <div class="content">
+        <div class="title">Wk 9–10 — Integrated System Validation <span class="badge badge-useful">Useful</span></div>
+        <div class="meta">Full demo flight over buoys, field video recording, end-to-end demonstration</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <h2><span class="accent">//</span> Team</h2>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="name">Stephen Liu</div>
+      <div class="role">Perception &amp; Communication Pipeline</div>
+      <div class="org">UCSD CSE · xul052@ucsd.edu</div>
+    </div>
+    <div class="team-card">
+      <div class="name">Dhruv Choudhary</div>
+      <div class="role">Perception &amp; Communication Pipeline</div>
+      <div class="org">UCSD ECE · dchoudhary@ucsd.edu</div>
+    </div>
+    <div class="team-card">
+      <div class="name">Prof. Jack Silberman</div>
+      <div class="role">Project Advisor</div>
+      <div class="org">UC San Diego</div>
+    </div>
+    <div class="team-card">
+      <div class="name">Team Inspiration</div>
+      <div class="role">Drone Hardware &amp; Assembly</div>
+      <div class="org">Eesh Vij · Colin Szeto · Chase Chen</div>
+    </div>
+  </div>
+</section>
+
+<!-- REPLICATE -->
+<section id="replicate">
+  <h2><span class="accent">//</span> Quick Replication</h2>
+  <p style="color:var(--muted); margin-bottom:1.25rem;">Requires: Jetson Orin Nano (already configured) + laptop on same network.</p>
+  <div class="code-block">
+    <span class="comment"># Terminal 1 — laptop: start ground station</span><br>
+    <span class="cmd">cd</span> ~/Downloads/SP26/CSE237D/145-237D-robotx-navigation<br>
+    <span class="cmd">source</span> .venv-mavlink/bin/activate<br>
+    <span class="cmd">python</span> mavlink_comms/scripts/run_ground_station.py --output-jsonl fulldemo/detections.jsonl<br>
+    <br>
+    <span class="comment"># Terminal 2 — SSH into Jetson: start detection</span><br>
+    <span class="cmd">ssh</span> babydragon@192.168.55.1<br>
+    <span class="cmd">GCS_IP</span>=192.168.55.100 bash fulldemo/run_detection_jetson.sh<br>
+    <br>
+    <span class="comment"># Terminal 3 — laptop: visualize live</span><br>
+    <span class="cmd">python</span> fulldemo/visualize_detections.py fulldemo/detections.jsonl --live
+  </div>
+  <p style="color:var(--muted); font-size:0.8rem; margin-top:0.75rem;">
+    Full setup instructions (fresh Jetson): <a href="https://github.com/saxysteph/145-237D-robotx-navigation/wiki/Setup-and-Replication" style="color:var(--accent)">Wiki → Setup &amp; Replication</a>
+  </p>
+</section>
+
+<!-- LINKS -->
+<section>
+  <h2><span class="accent">//</span> Resources</h2>
+  <div class="links-grid">
+    <a class="link-card" href="https://github.com/saxysteph/145-237D-robotx-navigation" target="_blank">
+      <span class="link-title">GitHub Repository</span>
+      <span class="link-desc">Full source code, models, and detection scripts</span>
+    </a>
+    <a class="link-card" href="https://github.com/saxysteph/145-237D-robotx-navigation/wiki" target="_blank">
+      <span class="link-title">Project Wiki</span>
+      <span class="link-desc">Detailed docs: setup, architecture, team, milestones</span>
+    </a>
+    <a class="link-card" href="https://github.com/saxysteph/145-237D-robotx-navigation/blob/main/fulldemo/PARTNER_INSTRUCTIONS.md" target="_blank">
+      <span class="link-title">Run Instructions</span>
+      <span class="link-desc">Step-by-step guide for running the demo pipeline</span>
+    </a>
+    <a class="link-card" href="https://robotx.org/" target="_blank">
+      <span class="link-title">Maritime RobotX 2026</span>
+      <span class="link-desc">The international competition this project supports</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  RobotX Navigation · CSE 145 / CSE 237D · Spring 2026 · UC San Diego ·
+  <a href="https://github.com/saxysteph/145-237D-robotx-navigation">GitHub</a>
+</footer>
+
+</body>
+</html>
