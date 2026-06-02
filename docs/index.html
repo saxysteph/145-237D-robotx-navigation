@@ -4,201 +4,397 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RobotX Navigation — Aerial Intelligence Pipeline</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0d1117;
-      --surface: #161b22;
-      --surface2: #21262d;
-      --border: #30363d;
-      --accent: #58a6ff;
-      --accent2: #3fb950;
-      --accent3: #f78166;
-      --text: #e6edf3;
-      --muted: #8b949e;
-      --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      --mono: 'Cascadia Code', 'Fira Code', 'Courier New', monospace;
+      --bg: #080c10;
+      --surface: #0e1419;
+      --surface2: #161d26;
+      --surface3: #1c2632;
+      --border: #1e2d3d;
+      --border2: #263545;
+      --accent: #4d9cf8;
+      --accent-glow: rgba(77,156,248,0.18);
+      --accent2: #3dba5e;
+      --accent3: #f07060;
+      --accent4: #c778dd;
+      --text: #dde6f0;
+      --text2: #b0bec8;
+      --muted: #627585;
+      --font: 'Space Grotesk', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', 'Cascadia Code', monospace;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: var(--font); line-height: 1.65;
+      overflow-x: hidden;
+    }
 
-    /* NAV */
+    /* ─── ANIMATED BACKGROUND CANVAS ─── */
+    #bg-canvas {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0; opacity: 0.4;
+    }
+    main, nav, footer { position: relative; z-index: 1; }
+
+    /* ─── NAV ─── */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(13,17,23,0.92); backdrop-filter: blur(12px);
+      background: rgba(8,12,16,0.75); backdrop-filter: blur(20px) saturate(180%);
       border-bottom: 1px solid var(--border);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0.75rem 2rem;
+      padding: 0 2rem; height: 56px;
+      transition: background 0.3s;
     }
-    nav .logo { font-weight: 700; font-size: 1rem; color: var(--accent); letter-spacing: 0.02em; }
-    nav ul { list-style: none; display: flex; gap: 1.5rem; flex-wrap: wrap; }
-    nav a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+    nav .logo {
+      font-weight: 700; font-size: 0.95rem; letter-spacing: -0.01em;
+      background: linear-gradient(135deg, var(--accent), var(--accent4));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    nav ul { list-style: none; display: flex; gap: 1.25rem; flex-wrap: wrap; align-items: center; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.8rem; font-weight: 500; transition: color 0.2s; letter-spacing: 0.01em; }
     nav a:hover { color: var(--text); }
 
-    /* HERO */
+    /* ─── HERO ─── */
     .hero {
-      padding: 5rem 2rem 4rem;
-      text-align: center;
-      background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(88,166,255,0.12), transparent);
-      border-bottom: 1px solid var(--border);
+      min-height: 92vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 6rem 2rem 5rem; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero-orb {
+      position: absolute; border-radius: 50%; filter: blur(80px);
+      pointer-events: none; animation: drift 12s ease-in-out infinite alternate;
+    }
+    .hero-orb-1 {
+      width: 500px; height: 500px; top: -120px; left: -100px;
+      background: radial-gradient(circle, rgba(77,156,248,0.12), transparent 70%);
+      animation-duration: 14s;
+    }
+    .hero-orb-2 {
+      width: 400px; height: 400px; bottom: -80px; right: -80px;
+      background: radial-gradient(circle, rgba(199,120,221,0.1), transparent 70%);
+      animation-duration: 10s; animation-delay: -4s;
+    }
+    .hero-orb-3 {
+      width: 300px; height: 300px; top: 50%; left: 55%;
+      background: radial-gradient(circle, rgba(61,186,94,0.07), transparent 70%);
+      animation-duration: 16s; animation-delay: -8s;
+    }
+    @keyframes drift {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, 30px) scale(1.1); }
     }
     .hero .tag {
-      display: inline-block; font-size: 0.75rem; font-weight: 600;
-      color: var(--accent); background: rgba(88,166,255,0.1);
-      border: 1px solid rgba(88,166,255,0.3); border-radius: 999px;
-      padding: 0.25rem 0.85rem; margin-bottom: 1.5rem; letter-spacing: 0.05em; text-transform: uppercase;
-    }
-    .hero h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem; }
-    .hero h1 span { color: var(--accent); }
-    .hero p { font-size: 1.05rem; color: var(--muted); max-width: 640px; margin: 0 auto 2rem; }
-    .hero-btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
-    .btn {
       display: inline-flex; align-items: center; gap: 0.4rem;
-      padding: 0.6rem 1.25rem; border-radius: 6px; font-size: 0.875rem; font-weight: 600;
-      text-decoration: none; transition: opacity 0.2s, transform 0.15s;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--accent); background: rgba(77,156,248,0.08);
+      border: 1px solid rgba(77,156,248,0.25); border-radius: 999px;
+      padding: 0.3rem 1rem; margin-bottom: 2rem;
+      animation: fadeSlideUp 0.6s ease both;
     }
-    .btn:hover { opacity: 0.85; transform: translateY(-1px); }
-    .btn-primary { background: var(--accent); color: #000; }
-    .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+    .hero .tag::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse-dot 2s ease-in-out infinite; }
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)} }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 700;
+      letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 1.25rem;
+      animation: fadeSlideUp 0.6s 0.1s ease both;
+    }
+    .hero h1 .line1 { display: block; color: var(--text); }
+    .hero h1 .line2 {
+      display: block;
+      background: linear-gradient(120deg, var(--accent) 0%, var(--accent4) 60%, var(--accent2) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero p {
+      font-size: 1.05rem; color: var(--text2); max-width: 580px;
+      margin: 0 auto 2.5rem; font-weight: 400; line-height: 1.7;
+      animation: fadeSlideUp 0.6s 0.2s ease both;
+    }
+    .hero-btns {
+      display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;
+      animation: fadeSlideUp 0.6s 0.3s ease both;
+    }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      padding: 0.65rem 1.4rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600;
+      text-decoration: none; transition: all 0.2s; font-family: var(--font);
+      letter-spacing: 0.01em;
+    }
+    .btn-primary {
+      background: var(--accent); color: #050a0f;
+      box-shadow: 0 0 20px rgba(77,156,248,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 32px rgba(77,156,248,0.5); }
+    .btn-secondary {
+      background: transparent; color: var(--text2);
+      border: 1px solid var(--border2);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
 
-    /* PIPELINE */
+    /* ─── SCROLL-REVEAL ─── */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ─── PIPELINE ─── */
+    .pipeline-wrap {
+      background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 3rem 2rem; overflow-x: auto;
+    }
     .pipeline {
-      display: flex; align-items: center; justify-content: center;
-      gap: 0; flex-wrap: wrap;
-      padding: 3rem 2rem;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
+      display: flex; align-items: stretch; justify-content: center;
+      gap: 0; flex-wrap: nowrap; min-width: max-content; margin: 0 auto;
     }
     .pipeline-step {
       background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 1rem 1.25rem; text-align: center;
-      min-width: 120px;
+      border-radius: 10px; padding: 1.1rem 1.3rem; text-align: center;
+      min-width: 110px; position: relative; overflow: hidden;
+      transition: border-color 0.3s, transform 0.2s;
     }
-    .pipeline-step .icon { font-size: 1.5rem; margin-bottom: 0.25rem; }
-    .pipeline-step .label { font-size: 0.75rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
-    .pipeline-step .desc { font-size: 0.7rem; color: var(--muted); margin-top: 0.2rem; }
-    .pipeline-arrow { color: var(--muted); font-size: 1.25rem; padding: 0 0.5rem; }
+    .pipeline-step::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, var(--accent-glow), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .pipeline-step:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .pipeline-step:hover::before { opacity: 1; }
+    .pipeline-step .icon { font-size: 1.4rem; margin-bottom: 0.35rem; }
+    .pipeline-step .label { font-size: 0.7rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
+    .pipeline-step .desc { font-size: 0.65rem; color: var(--muted); margin-top: 0.2rem; font-family: var(--mono); }
+    .pipeline-arrow {
+      display: flex; align-items: center; padding: 0 0.3rem; color: var(--border2);
+      font-size: 1rem; flex-shrink: 0;
+    }
 
-    /* SECTIONS */
-    section { padding: 4rem 2rem; max-width: 1000px; margin: 0 auto; }
-    h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
-    h2 .accent { color: var(--accent); }
+    /* ─── SECTIONS ─── */
+    section { padding: 5rem 2rem; max-width: 1040px; margin: 0 auto; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.75rem;
+    }
+    .section-label::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
+    h2 {
+      font-size: 2rem; font-weight: 700; letter-spacing: -0.03em;
+      margin-bottom: 1rem; color: var(--text); line-height: 1.2;
+    }
+    .section-sub {
+      color: var(--text2); font-size: 0.95rem; max-width: 640px;
+      margin-bottom: 2.5rem; line-height: 1.7;
+    }
+    .section-divider {
+      border: none; border-top: 1px solid var(--border); margin: 0;
+    }
 
-    /* CARDS GRID */
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+    /* ─── CARDS ─── */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; }
     .card {
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: 8px; padding: 1.25rem;
+      border-radius: 12px; padding: 1.5rem; position: relative; overflow: hidden;
+      transition: border-color 0.3s, transform 0.25s;
     }
-    .card h3 { font-size: 0.875rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.04em; }
-    .card p { font-size: 0.875rem; color: var(--muted); }
+    .card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .card:hover { border-color: var(--border2); transform: translateY(-4px); }
+    .card:hover::after { opacity: 1; }
+    .card-icon { font-size: 1.6rem; margin-bottom: 0.75rem; }
+    .card h3 { font-size: 0.875rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+    .card p { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
 
-    /* MILESTONES */
-    .milestones { display: flex; flex-direction: column; gap: 0.75rem; }
+    /* ─── MILESTONES ─── */
+    .milestones { display: flex; flex-direction: column; gap: 0.65rem; }
     .milestone {
-      display: flex; align-items: flex-start; gap: 1rem;
+      display: flex; align-items: flex-start; gap: 1.25rem;
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: 8px; padding: 1rem 1.25rem;
+      border-radius: 10px; padding: 1.1rem 1.4rem;
+      transition: border-color 0.3s, background 0.3s;
     }
-    .milestone .status { font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .milestone:hover { background: var(--surface2); border-color: var(--border2); }
+    .milestone.done { border-left: 3px solid var(--accent2); }
+    .milestone.active { border-left: 3px solid var(--accent); }
+    .milestone .status { font-size: 1.1rem; flex-shrink: 0; margin-top: 0.05rem; }
     .milestone .content { flex: 1; }
-    .milestone .title { font-size: 0.875rem; font-weight: 600; }
-    .milestone .meta { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+    .milestone .title { font-size: 0.875rem; font-weight: 600; color: var(--text); }
+    .milestone .meta { font-size: 0.75rem; color: var(--muted); margin-top: 0.3rem; line-height: 1.5; }
     .badge {
-      display: inline-block; font-size: 0.65rem; font-weight: 700;
-      padding: 0.1rem 0.5rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.04em;
-      margin-left: 0.5rem;
+      display: inline-block; font-size: 0.6rem; font-weight: 700;
+      padding: 0.1rem 0.55rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.05em;
+      margin-left: 0.5rem; vertical-align: middle;
     }
-    .badge-necessary { background: rgba(88,166,255,0.15); color: var(--accent); border: 1px solid rgba(88,166,255,0.3); }
-    .badge-useful { background: rgba(63,185,80,0.12); color: var(--accent2); border: 1px solid rgba(63,185,80,0.3); }
+    .badge-necessary { background: rgba(77,156,248,0.12); color: var(--accent); border: 1px solid rgba(77,156,248,0.3); }
+    .badge-useful { background: rgba(61,186,94,0.1); color: var(--accent2); border: 1px solid rgba(61,186,94,0.3); }
 
-    /* TEAM */
-    .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-    .team-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 8px; padding: 1.25rem;
-    }
-    .team-card .name { font-weight: 700; margin-bottom: 0.25rem; }
-    .team-card .role { font-size: 0.8rem; color: var(--accent); margin-bottom: 0.5rem; }
-    .team-card .org { font-size: 0.75rem; color: var(--muted); }
-
-    /* CODE BLOCK */
-    .code-block {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 8px; padding: 1.25rem; font-family: var(--mono);
-      font-size: 0.8rem; color: #a5d6ff; overflow-x: auto; line-height: 1.7;
-    }
-    .code-block .comment { color: var(--muted); }
-    .code-block .cmd { color: var(--accent2); }
-
-    /* LINKS SECTION */
-    .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; }
-    .link-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 8px; padding: 1rem 1.25rem;
-      text-decoration: none; color: var(--text);
-      transition: border-color 0.2s, transform 0.15s;
-      display: flex; flex-direction: column; gap: 0.25rem;
-    }
-    .link-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .link-card .link-title { font-weight: 600; font-size: 0.875rem; color: var(--accent); }
-    .link-card .link-desc { font-size: 0.75rem; color: var(--muted); }
-
-    /* FILE TREE */
-    .tree { font-family: var(--mono); font-size: 0.8rem; line-height: 1.9; }
-    .tree-row { display: flex; gap: 0.75rem; align-items: baseline; }
-    .tree-row:hover { background: var(--surface2); border-radius: 4px; }
-    .tree-path { color: #a5d6ff; white-space: nowrap; }
-    .tree-path.dir { color: var(--accent); font-weight: 600; }
-    .tree-desc { color: var(--muted); font-size: 0.75rem; font-family: var(--font); }
-    .tree-indent { color: var(--border); }
-
-    /* DEMO */
+    /* ─── DEMO ─── */
     .demo-grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start;
     }
     @media (max-width: 700px) { .demo-grid { grid-template-columns: 1fr; } }
     .demo-video-wrap {
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: 10px; overflow: hidden;
+      border-radius: 12px; overflow: hidden;
+      box-shadow: 0 0 40px rgba(77,156,248,0.08);
     }
     .demo-video-wrap video { display: block; width: 100%; max-height: 340px; object-fit: cover; }
     .demo-video-label {
-      padding: 0.6rem 1rem; font-size: 0.72rem; color: var(--muted);
+      padding: 0.6rem 1rem; font-size: 0.68rem; color: var(--muted);
       border-top: 1px solid var(--border); font-family: var(--mono);
     }
     .demo-panel {
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: 10px; padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem;
+      border-radius: 12px; padding: 1.4rem; display: flex; flex-direction: column; gap: 1.1rem;
     }
-    .demo-panel h3 { font-size: 0.85rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em; }
+    .demo-panel h3 { font-size: 0.8rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
     .demo-terminal {
-      background: #010409; border: 1px solid var(--border); border-radius: 8px;
-      padding: 1rem; font-family: var(--mono); font-size: 0.72rem; line-height: 1.8;
-      color: #c9d1d9; overflow-x: auto;
+      background: #020609; border: 1px solid var(--border); border-radius: 8px;
+      padding: 1rem 1.1rem; font-family: var(--mono); font-size: 0.72rem; line-height: 1.9;
+      color: #c4cdd8; overflow-x: auto; position: relative;
     }
-    .demo-terminal .tx { color: #3fb950; }
-    .demo-terminal .rx { color: #58a6ff; }
-    .demo-terminal .dim { color: #484f58; }
-    .demo-stat { display: flex; gap: 0.5rem; align-items: center; }
-    .demo-stat .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .demo-stat .dot-green { background: #3fb950; }
-    .demo-stat .dot-blue { background: #58a6ff; }
+    .demo-terminal::before {
+      content: '● ● ●'; position: absolute; top: 0.5rem; left: 0.9rem;
+      font-size: 0.55rem; color: var(--border2); letter-spacing: 0.2em;
+    }
+    .demo-terminal .inner { margin-top: 1.2rem; }
+    .demo-terminal .tx { color: #3dba5e; }
+    .demo-terminal .rx { color: #4d9cf8; }
+    .demo-terminal .dim { color: #3a4a58; }
+    .demo-stat { display: flex; gap: 0.6rem; align-items: center; }
+    .demo-stat .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .demo-stat .dot-green { background: #3dba5e; box-shadow: 0 0 6px #3dba5e; }
+    .demo-stat .dot-blue { background: #4d9cf8; box-shadow: 0 0 6px #4d9cf8; }
     .demo-stat .dot-orange { background: #f0883e; }
-    .demo-stat span { font-size: 0.8rem; color: var(--muted); }
-    .demo-stat strong { color: var(--text); }
+    .demo-stat span { font-size: 0.78rem; color: var(--muted); }
+    .demo-stat strong { color: var(--text2); }
 
-    /* FOOTER */
+    /* ─── TEAM ─── */
+    .team-photo-wrap {
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border); margin-bottom: 2.5rem;
+      position: relative; max-height: 420px;
+    }
+    .team-photo-wrap img { display: block; width: 100%; object-fit: cover; max-height: 420px; }
+    .team-photo-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(8,12,16,0.9));
+      padding: 2rem 1.5rem 1rem;
+      font-size: 0.78rem; color: var(--text2);
+    }
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; }
+    .team-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.25rem 1.4rem;
+      transition: border-color 0.3s, transform 0.2s;
+    }
+    .team-card:hover { border-color: var(--border2); transform: translateY(-3px); }
+    .team-card .avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent4));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.85rem; color: #080c10; margin-bottom: 0.85rem;
+    }
+    .team-card .name { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.2rem; color: var(--text); }
+    .team-card .role { font-size: 0.75rem; color: var(--accent); margin-bottom: 0.4rem; font-weight: 500; }
+    .team-card .org { font-size: 0.72rem; color: var(--muted); }
+
+    /* ─── REPLICATION CODE ─── */
+    .code-block {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden; position: relative;
+    }
+    .code-block-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.65rem 1rem; border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+    }
+    .code-dots { display: flex; gap: 0.35rem; }
+    .code-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .code-dot-red { background: #f07060; }
+    .code-dot-yellow { background: #f0c060; }
+    .code-dot-green { background: #3dba5e; }
+    .code-lang { font-size: 0.65rem; color: var(--muted); font-family: var(--mono); }
+    .code-inner {
+      padding: 1.25rem 1.4rem; font-family: var(--mono);
+      font-size: 0.78rem; color: #a8c0d6; line-height: 1.8; overflow-x: auto;
+    }
+    .code-inner .comment { color: var(--muted); }
+    .code-inner .cmd { color: var(--accent2); }
+    .code-inner .arg { color: var(--accent); }
+
+    /* ─── CODEBASE TREE ─── */
+    .tree { font-family: var(--mono); font-size: 0.78rem; line-height: 2.0; }
+    .tree-row { display: flex; gap: 0.75rem; align-items: baseline; padding: 0 0.5rem; border-radius: 6px; }
+    .tree-row:hover { background: var(--surface2); }
+    .tree-path { color: #a8c0d6; white-space: nowrap; }
+    .tree-path.dir { color: var(--accent); font-weight: 600; }
+    .tree-desc { color: var(--muted); font-size: 0.7rem; font-family: var(--font); }
+    .tree-indent { color: var(--border2); }
+
+    /* ─── RESOURCES ─── */
+    .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0.75rem; }
+    .link-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.1rem 1.3rem;
+      text-decoration: none; color: var(--text);
+      transition: all 0.25s; display: flex; flex-direction: column; gap: 0.3rem;
+    }
+    .link-card:hover { border-color: var(--accent); transform: translateY(-3px); background: var(--surface2); }
+    .link-card .link-icon { font-size: 1.1rem; margin-bottom: 0.2rem; }
+    .link-card .link-title { font-weight: 600; font-size: 0.85rem; color: var(--accent); }
+    .link-card .link-desc { font-size: 0.72rem; color: var(--muted); line-height: 1.5; }
+
+    /* ─── STATS BAR ─── */
+    .stats-bar {
+      display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center;
+      padding: 2.5rem 2rem;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-size: 2rem; font-weight: 700; letter-spacing: -0.04em;
+      background: linear-gradient(135deg, var(--accent), var(--accent4));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stat-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.2rem; }
+
+    /* ─── FOOTER ─── */
     footer {
-      border-top: 1px solid var(--border); padding: 2rem;
-      text-align: center; color: var(--muted); font-size: 0.8rem;
+      border-top: 1px solid var(--border); padding: 2rem 2rem;
+      text-align: center; color: var(--muted); font-size: 0.78rem;
     }
     footer a { color: var(--accent); text-decoration: none; }
+
+    /* ─── UTILITIES ─── */
+    @media (max-width: 600px) {
+      .pipeline { justify-content: flex-start; }
+      section { padding: 3.5rem 1.25rem; }
+    }
   </style>
 </head>
 <body>
 
+<!-- Animated background -->
+<canvas id="bg-canvas"></canvas>
+
 <nav>
-  <span class="logo">RobotX Navigation</span>
+  <span class="logo">⬡ RobotX Navigation</span>
   <ul>
     <li><a href="#overview">Overview</a></li>
     <li><a href="#pipeline">Pipeline</a></li>
@@ -211,115 +407,161 @@
   </ul>
 </nav>
 
+<main>
+
+<!-- HERO -->
 <div class="hero">
-  <div class="tag">CSE 145 / CSE 237D &mdash; Spring 2026 &mdash; UC San Diego</div>
-  <h1>Aerial Intelligence &amp;<br><span>Communication Pipeline</span></h1>
-  <p>A drone autonomously detects colored buoys, calculates GPS coordinates using ray projection, and transmits a real-time buoy map to a ground station — powering UCSD's entry into Maritime RobotX 2026.</p>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+  <div class="tag">CSE 145 / CSE 237D &nbsp;·&nbsp; Spring 2026 &nbsp;·&nbsp; UC San Diego</div>
+  <h1>
+    <span class="line1">Aerial Intelligence &amp;</span>
+    <span class="line2">Communication Pipeline</span>
+  </h1>
+  <p>A drone autonomously detects colored buoys, computes GPS coordinates via monocular ray projection, and transmits a real-time buoy map over MAVLink — powering UCSD's entry into Maritime RobotX 2026.</p>
   <div class="hero-btns">
-    <a class="btn btn-primary" href="https://github.com/saxysteph/145-237D-robotx-navigation/blob/main/fulldemo/PARTNER_INSTRUCTIONS.md" target="_blank">Run the Pipeline</a>
-    <a class="btn btn-secondary" href="https://github.com/saxysteph/145-237D-robotx-navigation" target="_blank">View on GitHub</a>
-    <a class="btn btn-secondary" href="https://github.com/saxysteph/145-237D-robotx-navigation/wiki" target="_blank">Full Wiki</a>
+    <a class="btn btn-primary" href="https://github.com/saxysteph/145-237D-robotx-navigation/blob/main/fulldemo/PARTNER_INSTRUCTIONS.md" target="_blank">▶ Run the Pipeline</a>
+    <a class="btn btn-secondary" href="https://github.com/saxysteph/145-237D-robotx-navigation" target="_blank">⌥ View on GitHub</a>
+    <a class="btn btn-secondary" href="https://github.com/saxysteph/145-237D-robotx-navigation/wiki" target="_blank">⊞ Full Wiki</a>
   </div>
 </div>
 
-<!-- PIPELINE BAR -->
-<div class="pipeline">
-  <div class="pipeline-step">
-    <div class="icon">📷</div>
-    <div class="label">H264 Camera</div>
-    <div class="desc">USB, 800×600</div>
+<!-- STATS BAR -->
+<div class="stats-bar reveal">
+  <div class="stat-item">
+    <div class="stat-num">94.1%</div>
+    <div class="stat-label">Detection Precision</div>
   </div>
-  <div class="pipeline-arrow">→</div>
-  <div class="pipeline-step">
-    <div class="icon">🔍</div>
-    <div class="label">YOLO11n</div>
-    <div class="desc">Bounding boxes</div>
+  <div class="stat-item">
+    <div class="stat-num">97.1%</div>
+    <div class="stat-label">mAP @ 50</div>
   </div>
-  <div class="pipeline-arrow">→</div>
-  <div class="pipeline-step">
-    <div class="icon">🎨</div>
-    <div class="label">HSV Thresh</div>
-    <div class="desc">R / G / B</div>
+  <div class="stat-item">
+    <div class="stat-num">&lt;50ms</div>
+    <div class="stat-label">Inference Latency</div>
   </div>
-  <div class="pipeline-arrow">→</div>
-  <div class="pipeline-step">
-    <div class="icon">📍</div>
-    <div class="label">Ray Projection</div>
-    <div class="desc">Pixel → GPS</div>
+  <div class="stat-item">
+    <div class="stat-num">3</div>
+    <div class="stat-label">Buoy Colors Classified</div>
   </div>
-  <div class="pipeline-arrow">→</div>
-  <div class="pipeline-step">
-    <div class="icon">📡</div>
-    <div class="label">MAVLink UDP</div>
-    <div class="desc">Port 14555</div>
+  <div class="stat-item">
+    <div class="stat-num">2-stage</div>
+    <div class="stat-label">Detection Pipeline</div>
   </div>
-  <div class="pipeline-arrow">→</div>
-  <div class="pipeline-step">
-    <div class="icon">💻</div>
-    <div class="label">Ground Station</div>
-    <div class="desc">JSON + dot map</div>
+</div>
+
+<!-- PIPELINE -->
+<div class="pipeline-wrap" id="pipeline">
+  <div class="pipeline reveal">
+    <div class="pipeline-step">
+      <div class="icon">📷</div>
+      <div class="label">H264 Camera</div>
+      <div class="desc">USB · 800×600</div>
+    </div>
+    <div class="pipeline-arrow">→</div>
+    <div class="pipeline-step">
+      <div class="icon">🔍</div>
+      <div class="label">YOLO11n</div>
+      <div class="desc">ONNX · bbox</div>
+    </div>
+    <div class="pipeline-arrow">→</div>
+    <div class="pipeline-step">
+      <div class="icon">🎨</div>
+      <div class="label">HSV Thresh</div>
+      <div class="desc">R / G / B</div>
+    </div>
+    <div class="pipeline-arrow">→</div>
+    <div class="pipeline-step">
+      <div class="icon">📐</div>
+      <div class="label">Ray Projection</div>
+      <div class="desc">pixel → GPS</div>
+    </div>
+    <div class="pipeline-arrow">→</div>
+    <div class="pipeline-step">
+      <div class="icon">📡</div>
+      <div class="label">MAVLink UDP</div>
+      <div class="desc">port 14555</div>
+    </div>
+    <div class="pipeline-arrow">→</div>
+    <div class="pipeline-step">
+      <div class="icon">💻</div>
+      <div class="label">Ground Station</div>
+      <div class="desc">JSON · dot map</div>
+    </div>
   </div>
 </div>
 
 <!-- OVERVIEW -->
 <section id="overview">
-  <h2><span class="accent">//</span> Project Overview</h2>
-  <p style="color:var(--muted); margin-bottom:1.5rem; max-width:720px;">
-    The Maritime RobotX 2026 Challenge tasks teams with fielding coordinated autonomous aerial, surface, and underwater robots. Our project delivers the <strong style="color:var(--text)">aerial perception and communication layer</strong>: the Jetson Orin Nano onboard the UAV detects colored buoys via a hybrid YOLO + HSV pipeline, projects pixel centroids to GPS coordinates using monocular ray projection, and transmits structured detections to a ground station over MAVLink UDP — all in real time.
-  </p>
+  <div class="reveal">
+    <div class="section-label">Project Overview</div>
+    <h2>Aerial Scout for Maritime RobotX 2026</h2>
+    <p class="section-sub">The RobotX Challenge tasks teams with fielding coordinated autonomous aerial, surface, and underwater robots. Our project delivers the <strong>aerial perception and communication layer</strong> — the Jetson Orin Nano onboard the UAV detects colored buoys, projects them to GPS coordinates, and transmits structured detections to a ground station over MAVLink UDP, all in real time.</p>
+  </div>
   <div class="cards">
-    <div class="card">
-      <h3>Edge Detection</h3>
-      <p>YOLO11n (ONNX) proposes bounding boxes. HSV thresholding classifies color within each ROI. Two-stage design is more robust than end-to-end classification on limited data.</p>
+    <div class="card reveal reveal-delay-1">
+      <div class="card-icon">🔍</div>
+      <h3>Two-Stage Detection</h3>
+      <p>YOLO11n (ONNX) proposes bounding boxes. HSV thresholding classifies color within each ROI. More robust than end-to-end classification on limited training data.</p>
     </div>
-    <div class="card">
+    <div class="card reveal reveal-delay-2">
+      <div class="card-icon">📍</div>
       <h3>GPS Mapping</h3>
-      <p>Pixel centroids are projected to GPS lat/lon using drone altitude, heading, and camera intrinsics. Flat-earth nadir model, valid for competition environment.</p>
+      <p>Pixel centroids projected to GPS lat/lon using drone altitude, heading, and camera intrinsics. Flat-earth nadir model — valid for the competition environment.</p>
     </div>
-    <div class="card">
+    <div class="card reveal reveal-delay-3">
+      <div class="card-icon">📡</div>
       <h3>MAVLink Comms</h3>
       <p>Detections transmitted as STATUSTEXT packets over UDP. Ground station decodes to JSON and logs a JSONL file for visualization and post-processing.</p>
     </div>
-    <div class="card">
-      <h3>Visualization</h3>
-      <p>Color-coded GPS dot map rendered via matplotlib. Supports live polling mode while a session is running for real-time situational awareness.</p>
+    <div class="card reveal reveal-delay-4">
+      <div class="card-icon">🗺️</div>
+      <h3>Live Visualization</h3>
+      <p>Color-coded GPS dot map via matplotlib. Supports live polling mode while a session runs — real-time situational awareness from any networked laptop.</p>
     </div>
   </div>
 </section>
 
+<hr class="section-divider">
+
 <!-- MILESTONES -->
 <section id="milestones">
-  <h2><span class="accent">//</span> Project Milestones</h2>
+  <div class="reveal">
+    <div class="section-label">Project Status</div>
+    <h2>Milestones</h2>
+    <p class="section-sub">All necessary milestones complete. Final integrated flight demo in progress.</p>
+  </div>
   <div class="milestones">
-    <div class="milestone">
+    <div class="milestone done reveal reveal-delay-1">
       <div class="status">✅</div>
       <div class="content">
         <div class="title">Wk 4 — System Setup <span class="badge badge-necessary">Necessary</span></div>
-        <div class="meta">Jetson Orin setup, live camera feed, basic detection running on device</div>
+        <div class="meta">Jetson Orin Nano setup, live camera feed, basic detection running on device</div>
       </div>
     </div>
-    <div class="milestone">
+    <div class="milestone done reveal reveal-delay-1">
       <div class="status">✅</div>
       <div class="content">
         <div class="title">Wk 5 — MVP Demonstration <span class="badge badge-necessary">Necessary</span></div>
         <div class="meta">Buoy color detection, GPS projection, MAVLink transmission to base station, detection visualizer. Benchmark: &gt;85% classification accuracy</div>
       </div>
     </div>
-    <div class="milestone">
+    <div class="milestone done reveal reveal-delay-2">
       <div class="status">✅</div>
       <div class="content">
         <div class="title">Wk 6–7 — System Optimization <span class="badge badge-useful">Useful</span></div>
         <div class="meta">Detection accuracy tuning, HSV fallback ranges, latency stabilization</div>
       </div>
     </div>
-    <div class="milestone">
+    <div class="milestone done reveal reveal-delay-3">
       <div class="status">✅</div>
       <div class="content">
         <div class="title">Wk 7–9 — Data-to-Action Pipeline <span class="badge badge-useful">Useful</span></div>
         <div class="meta">Wireless link (router/USB-C), ground station logging, coordinate visualization</div>
       </div>
     </div>
-    <div class="milestone">
+    <div class="milestone active reveal reveal-delay-4">
       <div class="status">🔄</div>
       <div class="content">
         <div class="title">Wk 9–10 — Integrated System Validation <span class="badge badge-useful">Useful</span></div>
@@ -329,68 +571,90 @@
   </div>
 </section>
 
+<hr class="section-divider">
+
 <!-- DEMO -->
 <section id="demo">
-  <h2><span class="accent">//</span> Demo</h2>
-  <p style="color:var(--muted); margin-bottom:1.5rem; max-width:720px;">
-    Both pipeline components have been validated independently. The drone flight shows the aerial platform in operation; the terminal output confirms end-to-end MAVLink transmission over WiFi with live buoy color and GPS coordinate delivery to the ground station. Final integration (drone in flight simultaneously transmitting detections) is the Week 9–10 milestone.
-  </p>
+  <div class="reveal">
+    <div class="section-label">Demonstrations</div>
+    <h2>Pipeline in Action</h2>
+    <p class="section-sub">Both components validated independently. Drone flight confirms the aerial platform; the terminal output confirms end-to-end MAVLink transmission over WiFi with live buoy detections delivered to the ground station. Full in-flight integration is the Wk 9–10 milestone.</p>
+  </div>
   <div class="demo-grid">
-    <div>
+    <div class="reveal reveal-delay-1">
       <div class="demo-video-wrap">
-        <video controls muted playsinline preload="metadata" poster="">
+        <video controls muted playsinline preload="metadata">
           <source src="drone_flight.mp4" type="video/mp4">
           <source src="drone_flight.mov" type="video/quicktime">
           Your browser does not support HTML5 video.
         </video>
-        <div class="demo-video-label">drone_flight.mp4 — UAV test flight over test environment</div>
+        <div class="demo-video-label">drone_flight.mp4 — UAV test flight</div>
       </div>
     </div>
-    <div class="demo-panel">
+    <div class="demo-panel reveal reveal-delay-2">
       <div>
-        <h3>Live MAVLink Pipeline — Confirmed Working</h3>
-        <p style="font-size:0.8rem; color:var(--muted); margin-top:0.4rem;">Jetson (192.168.8.184) → WiFi router → Laptop GCS, real targets</p>
+        <h3>Live MAVLink Pipeline — Confirmed ✓</h3>
+        <p style="font-size:0.75rem; color:var(--muted); margin-top:0.3rem;">Jetson (192.168.8.x) → WiFi router → Laptop GCS</p>
       </div>
       <div class="demo-terminal">
-        <span class="dim"># Jetson TX — buoy detections transmitted</span><br>
-        <span class="tx">[TX]</span> t1 <span style="color:#f0883e">blue</span>  lat=32.8813 lon=-117.2341 frame=17<br>
-        <span class="tx">[TX]</span> t2 <span style="color:#3fb950">green</span> lat=32.8814 lon=-117.2339 frame=18<br>
-        <span class="tx">[TX]</span> t3 <span style="color:#f78166">red</span>   lat=32.8812 lon=-117.2343 frame=19<br>
-        <br>
-        <span class="dim"># Laptop GCS — decoded JSON received</span><br>
-        <span class="rx">[GCS]</span> {"target_id":1,"color":"blue","lat":32.8813,"lon":-117.2341}<br>
-        <span class="rx">[GCS]</span> {"target_id":2,"color":"green","lat":32.8814,"lon":-117.2339}<br>
-        <span class="rx">[GCS]</span> {"target_id":3,"color":"red","lat":32.8812,"lon":-117.2343}
+        <div class="inner">
+          <span class="dim"># Jetson TX — detections transmitted</span><br>
+          <span class="tx">[TX]</span> t1 <span style="color:#4d9cf8">blue</span>&nbsp; lat=32.8813 lon=-117.2341 fr=17<br>
+          <span class="tx">[TX]</span> t2 <span style="color:#3dba5e">green</span> lat=32.8814 lon=-117.2339 fr=18<br>
+          <span class="tx">[TX]</span> t3 <span style="color:#f07060">red</span>&nbsp;&nbsp; lat=32.8812 lon=-117.2343 fr=19<br>
+          <br>
+          <span class="dim"># Laptop GCS — decoded JSON</span><br>
+          <span class="rx">[GCS]</span> {"id":1,"color":"blue","lat":32.8813,...}<br>
+          <span class="rx">[GCS]</span> {"id":2,"color":"green","lat":32.8814,...}<br>
+          <span class="rx">[GCS]</span> {"id":3,"color":"red","lat":32.8812,...}
+        </div>
       </div>
-      <div style="display:flex; flex-direction:column; gap:0.5rem; padding-top:0.25rem; border-top:1px solid var(--border);">
+      <div style="display:flex; flex-direction:column; gap:0.55rem; padding-top:0.5rem; border-top:1px solid var(--border);">
         <div class="demo-stat"><div class="dot dot-green"></div><span><strong>YOLO11n</strong> — 94.1% precision, 97.1% mAP@50 on val set</span></div>
-        <div class="demo-stat"><div class="dot dot-blue"></div><span><strong>MAVLink link</strong> — USB-C ethernet + WiFi router validated</span></div>
+        <div class="demo-stat"><div class="dot dot-blue"></div><span><strong>MAVLink link</strong> — USB-C + WiFi router both validated</span></div>
         <div class="demo-stat"><div class="dot dot-orange"></div><span><strong>E2E flight demo</strong> — in progress (Wk 9–10)</span></div>
       </div>
     </div>
   </div>
 </section>
 
+<hr class="section-divider">
+
 <!-- TEAM -->
 <section id="team">
-  <h2><span class="accent">//</span> Team</h2>
+  <div class="reveal">
+    <div class="section-label">The Team</div>
+    <h2>Built by UCSD Engineers</h2>
+    <p class="section-sub">Developed in collaboration with TritonAI and Team Inspiration for Maritime RobotX 2026.</p>
+  </div>
+
+  <div class="team-photo-wrap reveal">
+    <img src="team_photo.jpg" alt="Stephen, Dhruv, and team working on the drone hardware"
+         onerror="this.parentElement.style.display='none'">
+    <div class="team-photo-caption">Late-night hardware session — drone wiring, motor controllers, and good vibes 🛠️</div>
+  </div>
+
   <div class="team-grid">
-    <div class="team-card">
+    <div class="team-card reveal reveal-delay-1">
+      <div class="avatar">SL</div>
       <div class="name">Stephen Liu</div>
       <div class="role">Perception &amp; Communication Pipeline</div>
       <div class="org">UCSD CSE · xul052@ucsd.edu</div>
     </div>
-    <div class="team-card">
+    <div class="team-card reveal reveal-delay-2">
+      <div class="avatar">DC</div>
       <div class="name">Dhruv Choudhary</div>
       <div class="role">Perception &amp; Communication Pipeline</div>
       <div class="org">UCSD ECE · dchoudhary@ucsd.edu</div>
     </div>
-    <div class="team-card">
+    <div class="team-card reveal reveal-delay-3">
+      <div class="avatar">JS</div>
       <div class="name">Prof. Jack Silberman</div>
       <div class="role">Project Advisor</div>
       <div class="org">UC San Diego</div>
     </div>
-    <div class="team-card">
+    <div class="team-card reveal reveal-delay-4">
+      <div class="avatar">TI</div>
       <div class="name">Team Inspiration</div>
       <div class="role">Drone Hardware &amp; Assembly</div>
       <div class="org">Eesh Vij · Colin Szeto · Chase Chen</div>
@@ -398,84 +662,194 @@
   </div>
 </section>
 
+<hr class="section-divider">
+
 <!-- REPLICATE -->
 <section id="replicate">
-  <h2><span class="accent">//</span> Quick Replication</h2>
-  <p style="color:var(--muted); margin-bottom:1.25rem;">Requires: Jetson Orin Nano (already configured) + laptop on same network.</p>
-  <div class="code-block">
-    <span class="comment"># Terminal 1 — laptop: start ground station</span><br>
-    <span class="cmd">cd</span> ~/Downloads/SP26/CSE237D/145-237D-robotx-navigation<br>
-    <span class="cmd">source</span> .venv-mavlink/bin/activate<br>
-    <span class="cmd">python</span> mavlink_comms/scripts/run_ground_station.py --output-jsonl fulldemo/detections.jsonl<br>
-    <br>
-    <span class="comment"># Terminal 2 — SSH into Jetson: start detection</span><br>
-    <span class="cmd">ssh</span> babydragon@192.168.55.1<br>
-    <span class="cmd">GCS_IP</span>=192.168.55.100 bash fulldemo/run_detection_jetson.sh<br>
-    <br>
-    <span class="comment"># Terminal 3 — laptop: visualize live</span><br>
-    <span class="cmd">python</span> fulldemo/visualize_detections.py fulldemo/detections.jsonl --live
+  <div class="reveal">
+    <div class="section-label">Quick Start</div>
+    <h2>Run the Pipeline</h2>
+    <p class="section-sub">Requires: Jetson Orin Nano (already configured) + laptop on the same network.</p>
   </div>
-  <p style="color:var(--muted); font-size:0.8rem; margin-top:0.75rem;">
-    Full setup instructions (fresh Jetson): <a href="https://github.com/saxysteph/145-237D-robotx-navigation/wiki/Setup-and-Replication" style="color:var(--accent)">Wiki → Setup &amp; Replication</a>
+  <div class="code-block reveal">
+    <div class="code-block-header">
+      <div class="code-dots">
+        <div class="code-dot code-dot-red"></div>
+        <div class="code-dot code-dot-yellow"></div>
+        <div class="code-dot code-dot-green"></div>
+      </div>
+      <span class="code-lang">bash</span>
+    </div>
+    <div class="code-inner">
+      <span class="comment"># Terminal 1 — laptop: start ground station</span><br>
+      <span class="cmd">cd</span> ~/Downloads/SP26/CSE237D/145-237D-robotx-navigation<br>
+      <span class="cmd">source</span> .venv-mavlink/bin/activate<br>
+      <span class="cmd">python</span> mavlink_comms/scripts/run_ground_station.py <span class="arg">--output-jsonl</span> fulldemo/detections.jsonl<br>
+      <br>
+      <span class="comment"># Terminal 2 — SSH into Jetson: run detection</span><br>
+      <span class="cmd">ssh</span> babydragon@192.168.55.1<br>
+      <span class="cmd">GCS_IP</span>=192.168.55.100 bash fulldemo/run_detection_jetson.sh<br>
+      <br>
+      <span class="comment"># Terminal 3 — laptop: visualize live</span><br>
+      <span class="cmd">python</span> fulldemo/visualize_detections.py fulldemo/detections.jsonl <span class="arg">--live</span>
+    </div>
+  </div>
+  <p style="color:var(--muted); font-size:0.78rem; margin-top:0.85rem;">
+    Fresh Jetson setup: <a href="https://github.com/saxysteph/145-237D-robotx-navigation/wiki/Setup-and-Replication" style="color:var(--accent)">Wiki → Setup &amp; Replication ↗</a>
   </p>
 </section>
 
+<hr class="section-divider">
+
 <!-- CODEBASE -->
 <section id="codebase">
-  <h2><span class="accent">//</span> Codebase Structure</h2>
-  <p style="color:var(--muted); margin-bottom:1.25rem;">All code is version-controlled at <a href="https://github.com/saxysteph/145-237D-robotx-navigation" style="color:var(--accent)" target="_blank">saxysteph/145-237D-robotx-navigation</a>. Key files below:</p>
-  <div class="code-block">
-    <div class="tree">
-      <div class="tree-row"><span class="tree-path dir">camera_live_feed.py</span><span class="tree-desc">← Main pipeline: YOLO → HSV → GPS projection → MAVLink TX</span></div>
-      <div class="tree-row"><span class="tree-path dir">color_utils.py</span><span class="tree-desc">← HSV color range definitions and fallback ranges (R/G/B)</span></div>
-      <div class="tree-row" style="margin-top:0.5rem"><span class="tree-path dir">mavlink_comms/</span></div>
-      <div class="tree-row"><span class="tree-indent">├─ </span><span class="tree-path">transmitter.py</span><span class="tree-desc">← BuoyMavlinkTransmitter — wraps pymavlink UDP send</span></div>
-      <div class="tree-row"><span class="tree-indent">└─ scripts/run_ground_station.py</span><span class="tree-path"></span><span class="tree-desc">← Laptop GCS: listens UDP 14555, logs JSON detections</span></div>
-      <div class="tree-row" style="margin-top:0.5rem"><span class="tree-path dir">fulldemo/</span></div>
-      <div class="tree-row"><span class="tree-indent">├─ </span><span class="tree-path">PARTNER_INSTRUCTIONS.md</span><span class="tree-desc">← Step-by-step run guide for team members</span></div>
-      <div class="tree-row"><span class="tree-indent">├─ </span><span class="tree-path">README.md</span><span class="tree-desc">← Full demo guide with post-processing steps</span></div>
-      <div class="tree-row"><span class="tree-indent">└─ </span><span class="tree-path">visualize_detections.py</span><span class="tree-desc">← GPS dot map visualizer, supports --live polling</span></div>
-      <div class="tree-row" style="margin-top:0.5rem"><span class="tree-path dir">buoy_best.onnx</span><span class="tree-desc">← Trained YOLO11n model (opset 19), 94.1% precision on val set</span></div>
-      <div class="tree-row"><span class="tree-path dir">captures/classes/</span><span class="tree-desc">← Reference images (red/green/blue) for HSV range derivation</span></div>
-      <div class="tree-row"><span class="tree-path dir">vendor/mavcore/</span><span class="tree-desc">← Vendored pymavlink core, patched for Python 3.8 compatibility</span></div>
-      <div class="tree-row" style="margin-top:0.5rem; padding-top:0.5rem; border-top:1px solid var(--border)">
-        <span style="color:var(--muted); font-family:var(--font); font-size:0.75rem;">Data formats: MAVLink wire <code style="color:#a5d6ff">RXB|id|color|lat_e7|lon_e7|frame</code> · Ground station output: JSONL · On-device: CSV + AVI</span>
+  <div class="reveal">
+    <div class="section-label">Codebase</div>
+    <h2>Repository Structure</h2>
+    <p class="section-sub">All code at <a href="https://github.com/saxysteph/145-237D-robotx-navigation" style="color:var(--accent)" target="_blank">saxysteph/145-237D-robotx-navigation</a></p>
+  </div>
+  <div class="code-block reveal">
+    <div class="code-block-header">
+      <div class="code-dots">
+        <div class="code-dot code-dot-red"></div>
+        <div class="code-dot code-dot-yellow"></div>
+        <div class="code-dot code-dot-green"></div>
+      </div>
+      <span class="code-lang">repository tree</span>
+    </div>
+    <div class="code-inner">
+      <div class="tree">
+        <div class="tree-row"><span class="tree-path dir">camera_live_feed.py</span><span class="tree-desc">&nbsp;←&nbsp; Main pipeline: YOLO → HSV → GPS projection → MAVLink TX</span></div>
+        <div class="tree-row"><span class="tree-path dir">color_utils.py</span><span class="tree-desc">&nbsp;←&nbsp; HSV color range definitions and fallback ranges (R/G/B)</span></div>
+        <div class="tree-row" style="margin-top:0.4rem"><span class="tree-path dir">mavlink_comms/</span></div>
+        <div class="tree-row"><span class="tree-indent">├─ </span><span class="tree-path">transmitter.py</span><span class="tree-desc">&nbsp;←&nbsp; BuoyMavlinkTransmitter — wraps pymavlink UDP send</span></div>
+        <div class="tree-row"><span class="tree-indent">└─ scripts/run_ground_station.py</span><span class="tree-desc">&nbsp;←&nbsp; Laptop GCS: listens UDP 14555, logs JSON detections</span></div>
+        <div class="tree-row" style="margin-top:0.4rem"><span class="tree-path dir">fulldemo/</span></div>
+        <div class="tree-row"><span class="tree-indent">├─ </span><span class="tree-path">PARTNER_INSTRUCTIONS.md</span><span class="tree-desc">&nbsp;←&nbsp; Step-by-step run guide for team members</span></div>
+        <div class="tree-row"><span class="tree-indent">├─ </span><span class="tree-path">README.md</span><span class="tree-desc">&nbsp;←&nbsp; Full demo guide with post-processing steps</span></div>
+        <div class="tree-row"><span class="tree-indent">└─ </span><span class="tree-path">visualize_detections.py</span><span class="tree-desc">&nbsp;←&nbsp; GPS dot map visualizer, supports --live polling</span></div>
+        <div class="tree-row" style="margin-top:0.4rem"><span class="tree-path dir">buoy_best.onnx</span><span class="tree-desc">&nbsp;←&nbsp; Trained YOLO11n model (opset 19), 94.1% precision on val set</span></div>
+        <div class="tree-row"><span class="tree-path dir">captures/classes/</span><span class="tree-desc">&nbsp;←&nbsp; Reference images (red/green/blue) for HSV range derivation</span></div>
+        <div class="tree-row"><span class="tree-path dir">vendor/mavcore/</span><span class="tree-desc">&nbsp;←&nbsp; Vendored pymavlink core, patched for Python 3.8</span></div>
+        <div class="tree-row" style="margin-top:0.6rem; padding-top:0.6rem; border-top:1px solid var(--border)">
+          <span style="color:var(--muted); font-family:var(--font); font-size:0.7rem;">
+            Wire format: <code style="color:#a8c0d6; font-family:var(--mono)">RXB|id|color|lat_e7|lon_e7|frame</code>
+            &nbsp;·&nbsp; Output: JSONL &nbsp;·&nbsp; On-device: CSV + AVI
+          </span>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- LINKS -->
+<hr class="section-divider">
+
+<!-- RESOURCES -->
 <section>
-  <h2><span class="accent">//</span> Resources</h2>
-  <div class="links-grid">
+  <div class="reveal">
+    <div class="section-label">Resources</div>
+    <h2>Links</h2>
+  </div>
+  <div class="links-grid reveal">
     <a class="link-card" href="https://github.com/saxysteph/145-237D-robotx-navigation" target="_blank">
+      <span class="link-icon">⌥</span>
       <span class="link-title">GitHub Repository</span>
       <span class="link-desc">Full source code, models, and detection scripts</span>
     </a>
     <a class="link-card" href="https://github.com/saxysteph/145-237D-robotx-navigation/wiki" target="_blank">
+      <span class="link-icon">⊞</span>
       <span class="link-title">Project Wiki</span>
-      <span class="link-desc">Detailed docs: setup, architecture, team, milestones</span>
+      <span class="link-desc">Setup, architecture, team, milestones</span>
     </a>
     <a class="link-card" href="https://github.com/saxysteph/145-237D-robotx-navigation/blob/main/fulldemo/PARTNER_INSTRUCTIONS.md" target="_blank">
+      <span class="link-icon">▶</span>
       <span class="link-title">Run Instructions</span>
       <span class="link-desc">Step-by-step guide for running the demo pipeline</span>
     </a>
     <a class="link-card" href="https://github.com/saxysteph/145-237D-robotx-navigation/wiki/Repository-Structure" target="_blank">
+      <span class="link-icon">🗂</span>
       <span class="link-title">Codebase Structure</span>
-      <span class="link-desc">Annotated repo layout, key file descriptions, and data format specs</span>
+      <span class="link-desc">Annotated repo layout and data format specs</span>
     </a>
     <a class="link-card" href="https://robotx.org/" target="_blank">
+      <span class="link-icon">🌊</span>
       <span class="link-title">Maritime RobotX 2026</span>
       <span class="link-desc">The international competition this project supports</span>
     </a>
   </div>
 </section>
 
+</main>
+
 <footer>
-  RobotX Navigation · CSE 145 / CSE 237D · Spring 2026 · UC San Diego ·
-  <a href="https://github.com/saxysteph/145-237D-robotx-navigation">GitHub</a>
+  RobotX Navigation &nbsp;·&nbsp; CSE 145 / CSE 237D &nbsp;·&nbsp; Spring 2026 &nbsp;·&nbsp; UC San Diego &nbsp;·&nbsp;
+  <a href="https://github.com/saxysteph/145-237D-robotx-navigation">GitHub ↗</a>
 </footer>
 
+<script>
+  // ── Scroll-reveal ──────────────────────────────────────────
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ── Animated background canvas ─────────────────────────────
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function makeParticles(n) {
+    return Array.from({ length: n }, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 1.5 + 0.4,
+      alpha: Math.random() * 0.5 + 0.1,
+      color: Math.random() < 0.5 ? '77,156,248' : '199,120,221'
+    }));
+  }
+
+  function drawConnections() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(77,156,248,${0.06 * (1 - dist / 120)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.color},${p.alpha})`;
+      ctx.fill();
+    });
+    drawConnections();
+    requestAnimationFrame(tick);
+  }
+
+  window.addEventListener('resize', () => { resize(); particles = makeParticles(60); });
+  resize();
+  particles = makeParticles(60);
+  tick();
+</script>
 </body>
 </html>
