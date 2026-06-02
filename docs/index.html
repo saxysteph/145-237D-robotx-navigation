@@ -247,20 +247,27 @@
     .badge-useful { background: rgba(61,186,94,0.1); color: var(--accent2); border: 1px solid rgba(61,186,94,0.3); }
 
     /* ─── DEMO ─── */
-    .demo-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start;
-    }
-    @media (max-width: 700px) { .demo-grid { grid-template-columns: 1fr; } }
     .demo-video-wrap {
       background: var(--surface); border: 1px solid var(--border);
       border-radius: 12px; overflow: hidden;
       box-shadow: 0 0 40px rgba(77,156,248,0.08);
+      margin-bottom: 1.25rem;
     }
-    .demo-video-wrap video { display: block; width: 100%; max-height: 340px; object-fit: cover; }
+    .demo-video-wrap video { display: block; width: 100%; max-height: 460px; object-fit: cover; }
     .demo-video-label {
       padding: 0.6rem 1rem; font-size: 0.68rem; color: var(--muted);
       border-top: 1px solid var(--border); font-family: var(--mono);
     }
+    .demo-bottom {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; align-items: start;
+    }
+    @media (max-width: 700px) { .demo-bottom { grid-template-columns: 1fr; } }
+    .demo-screenshot-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
+    }
+    .demo-screenshot-card img { display: block; width: 100%; object-fit: cover; }
+    .demo-screenshot-card .demo-video-label { border-top: 1px solid var(--border); }
     .demo-panel {
       background: var(--surface); border: 1px solid var(--border);
       border-radius: 12px; padding: 1.4rem; display: flex; flex-direction: column; gap: 1.1rem;
@@ -399,7 +406,7 @@
 <canvas id="bg-canvas"></canvas>
 
 <nav>
-  <span class="logo">⬡ RobotX Navigation</span>
+  <span class="logo">⬡ Aerial Environment Recognition</span>
   <ul>
     <li><a href="#overview">Overview</a></li>
     <li><a href="#pipeline">Pipeline</a></li>
@@ -421,10 +428,10 @@
   <div class="hero-orb hero-orb-3"></div>
   <div class="tag">CSE 145 / CSE 237D &nbsp;·&nbsp; Spring 2026 &nbsp;·&nbsp; UC San Diego</div>
   <h1>
-    <span class="line1">Aerial Intelligence &amp;</span>
-    <span class="line2">Communication Pipeline</span>
+    <span class="line1">Aerial Environment Recognition</span>
+    <span class="line2">Communicated for Boat Navigation</span>
   </h1>
-  <p>A drone autonomously detects colored buoys, computes GPS coordinates via monocular ray projection, and transmits a real-time buoy map over MAVLink — powering UCSD's entry into Maritime RobotX 2026.</p>
+  <p>An edge-compute color detection model, ray-projection coordinate mapping, and a low-latency publish-subscribe network — deployed on a UAV to extend the navigational intelligence of a surface vessel.</p>
   <div class="hero-btns">
     <a class="btn btn-primary" href="https://github.com/saxysteph/145-237D-robotx-navigation/blob/main/fulldemo/PARTNER_INSTRUCTIONS.md" target="_blank">▶ Run the Pipeline</a>
     <a class="btn btn-secondary" href="https://github.com/saxysteph/145-237D-robotx-navigation" target="_blank">⌥ View on GitHub</a>
@@ -501,8 +508,8 @@
 <section id="overview">
   <div class="reveal">
     <div class="section-label">Project Overview</div>
-    <h2>Aerial Scout for Maritime RobotX 2026</h2>
-    <p class="section-sub">The RobotX Challenge tasks teams with fielding coordinated autonomous aerial, surface, and underwater robots. Our project delivers the <strong>aerial perception and communication layer</strong> — the Jetson Orin Nano onboard the UAV detects colored buoys, projects them to GPS coordinates, and transmits structured detections to a ground station over MAVLink UDP, all in real time.</p>
+    <h2>Extending a Vessel's Intelligence from the Air</h2>
+    <p class="section-sub">To successfully deploy an aerial-to-surface recognition system that extends the navigational intelligence of a surface vessel, the drone must integrate an <strong>edge-compute color thresholding model</strong> for obstacle detection, <strong>mathematical ray-projection logic</strong> for coordinate mapping, and a <strong>low-latency publish-subscribe network</strong> for actionable payload transmission. This project delivers all three, running entirely on a Jetson Orin Nano aboard a UAV for Maritime RobotX 2026.</p>
   </div>
   <div class="cards">
     <div class="card reveal reveal-delay-1">
@@ -585,30 +592,29 @@
     <h2>Pipeline in Action</h2>
     <p class="section-sub">Both components validated independently. Drone flight confirms the aerial platform; the terminal output confirms end-to-end MAVLink transmission over WiFi with live buoy detections delivered to the ground station. Full in-flight integration is the Wk 9–10 milestone.</p>
   </div>
-  <div class="demo-grid">
-    <div class="reveal reveal-delay-1">
-      <div class="demo-video-wrap">
-        <video controls muted playsinline preload="metadata">
-          <source src="drone_flight.mp4" type="video/mp4">
-          <source src="drone_flight.mov" type="video/quicktime">
-          Your browser does not support HTML5 video.
-        </video>
-        <div class="demo-video-label">drone_flight.mp4 — UAV test flight</div>
-      </div>
+  <!-- Row 1: full-width video -->
+  <div class="demo-video-wrap reveal">
+    <video controls muted playsinline preload="metadata">
+      <source src="drone_flight.mp4" type="video/mp4">
+      <source src="drone_flight.mov" type="video/quicktime">
+      Your browser does not support HTML5 video.
+    </video>
+    <div class="demo-video-label">drone_flight.mp4 — UAV test flight</div>
+  </div>
+
+  <!-- Row 2: screenshot | terminal -->
+  <div class="demo-bottom">
+    <!-- Actual screenshot — save as docs/pipeline_screenshot.jpg -->
+    <div class="demo-screenshot-card reveal reveal-delay-1" id="screenshot-wrap">
+      <img src="pipeline_screenshot.jpg" alt="Actual terminal output: Jetson [TX] and laptop [GCS] lines live"
+           onerror="document.getElementById('screenshot-wrap').style.display='none'">
+      <div class="demo-video-label">pipeline_screenshot.jpg — actual terminal output, field session</div>
     </div>
+
     <div class="demo-panel reveal reveal-delay-2">
       <div>
         <h3>Live MAVLink Pipeline — Confirmed ✓</h3>
         <p style="font-size:0.75rem; color:var(--muted); margin-top:0.3rem;">Jetson (192.168.8.x) → WiFi router → Laptop GCS</p>
-      </div>
-      <!-- Actual screenshot — save as docs/pipeline_screenshot.jpg -->
-      <div class="demo-screenshot-wrap" id="screenshot-wrap">
-        <img src="pipeline_screenshot.jpg" alt="Actual terminal output: Jetson [TX] and laptop [GCS] lines live"
-             style="display:block; width:100%; border-radius:6px; border:1px solid var(--border);"
-             onerror="document.getElementById('screenshot-wrap').style.display='none'">
-        <div style="font-size:0.65rem; color:var(--muted); font-family:var(--mono); margin-top:0.4rem;">
-          pipeline_screenshot.jpg — actual terminal output, field session
-        </div>
       </div>
       <div class="demo-terminal">
         <div class="inner">
