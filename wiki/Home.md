@@ -62,5 +62,3 @@ The UAV runs a two-stage perception pipeline on a Jetson Orin Nano:
 | **Wk 6–7 — System Optimization:** Detection accuracy tuning, HSV fallback ranges, latency stabilization | Useful | ✅ Complete |
 | **Wk 7–9 — Data-to-Action Pipeline:** Wireless link (router/USB-C), ground station logging, coordinate visualization | Useful | ✅ Complete |
 | **Wk 9–10 — Integrated System Validation:** Full demo flight over buoys, field video recording, end-to-end demonstration | Useful | 🔄 In Progress |
-| **Stretch — RC Car Integration:** RC car receives coordinate map, runs path planning | Hopeful | 🔲 Planned |
-| **Stretch — Dynamic Monitoring Loop:** Live coordinate updates as buoys move | Hopeful | 🔲 Planned |
