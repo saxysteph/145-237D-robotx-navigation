@@ -42,7 +42,6 @@ This project contributes the **aerial perception and communication layer** of UC
 ┌─────────────────────────────────┐
 │      Ground Station / USV       │
 │  Receives buoy GPS coordinates  │
-│  Navigates safe passage course  │
 └─────────────────────────────────┘
 ```
 
@@ -56,14 +55,12 @@ The UAV runs a two-stage perception pipeline on a Jetson Orin Nano:
 
 ## Project Status
 
-| Milestone | Status |
-|---|---|
-| Camera pipeline on Jetson | ✅ Complete |
-| YOLO inference (ONNX, CPU) | ✅ Complete |
-| HSV color classification | ✅ Complete |
-| GPS coordinate projection | ✅ Complete |
-| MAVLink USB-C transmission | ✅ Complete |
-| Ground station receiver | ✅ Complete |
-| Detection visualizer | ✅ Complete |
-| Wireless communication (WiFi) | 🔲 Planned |
-| RC car integration | 🔲 Planned |
+| Milestone | Priority | Status |
+|---|---|---|
+| **Wk 4 — System Setup:** Jetson Orin setup, live camera feed, basic detection running | Necessary | ✅ Complete |
+| **Wk 5 — MVP:** Buoy color detection, GPS coordinate projection, MAVLink transmission to base station, detection visualizer | Necessary | ✅ Complete |
+| **Wk 6–7 — System Optimization:** Detection accuracy tuning, HSV fallback ranges, latency stabilization | Useful | ✅ Complete |
+| **Wk 7–9 — Data-to-Action Pipeline:** Wireless link (router/USB-C), ground station logging, coordinate visualization | Useful | ✅ Complete |
+| **Wk 9–10 — Integrated System Validation:** Full demo flight over buoys, field video recording, end-to-end demonstration | Useful | 🔄 In Progress |
+| **Stretch — RC Car Integration:** RC car receives coordinate map, runs path planning | Hopeful | 🔲 Planned |
+| **Stretch — Dynamic Monitoring Loop:** Live coordinate updates as buoys move | Hopeful | 🔲 Planned |
