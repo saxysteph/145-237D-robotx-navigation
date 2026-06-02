@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RobotX Navigation — Aerial Intelligence Pipeline</title>
+  <title>Aerial Environment Recognition — Communicated for Boat Navigation</title>
+  <meta name="description" content="A UAV-mounted edge-compute pipeline for colored buoy detection, GPS coordinate mapping via ray projection, and real-time MAVLink transmission to a surface vessel — UCSD CSE 145/237D Spring 2026." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Syne:wght@600;700;800&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -515,23 +516,23 @@
   <div class="cards">
     <div class="card reveal reveal-delay-1">
       <div class="card-icon">🔍</div>
-      <h3>Two-Stage Detection</h3>
-      <p>YOLO11n (ONNX) proposes bounding boxes. HSV thresholding classifies color within each ROI. More robust than end-to-end classification on limited training data.</p>
+      <h3>Edge-Compute Color Thresholding</h3>
+      <p>YOLO11n (ONNX) proposes bounding boxes on the Jetson. HSV thresholding then classifies each ROI as red, green, or blue — the two-stage design is more robust than end-to-end classification on limited training data.</p>
     </div>
     <div class="card reveal reveal-delay-2">
-      <div class="card-icon">📍</div>
-      <h3>GPS Mapping</h3>
-      <p>Pixel centroids projected to GPS lat/lon using drone altitude, heading, and camera intrinsics. Flat-earth nadir model — valid for the competition environment.</p>
+      <div class="card-icon">📐</div>
+      <h3>Ray-Projection Coordinate Mapping</h3>
+      <p>Each detection's pixel centroid is projected to GPS lat/lon using drone altitude, heading, and camera intrinsics. Flat-earth nadir model gives real-world coordinates the vessel can act on.</p>
     </div>
     <div class="card reveal reveal-delay-3">
       <div class="card-icon">📡</div>
-      <h3>MAVLink Comms</h3>
-      <p>Detections transmitted as STATUSTEXT packets over UDP. Ground station decodes to JSON and logs a JSONL file for visualization and post-processing.</p>
+      <h3>Low-Latency Payload Transmission</h3>
+      <p>Detections are encoded as MAVLink STATUSTEXT packets and transmitted over UDP to the ground station, which decodes structured JSON in real time — closing the aerial-to-surface intelligence loop.</p>
     </div>
     <div class="card reveal reveal-delay-4">
       <div class="card-icon">🗺️</div>
       <h3>Live Visualization</h3>
-      <p>Color-coded GPS dot map via matplotlib. Supports live polling mode while a session runs — real-time situational awareness from any networked laptop.</p>
+      <p>Color-coded GPS dot map via matplotlib, with live polling mode for real-time situational awareness. Logs saved as JSONL for post-session analysis.</p>
     </div>
   </div>
 </section>
@@ -690,8 +691,25 @@
   <div class="reveal">
     <div class="section-label">Quick Start</div>
     <h2>Run the Pipeline</h2>
-    <p class="section-sub">Requires: Jetson Orin Nano (already configured) + laptop on the same network.</p>
+    <p class="section-sub">For the already-configured hardware setup. See <a href="https://github.com/saxysteph/145-237D-robotx-navigation/wiki/Setup-and-Replication" style="color:var(--accent)" target="_blank">Wiki → Setup &amp; Replication</a> for a fresh Jetson install from scratch.</p>
   </div>
+
+  <!-- Prerequisites -->
+  <div class="reveal" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:0.75rem; margin-bottom:1.5rem;">
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:1rem 1.2rem;">
+      <div style="font-size:0.65rem; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.4rem;">Hardware</div>
+      <div style="font-size:0.8rem; color:var(--text2); line-height:1.6;">Jetson Orin Nano (JetPack 5) · H264 USB camera · Laptop (macOS/Linux) · USB-C or WiFi router link</div>
+    </div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:1rem 1.2rem;">
+      <div style="font-size:0.65rem; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.4rem;">Laptop Setup</div>
+      <div style="font-size:0.8rem; color:var(--muted); font-family:var(--mono); line-height:1.8;">git clone &lt;repo&gt;<br>cd &lt;repo&gt;<br>python3 -m venv .venv-mavlink<br>source .venv-mavlink/bin/activate<br>pip install pymavlink future matplotlib</div>
+    </div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:1rem 1.2rem;">
+      <div style="font-size:0.65rem; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.4rem;">Network</div>
+      <div style="font-size:0.8rem; color:var(--text2); line-height:1.6;">USB-C: assign <code style="font-family:var(--mono); color:#a8c0d6">192.168.55.100</code> to your USB ethernet interface. WiFi router: both devices on the same LAN, use the laptop's assigned IP as <code style="font-family:var(--mono); color:#a8c0d6">GCS_IP</code>.</div>
+    </div>
+  </div>
+
   <div class="code-block reveal">
     <div class="code-block-header">
       <div class="code-dots">
@@ -699,24 +717,24 @@
         <div class="code-dot code-dot-yellow"></div>
         <div class="code-dot code-dot-green"></div>
       </div>
-      <span class="code-lang">bash</span>
+      <span class="code-lang">bash — 3 terminals</span>
     </div>
     <div class="code-inner">
-      <span class="comment"># Terminal 1 — laptop: start ground station</span><br>
-      <span class="cmd">cd</span> ~/Downloads/SP26/CSE237D/145-237D-robotx-navigation<br>
+      <span class="comment"># Terminal 1 — laptop: start ground station receiver</span><br>
+      <span class="cmd">cd</span> &lt;repo-root&gt;<br>
       <span class="cmd">source</span> .venv-mavlink/bin/activate<br>
       <span class="cmd">python</span> mavlink_comms/scripts/run_ground_station.py <span class="arg">--output-jsonl</span> fulldemo/detections.jsonl<br>
       <br>
-      <span class="comment"># Terminal 2 — SSH into Jetson: run detection</span><br>
-      <span class="cmd">ssh</span> babydragon@192.168.55.1<br>
-      <span class="cmd">GCS_IP</span>=192.168.55.100 bash fulldemo/run_detection_jetson.sh<br>
+      <span class="comment"># Terminal 2 — SSH into Jetson, run the detection pipeline</span><br>
+      <span class="cmd">ssh</span> babydragon@192.168.55.1  <span class="comment"># password: ask repo owners</span><br>
+      <span class="cmd">GCS_IP</span>=&lt;laptop-ip&gt; bash fulldemo/run_detection_jetson.sh<br>
       <br>
-      <span class="comment"># Terminal 3 — laptop: visualize live</span><br>
+      <span class="comment"># Terminal 3 — laptop: live GPS dot-map visualization</span><br>
       <span class="cmd">python</span> fulldemo/visualize_detections.py fulldemo/detections.jsonl <span class="arg">--live</span>
     </div>
   </div>
   <p style="color:var(--muted); font-size:0.78rem; margin-top:0.85rem;">
-    Fresh Jetson setup: <a href="https://github.com/saxysteph/145-237D-robotx-navigation/wiki/Setup-and-Replication" style="color:var(--accent)">Wiki → Setup &amp; Replication ↗</a>
+    Expected output: <code style="font-family:var(--mono); color:#a8c0d6">[GCS] {"target_id":1,"color":"red","lat":32.880,"lon":-117.234}</code> lines on the laptop as detections arrive.
   </p>
 </section>
 
@@ -825,7 +843,7 @@
 </main>
 
 <footer>
-  RobotX Navigation &nbsp;·&nbsp; CSE 145 / CSE 237D &nbsp;·&nbsp; Spring 2026 &nbsp;·&nbsp; UC San Diego &nbsp;·&nbsp;
+  Aerial Environment Recognition &nbsp;·&nbsp; CSE 145 / CSE 237D &nbsp;·&nbsp; Spring 2026 &nbsp;·&nbsp; UC San Diego &nbsp;·&nbsp;
   <a href="https://github.com/saxysteph/145-237D-robotx-navigation">GitHub ↗</a>
 </footer>
 
