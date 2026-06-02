@@ -30,7 +30,7 @@
       padding: 0.75rem 2rem;
     }
     nav .logo { font-weight: 700; font-size: 1rem; color: var(--accent); letter-spacing: 0.02em; }
-    nav ul { list-style: none; display: flex; gap: 1.5rem; }
+    nav ul { list-style: none; display: flex; gap: 1.5rem; flex-wrap: wrap; }
     nav a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
     nav a:hover { color: var(--text); }
 
@@ -143,6 +143,50 @@
     .link-card .link-title { font-weight: 600; font-size: 0.875rem; color: var(--accent); }
     .link-card .link-desc { font-size: 0.75rem; color: var(--muted); }
 
+    /* FILE TREE */
+    .tree { font-family: var(--mono); font-size: 0.8rem; line-height: 1.9; }
+    .tree-row { display: flex; gap: 0.75rem; align-items: baseline; }
+    .tree-row:hover { background: var(--surface2); border-radius: 4px; }
+    .tree-path { color: #a5d6ff; white-space: nowrap; }
+    .tree-path.dir { color: var(--accent); font-weight: 600; }
+    .tree-desc { color: var(--muted); font-size: 0.75rem; font-family: var(--font); }
+    .tree-indent { color: var(--border); }
+
+    /* DEMO */
+    .demo-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start;
+    }
+    @media (max-width: 700px) { .demo-grid { grid-template-columns: 1fr; } }
+    .demo-video-wrap {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden;
+    }
+    .demo-video-wrap video { display: block; width: 100%; max-height: 340px; object-fit: cover; }
+    .demo-video-label {
+      padding: 0.6rem 1rem; font-size: 0.72rem; color: var(--muted);
+      border-top: 1px solid var(--border); font-family: var(--mono);
+    }
+    .demo-panel {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .demo-panel h3 { font-size: 0.85rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em; }
+    .demo-terminal {
+      background: #010409; border: 1px solid var(--border); border-radius: 8px;
+      padding: 1rem; font-family: var(--mono); font-size: 0.72rem; line-height: 1.8;
+      color: #c9d1d9; overflow-x: auto;
+    }
+    .demo-terminal .tx { color: #3fb950; }
+    .demo-terminal .rx { color: #58a6ff; }
+    .demo-terminal .dim { color: #484f58; }
+    .demo-stat { display: flex; gap: 0.5rem; align-items: center; }
+    .demo-stat .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .demo-stat .dot-green { background: #3fb950; }
+    .demo-stat .dot-blue { background: #58a6ff; }
+    .demo-stat .dot-orange { background: #f0883e; }
+    .demo-stat span { font-size: 0.8rem; color: var(--muted); }
+    .demo-stat strong { color: var(--text); }
+
     /* FOOTER */
     footer {
       border-top: 1px solid var(--border); padding: 2rem;
@@ -159,8 +203,10 @@
     <li><a href="#overview">Overview</a></li>
     <li><a href="#pipeline">Pipeline</a></li>
     <li><a href="#milestones">Milestones</a></li>
+    <li><a href="#demo">Demo</a></li>
     <li><a href="#team">Team</a></li>
     <li><a href="#replicate">Replicate</a></li>
+    <li><a href="#codebase">Codebase</a></li>
     <li><a href="https://github.com/saxysteph/145-237D-robotx-navigation" target="_blank">GitHub ↗</a></li>
   </ul>
 </nav>
@@ -283,6 +329,48 @@
   </div>
 </section>
 
+<!-- DEMO -->
+<section id="demo">
+  <h2><span class="accent">//</span> Demo</h2>
+  <p style="color:var(--muted); margin-bottom:1.5rem; max-width:720px;">
+    Both pipeline components have been validated independently. The drone flight shows the aerial platform in operation; the terminal output confirms end-to-end MAVLink transmission over WiFi with live buoy color and GPS coordinate delivery to the ground station. Final integration (drone in flight simultaneously transmitting detections) is the Week 9–10 milestone.
+  </p>
+  <div class="demo-grid">
+    <div>
+      <div class="demo-video-wrap">
+        <video controls muted playsinline preload="metadata" poster="">
+          <source src="drone_flight.mp4" type="video/mp4">
+          <source src="drone_flight.mov" type="video/quicktime">
+          Your browser does not support HTML5 video.
+        </video>
+        <div class="demo-video-label">drone_flight.mp4 — UAV test flight over test environment</div>
+      </div>
+    </div>
+    <div class="demo-panel">
+      <div>
+        <h3>Live MAVLink Pipeline — Confirmed Working</h3>
+        <p style="font-size:0.8rem; color:var(--muted); margin-top:0.4rem;">Jetson (192.168.8.184) → WiFi router → Laptop GCS, real targets</p>
+      </div>
+      <div class="demo-terminal">
+        <span class="dim"># Jetson TX — buoy detections transmitted</span><br>
+        <span class="tx">[TX]</span> t1 <span style="color:#f0883e">blue</span>  lat=32.8813 lon=-117.2341 frame=17<br>
+        <span class="tx">[TX]</span> t2 <span style="color:#3fb950">green</span> lat=32.8814 lon=-117.2339 frame=18<br>
+        <span class="tx">[TX]</span> t3 <span style="color:#f78166">red</span>   lat=32.8812 lon=-117.2343 frame=19<br>
+        <br>
+        <span class="dim"># Laptop GCS — decoded JSON received</span><br>
+        <span class="rx">[GCS]</span> {"target_id":1,"color":"blue","lat":32.8813,"lon":-117.2341}<br>
+        <span class="rx">[GCS]</span> {"target_id":2,"color":"green","lat":32.8814,"lon":-117.2339}<br>
+        <span class="rx">[GCS]</span> {"target_id":3,"color":"red","lat":32.8812,"lon":-117.2343}
+      </div>
+      <div style="display:flex; flex-direction:column; gap:0.5rem; padding-top:0.25rem; border-top:1px solid var(--border);">
+        <div class="demo-stat"><div class="dot dot-green"></div><span><strong>YOLO11n</strong> — 94.1% precision, 97.1% mAP@50 on val set</span></div>
+        <div class="demo-stat"><div class="dot dot-blue"></div><span><strong>MAVLink link</strong> — USB-C ethernet + WiFi router validated</span></div>
+        <div class="demo-stat"><div class="dot dot-orange"></div><span><strong>E2E flight demo</strong> — in progress (Wk 9–10)</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- TEAM -->
 <section id="team">
   <h2><span class="accent">//</span> Team</h2>
@@ -332,6 +420,31 @@
   </p>
 </section>
 
+<!-- CODEBASE -->
+<section id="codebase">
+  <h2><span class="accent">//</span> Codebase Structure</h2>
+  <p style="color:var(--muted); margin-bottom:1.25rem;">All code is version-controlled at <a href="https://github.com/saxysteph/145-237D-robotx-navigation" style="color:var(--accent)" target="_blank">saxysteph/145-237D-robotx-navigation</a>. Key files below:</p>
+  <div class="code-block">
+    <div class="tree">
+      <div class="tree-row"><span class="tree-path dir">camera_live_feed.py</span><span class="tree-desc">← Main pipeline: YOLO → HSV → GPS projection → MAVLink TX</span></div>
+      <div class="tree-row"><span class="tree-path dir">color_utils.py</span><span class="tree-desc">← HSV color range definitions and fallback ranges (R/G/B)</span></div>
+      <div class="tree-row" style="margin-top:0.5rem"><span class="tree-path dir">mavlink_comms/</span></div>
+      <div class="tree-row"><span class="tree-indent">├─ </span><span class="tree-path">transmitter.py</span><span class="tree-desc">← BuoyMavlinkTransmitter — wraps pymavlink UDP send</span></div>
+      <div class="tree-row"><span class="tree-indent">└─ scripts/run_ground_station.py</span><span class="tree-path"></span><span class="tree-desc">← Laptop GCS: listens UDP 14555, logs JSON detections</span></div>
+      <div class="tree-row" style="margin-top:0.5rem"><span class="tree-path dir">fulldemo/</span></div>
+      <div class="tree-row"><span class="tree-indent">├─ </span><span class="tree-path">PARTNER_INSTRUCTIONS.md</span><span class="tree-desc">← Step-by-step run guide for team members</span></div>
+      <div class="tree-row"><span class="tree-indent">├─ </span><span class="tree-path">README.md</span><span class="tree-desc">← Full demo guide with post-processing steps</span></div>
+      <div class="tree-row"><span class="tree-indent">└─ </span><span class="tree-path">visualize_detections.py</span><span class="tree-desc">← GPS dot map visualizer, supports --live polling</span></div>
+      <div class="tree-row" style="margin-top:0.5rem"><span class="tree-path dir">buoy_best.onnx</span><span class="tree-desc">← Trained YOLO11n model (opset 19), 94.1% precision on val set</span></div>
+      <div class="tree-row"><span class="tree-path dir">captures/classes/</span><span class="tree-desc">← Reference images (red/green/blue) for HSV range derivation</span></div>
+      <div class="tree-row"><span class="tree-path dir">vendor/mavcore/</span><span class="tree-desc">← Vendored pymavlink core, patched for Python 3.8 compatibility</span></div>
+      <div class="tree-row" style="margin-top:0.5rem; padding-top:0.5rem; border-top:1px solid var(--border)">
+        <span style="color:var(--muted); font-family:var(--font); font-size:0.75rem;">Data formats: MAVLink wire <code style="color:#a5d6ff">RXB|id|color|lat_e7|lon_e7|frame</code> · Ground station output: JSONL · On-device: CSV + AVI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- LINKS -->
 <section>
   <h2><span class="accent">//</span> Resources</h2>
@@ -347,6 +460,10 @@
     <a class="link-card" href="https://github.com/saxysteph/145-237D-robotx-navigation/blob/main/fulldemo/PARTNER_INSTRUCTIONS.md" target="_blank">
       <span class="link-title">Run Instructions</span>
       <span class="link-desc">Step-by-step guide for running the demo pipeline</span>
+    </a>
+    <a class="link-card" href="https://github.com/saxysteph/145-237D-robotx-navigation/wiki/Repository-Structure" target="_blank">
+      <span class="link-title">Codebase Structure</span>
+      <span class="link-desc">Annotated repo layout, key file descriptions, and data format specs</span>
     </a>
     <a class="link-card" href="https://robotx.org/" target="_blank">
       <span class="link-title">Maritime RobotX 2026</span>
