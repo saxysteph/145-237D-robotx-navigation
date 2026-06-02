@@ -32,7 +32,7 @@ sudo ifconfig en10 192.168.55.100 netmask 255.255.255.0
 ping 192.168.55.1
 
 # SSH in
-ssh babydragon@192.168.55.1   # password: companion
+ssh babydragon@192.168.55.1   # [password: ask repo owners]
 ```
 
 ### 2. Clone the Repo (Jetson)
