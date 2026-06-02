@@ -65,12 +65,15 @@ Physical actuation of the surface vehicle is a post-MVP stretch goal.
 
 ## Post-MVP Roadmap
 
+The quarter's focus shifted to getting the full aerial pipeline working on the drone — the RC car surface integration is out of scope for this class deliverable. Future work for RobotX 2026 includes:
+
 | Phase | Goal |
 |---|---|
-| Phase 1 | RC car receives coordinate map, runs pathfinding algorithm |
-| Phase 2 | RC car autonomously drives the gate course using drone intelligence |
-| Phase 3 | Live dynamic update loop — drone re-transmits if buoys move |
-| Long-term | Replace RC car with actual USV, full RobotX competition deployment |
+| Near-term | Wireless communication via portable router (in progress) |
+| Near-term | Full demo flight over buoys with field video recording |
+| Long-term | USV integration — USV subscribes to buoy coordinate map from UAV |
+| Long-term | Autonomous UAV flight (search pattern, no manual pilot) |
+| Long-term | Full tri-domain integration with UUV |
 
 ---
 
@@ -81,7 +84,7 @@ Physical actuation of the surface vehicle is a post-MVP stretch goal.
 | Edge Computer | Jetson Orin Nano (JetPack 5, Python 3.8) |
 | Camera | H264 USB camera |
 | UAV Frame | Team Inspiration 2024 competition drone |
-| Proxy USV | RC car (Prof. Silberman's lab) |
+| Proxy USV | RC car (Prof. Silberman's lab) — post-scope, not implemented this quarter |
 | Communication | USB-C ethernet (current), USB WiFi dongle (planned) |
 
 ## Software
