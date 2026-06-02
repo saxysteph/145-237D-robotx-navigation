@@ -15,7 +15,7 @@ Stephen and Dhruv contribute equally across all technical deliverables, includin
 
 | Name | Role |
 |---|---|
-| **Prof. Jack Silberman** | Project Advisor — hardware access, RC car proxy USV, technical direction |
+| **Prof. Jack Silberman** | Project Advisor — hardware access, lab facilities, technical direction |
 | **Eesh Vij** | Team Inspiration — drone hardware, liaison |
 | **Colin Szeto** | Team Inspiration — drone hardware, liaison |
 | **Chase Chen** | Team Inspiration — drone hardware, liaison |

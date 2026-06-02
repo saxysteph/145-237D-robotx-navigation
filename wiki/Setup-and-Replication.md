@@ -2,7 +2,32 @@
 
 This page covers how to replicate the full pipeline from scratch: setting up the Jetson Orin Nano, installing dependencies, and running the end-to-end buoy detection demo.
 
-For a quick-start guide focused on running (not setting up), see [fulldemo/PARTNER_INSTRUCTIONS.md](../blob/main/fulldemo/PARTNER_INSTRUCTIONS.md).
+> **Already set up?** Skip to the [Partner Run Instructions](https://github.com/saxysteph/145-237D-robotx-navigation/blob/main/fulldemo/PARTNER_INSTRUCTIONS.md) for a focused run guide.
+
+---
+
+## TL;DR — Already-Configured Jetson
+
+If the Jetson is already set up with dependencies and `buoy_best.onnx` installed:
+
+```bash
+# Terminal 1 — laptop (ground station)
+cd ~/Downloads/SP26/CSE237D/145-237D-robotx-navigation
+source .venv-mavlink/bin/activate
+python mavlink_comms/scripts/run_ground_station.py --output-jsonl fulldemo/detections.jsonl
+
+# Terminal 2 — SSH into Jetson
+ssh babydragon@192.168.55.1   # [password: ask repo owners]
+cd ~/robotx-navigation
+GCS_IP=192.168.55.100 bash fulldemo/run_detection_jetson.sh
+
+# Terminal 3 — visualize live
+python fulldemo/visualize_detections.py fulldemo/detections.jsonl --live
+```
+
+Expected: `[GCS] {"target_id": 1, "color": "red", "lat": ..., "lon": ...}` lines on the laptop.
+
+---
 
 ---
 

@@ -59,7 +59,9 @@ The MVP (demonstrated Week 5) proves the drone-to-receiver data pipeline end-to-
 4. Coordinates are transmitted via MAVLink to a base station laptop
 5. Laptop logs and visualizes received detections as a GPS dot map
 
-Physical actuation of the surface vehicle is a post-MVP stretch goal.
+**Success benchmark:** >85% object classification accuracy on static target buoys, with low-latency, uncorrupted JSON payload reception at the ground station.
+
+Physical actuation of a surface vehicle is a post-MVP stretch goal.
 
 ---
 

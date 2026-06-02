@@ -74,3 +74,25 @@ Reads a `.jsonl` detection log and renders a color-coded GPS dot map using matpl
 
 ### `color_utils.py`
 Defines `FALLBACK_COLOR_RANGES` — the HSV hue/saturation/value bounds for red, green, and blue. Used when derived ranges from `captures/classes/` images are found to be degenerate.
+
+---
+
+## Data Formats
+
+### MAVLink wire format (Jetson → Laptop)
+```
+RXB|<target_id>|<color>|<lat_e7>|<lon_e7>|<frame>
+```
+Example: `RXB|1|red|328801200|-1172341800|42`
+
+### Detection JSONL (ground station output)
+One JSON object per line, written by `--output-jsonl`:
+```json
+{"target_id": 1, "color": "red", "lat": 32.88012, "lon": -117.23418, "frame": 42, "timestamp_ms": 1748000000123}
+```
+
+### Detection CSV (Jetson on-device log)
+Saved to `detection_logs/detections.csv`. Columns: `timestamp, track_id, color, pixel_x, pixel_y, est_lat, est_lon`.
+
+### Video (Jetson on-device recording)
+Saved to `detection_logs/recording_<unix_ts>.avi` (MJPG codec, 800×600 @ 15fps). The filename timestamp matches the `timestamp` column in the CSV for cross-referencing.
