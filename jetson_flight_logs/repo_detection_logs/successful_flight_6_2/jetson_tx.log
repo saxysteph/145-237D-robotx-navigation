@@ -1,0 +1,78 @@
+# Jetson detection terminal — 2025-06-02 successful demo
+# Command: GCS_IP=192.168.8.184 bash fulldemo/run_detection_jetson.sh
+# (pipeline crashed later on read-only detection_logs CSV flush; MAVLink TX succeeded)
+
+Recording to detection_logs/recording_1780463969.avi (800x600 @ 15fps)
+[TX] t1 green lat=32.88008717 lon=-117.23422790
+[TX] t2 red lat=32.88008264 lon=-117.23422774
+[TX] t3 green lat=32.88009410 lon=-117.23422793
+[TX] t4 green lat=32.88010275 lon=-117.23419690
+[TX] t5 red lat=32.88010610 lon=-117.23419629
+[TX] t5 red lat=32.88010885 lon=-117.23419380
+[TX] t6 red lat=32.88010876 lon=-117.23419319
+[TX] t7 red lat=32.88010075 lon=-117.23419641
+[TX] t8 green lat=32.88010656 lon=-117.23419121
+[TX] t9 blue lat=32.88010134 lon=-117.23419349
+[TX] t10 blue lat=32.88010404 lon=-117.23418504
+[TX] t10 blue lat=32.88010452 lon=-117.23418500
+[TX] t10 blue lat=32.88010460 lon=-117.23418587
+[TX] t11 blue lat=32.88010001 lon=-117.23419896
+[TX] t12 blue lat=32.88010394 lon=-117.23419382
+[TX] t13 blue lat=32.88010076 lon=-117.23420555
+[TX] t13 blue lat=32.88010062 lon=-117.23420508
+[TX] t12 blue lat=32.88010433 lon=-117.23419274
+[TX] t12 blue lat=32.88010429 lon=-117.23419343
+[TX] t13 blue lat=32.88010039 lon=-117.23420442
+[TX] t14 red lat=32.88010817 lon=-117.23419852
+[TX] t15 blue lat=32.88010396 lon=-117.23419911
+[TX] t16 green lat=32.88010564 lon=-117.23420895
+[TX] t16 green lat=32.88010494 lon=-117.23420817
+[TX] t17 green lat=32.88010632 lon=-117.23421198
+[TX] t18 red lat=32.88010842 lon=-117.23420623
+[TX] t19 blue lat=32.88010076 lon=-117.23421257
+[TX] t16 green lat=32.88010522 lon=-117.23420523
+[TX] t17 green lat=32.88010675 lon=-117.23421059
+[TX] t16 green lat=32.88010503 lon=-117.23420478
+[TX] t16 green lat=32.88010491 lon=-117.23420473
+[TX] t17 green lat=32.88010651 lon=-117.23421114
+[TX] t18 red lat=32.88010830 lon=-117.23420636
+[TX] t20 blue lat=32.88009968 lon=-117.23421134
+[TX] t16 green lat=32.88010357 lon=-117.23420463
+[TX] t18 red lat=32.88010706 lon=-117.23420531
+[TX] t20 blue lat=32.88009956 lon=-117.23421100
+[TX] t18 red lat=32.88010713 lon=-117.23420498
+[TX] t16 green lat=32.88010435 lon=-117.23420474
+[TX] t16 green lat=32.88010343 lon=-117.23420684
+[TX] t18 red lat=32.88010650 lon=-117.23420737
+[TX] t16 green lat=32.88010300 lon=-117.23420825
+[TX] t16 green lat=32.88010291 lon=-117.23420832
+[TX] t21 blue lat=32.88009893 lon=-117.23421338
+[TX] t16 green lat=32.88010309 lon=-117.23420824
+[TX] t18 red lat=32.88010682 lon=-117.23420812
+[TX] t21 blue lat=32.88009923 lon=-117.23421329
+[TX] t22 red lat=32.88010690 lon=-117.23420764
+[TX] t16 green lat=32.88010344 lon=-117.23420839
+[TX] t18 red lat=32.88010854 lon=-117.23420993
+[TX] t18 red lat=32.88010870 lon=-117.23420989
+[TX] t23 red lat=32.88009337 lon=-117.23420978
+[TX] t24 blue lat=32.88008991 lon=-117.23422350
+[TX] t25 blue lat=32.88008727 lon=-117.23421812
+Traceback (most recent call last):
+  File "camera_live_feed.py", line 600, in main
+    f.flush()
+OSError: [Errno 30] Read-only file system
+
+During handling of the above exception, another exception occurred:
+
+OSError: [Errno 30] Read-only file system
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "camera_live_feed.py", line 622, in <module>
+    sys.exit(main())
+  File "camera_live_feed.py", line 608, in main
+    calibrate_sv_threshold(frame_det, args.calib_color)
+OSError: [Errno 30] Read-only file system
+fulldemo/run_detection_jetson.sh: line 40:  2000 Bus error               python3 camera_live_feed.py --headless --save-video --camera-index 0 --yolo-model "$MODEL" --yolo-conf 0.25 --min-color-ratio 0.12 --gcs-ip "$GCS_IP" --drone-lat 32.88010 --drone-lon -117.23420 --altitude-m 10 --heading-deg 0
+babydragon@babydragon-desktop:~/robotx-navigation$

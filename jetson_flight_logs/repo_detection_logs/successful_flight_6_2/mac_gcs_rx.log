@@ -1,0 +1,62 @@
+# Mac GCS terminal — 2025-06-02 successful demo
+# Command: bash fulldemo/run_gcs_mac.sh
+
+Mac IP on WiFi: 192.168.8.184
+Jetson should use: --gcs-ip 192.168.8.184
+Listening UDP 14555 for buoy reports (Ctrl+C to stop)
+
+Listening on udpin:0.0.0.0:14555 for RXB| buoy reports (Ctrl+C to stop)
+[GCS] {"target_id": 1, "color": "green", "lat": 32.8800872, "lon": -117.2342279, "frame": 494, "timestamp_ms": 1780464089.984857}
+[GCS] {"target_id": 2, "color": "red", "lat": 32.8800826, "lon": -117.2342277, "frame": 494, "timestamp_ms": 1780464089.985448}
+[GCS] {"target_id": 3, "color": "green", "lat": 32.8800941, "lon": -117.2342279, "frame": 553, "timestamp_ms": 1780464103.820918}
+[GCS] {"target_id": 4, "color": "green", "lat": 32.8801028, "lon": -117.2341969, "frame": 627, "timestamp_ms": 1780464121.263635}
+[GCS] {"target_id": 5, "color": "red", "lat": 32.8801061, "lon": -117.2341963, "frame": 629, "timestamp_ms": 1780464121.879043}
+[GCS] {"target_id": 5, "color": "red", "lat": 32.8801088, "lon": -117.2341938, "frame": 635, "timestamp_ms": 1780464123.211392}
+[GCS] {"target_id": 6, "color": "red", "lat": 32.8801088, "lon": -117.2341932, "frame": 635, "timestamp_ms": 1780464123.211543}
+[GCS] {"target_id": 7, "color": "red", "lat": 32.8801007, "lon": -117.2341964, "frame": 638, "timestamp_ms": 1780464124.13269}
+[GCS] {"target_id": 8, "color": "green", "lat": 32.8801066, "lon": -117.2341912, "frame": 639, "timestamp_ms": 1780464124.13269}
+[GCS] {"target_id": 9, "color": "blue", "lat": 32.8801013, "lon": -117.2341935, "frame": 640, "timestamp_ms": 1780464124.324747}
+[GCS] {"target_id": 10, "color": "blue", "lat": 32.880104, "lon": -117.234185, "frame": 642, "timestamp_ms": 1780464124.783991}
+[GCS] {"target_id": 10, "color": "blue", "lat": 32.8801045, "lon": -117.234185, "frame": 645, "timestamp_ms": 1780464125.460288}
+[GCS] {"target_id": 10, "color": "blue", "lat": 32.8801046, "lon": -117.2341859, "frame": 646, "timestamp_ms": 1780464125.689717}
+[GCS] {"target_id": 11, "color": "blue", "lat": 32.8801, "lon": -117.234199, "frame": 648, "timestamp_ms": 1780464126.145561}
+[GCS] {"target_id": 12, "color": "blue", "lat": 32.8801039, "lon": -117.2341938, "frame": 650, "timestamp_ms": 1780464126.73087}
+[GCS] {"target_id": 13, "color": "blue", "lat": 32.8801008, "lon": -117.2342056, "frame": 651, "timestamp_ms": 1780464126.987624}
+[GCS] {"target_id": 13, "color": "blue", "lat": 32.8801006, "lon": -117.2342051, "frame": 652, "timestamp_ms": 1780464127.226601}
+[GCS] {"target_id": 12, "color": "blue", "lat": 32.8801043, "lon": -117.2341927, "frame": 659, "timestamp_ms": 1780464128.8410282}
+[GCS] {"target_id": 12, "color": "blue", "lat": 32.8801043, "lon": -117.2341934, "frame": 660, "timestamp_ms": 1780464129.29925}
+[GCS] {"target_id": 13, "color": "blue", "lat": 32.8801004, "lon": -117.2342044, "frame": 660, "timestamp_ms": 1780464129.29925}
+[GCS] {"target_id": 14, "color": "red", "lat": 32.8801082, "lon": -117.2341985, "frame": 660, "timestamp_ms": 1780464129.29925}
+[GCS] {"target_id": 15, "color": "blue", "lat": 32.880104, "lon": -117.2341991, "frame": 661, "timestamp_ms": 1780464129.6655161}
+[GCS] {"target_id": 16, "color": "green", "lat": 32.8801056, "lon": -117.234209, "frame": 661, "timestamp_ms": 1780464129.6655161}
+[GCS] {"target_id": 16, "color": "green", "lat": 32.8801049, "lon": -117.2342082, "frame": 663, "timestamp_ms": 1780464129.955946}
+[GCS] {"target_id": 17, "color": "green", "lat": 32.8801063, "lon": -117.234212, "frame": 665, "timestamp_ms": 1780464130.405802}
+[GCS] {"target_id": 18, "color": "red", "lat": 32.8801084, "lon": -117.2342062, "frame": 665, "timestamp_ms": 1780464130.406523}
+[GCS] {"target_id": 19, "color": "blue", "lat": 32.8801008, "lon": -117.2342126, "frame": 665, "timestamp_ms": 1780464130.406523}
+[GCS] {"target_id": 16, "color": "green", "lat": 32.8801052, "lon": -117.2342052, "frame": 670, "timestamp_ms": 1780464131.6067672}
+[GCS] {"target_id": 17, "color": "green", "lat": 32.8801068, "lon": -117.2342106, "frame": 671, "timestamp_ms": 1780464131.906152}
+[GCS] {"target_id": 16, "color": "green", "lat": 32.880105, "lon": -117.2342048, "frame": 672, "timestamp_ms": 1780464132.157888}
+[GCS] {"target_id": 16, "color": "green", "lat": 32.8801049, "lon": -117.2342047, "frame": 673, "timestamp_ms": 1780464132.38688}
+[GCS] {"target_id": 17, "color": "green", "lat": 32.8801065, "lon": -117.2342111, "frame": 674, "timestamp_ms": 1780464132.617617}
+[GCS] {"target_id": 18, "color": "red", "lat": 32.8801083, "lon": -117.2342064, "frame": 674, "timestamp_ms": 1780464132.6258829}
+[GCS] {"target_id": 20, "color": "blue", "lat": 32.8800997, "lon": -117.2342113, "frame": 676, "timestamp_ms": 1780464133.091037}
+[GCS] {"target_id": 16, "color": "green", "lat": 32.8801036, "lon": -117.2342046, "frame": 677, "timestamp_ms": 1780464133.330027}
+[GCS] {"target_id": 18, "color": "red", "lat": 32.8801071, "lon": -117.2342053, "frame": 677, "timestamp_ms": 1780464133.3347058}
+[GCS] {"target_id": 20, "color": "blue", "lat": 32.8800996, "lon": -117.234211, "frame": 677, "timestamp_ms": 1780464133.3347058}
+[GCS] {"target_id": 18, "color": "red", "lat": 32.8801071, "lon": -117.234205, "frame": 678, "timestamp_ms": 1780464133.568193}
+[GCS] {"target_id": 16, "color": "green", "lat": 32.8801044, "lon": -117.2342047, "frame": 679, "timestamp_ms": 1780464133.967731}
+[GCS] {"target_id": 16, "color": "green", "lat": 32.8801034, "lon": -117.2342068, "frame": 685, "timestamp_ms": 1780464135.317324}
+[GCS] {"target_id": 18, "color": "red", "lat": 32.8801065, "lon": -117.2342074, "frame": 686, "timestamp_ms": 1780464135.55324}
+[GCS] {"target_id": 16, "color": "green", "lat": 32.880103, "lon": -117.2342082, "frame": 688, "timestamp_ms": 1780464136.031007}
+[GCS] {"target_id": 16, "color": "green", "lat": 32.8801029, "lon": -117.2342083, "frame": 689, "timestamp_ms": 1780464136.303627}
+[GCS] {"target_id": 21, "color": "blue", "lat": 32.8800989, "lon": -117.2342134, "frame": 689, "timestamp_ms": 1780464136.316591}
+[GCS] {"target_id": 16, "color": "green", "lat": 32.8801031, "lon": -117.2342082, "frame": 690, "timestamp_ms": 1780464136.556072}
+[GCS] {"target_id": 18, "color": "red", "lat": 32.8801068, "lon": -117.2342081, "frame": 690, "timestamp_ms": 1780464136.56476}
+[GCS] {"target_id": 21, "color": "blue", "lat": 32.8800992, "lon": -117.2342133, "frame": 690, "timestamp_ms": 1780464136.56476}
+[GCS] {"target_id": 22, "color": "red", "lat": 32.8801069, "lon": -117.2342076, "frame": 690, "timestamp_ms": 1780464136.56476}
+[GCS] {"target_id": 16, "color": "green", "lat": 32.8801034, "lon": -117.2342084, "frame": 691, "timestamp_ms": 1780464136.9687119}
+[GCS] {"target_id": 18, "color": "red", "lat": 32.8801085, "lon": -117.2342099, "frame": 699, "timestamp_ms": 1780464138.8204339}
+[GCS] {"target_id": 18, "color": "red", "lat": 32.8801087, "lon": -117.2342099, "frame": 700, "timestamp_ms": 1780464139.172841}
+[GCS] {"target_id": 23, "color": "red", "lat": 32.8800934, "lon": -117.2342098, "frame": 703, "timestamp_ms": 1780464139.870899}
+[GCS] {"target_id": 24, "color": "blue", "lat": 32.8800899, "lon": -117.2342235, "frame": 740, "timestamp_ms": 1780464148.453054}
+[GCS] {"target_id": 25, "color": "blue", "lat": 32.8800873, "lon": -117.2342181, "frame": 1003, "timestamp_ms": 1780464211.581454}

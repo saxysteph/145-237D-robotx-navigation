@@ -248,3 +248,14 @@ yolo_comparison_test/path2_switch_proposal/captures/
 # ROI+HSV pipeline local runs (symlinked datasets, test_eval, MP4s; keep out of git)
 yolo_comparison_test/path2_switch_proposal/scripts/roi_hsv_pipeline*/
 yolo_comparison_test/path2_switch_proposal/scripts/path2_video_results/
+
+# Jetson rsync dumps (large AVIs/JPGs); only track curated successful-flight bundle
+jetson_flight_logs/**
+!jetson_flight_logs/repo_detection_logs/
+jetson_flight_logs/repo_detection_logs/**
+!jetson_flight_logs/repo_detection_logs/successful_flight_6_2/
+!jetson_flight_logs/repo_detection_logs/successful_flight_6_2/**
+
+# Unsplit originals in demo folder (split parts + SHA256SUMS are committed)
+jetson_flight_logs/repo_detection_logs/successful_flight_6_2/recording_demo_flight_mac.mp4
+jetson_flight_logs/repo_detection_logs/successful_flight_6_2/recording_demo_flight_mac_screen.mov
